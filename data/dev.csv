@@ -1,0 +1,1035 @@
+db_id	question	hardness	query
+konser_şarkıcı	Kaç tane şarkıcımız var?	easy	SELECT count(*) FROM şarkıcı
+konser_şarkıcı	Toplam şarkıcı sayısı nedir?	easy	SELECT count(*) FROM şarkıcı
+konser_şarkıcı	Yaşlıdan gence doğru sıralanmış bir şekilde tüm şarkıcıların isim, ülke ve yaşlarını göster.	medium	SELECT isim, ülke, yaş FROM şarkıcı ORDER BY yaş DESC
+konser_şarkıcı	Azalan yaş sırasıyla bütün şarkıcıların ismi, ülkesi ve yaşları nelerdir?	medium	SELECT isim , ülke , yaş FROM şarkıcı ORDER BY yaş DESC
+konser_şarkıcı	Fransa'daki bütün şarkıcıların ortalama, minimum ve maksimum yaşları nelerdir?	medium	SELECT avg(yaş), min(yaş), max(yaş) FROM şarkıcı WHERE ülke = 'Fransa'
+konser_şarkıcı	Fransız şarkıcıların ortalama, minimım ve maksimum yaşları nelerdir?	medium	SELECT avg(yaş), min(yaş), max(yaş) FROM şarkıcı WHERE ülke = 'Fransa'
+konser_şarkıcı	En genç şarkıcının şarkısının ismi ve çıkış tarihini göster.	medium	SELECT şarkı_ismi , şarkı_çıkış_tarihi FROM şarkıcı ORDER BY yaş LIMIT 1
+konser_şarkıcı	En genç şarkıcının bütün şarkılarının isimleri ve çıkış yılları nelerdir?	medium	SELECT şarkı_ismi, şarkı_çıkış_tarihi FROM şarkıcı ORDER BY yaş LIMIT 1
+konser_şarkıcı	20 yaş ve üzeri şarkıcıların olduğu farklı ülkeler hangileridir?	easy	SELECT DISTINCT ülke FROM şarkıcı WHERE yaş > 20
+konser_şarkıcı	Yaşı 20'den fazla olan şarkıcıların olduğu ülkeler hangileridir?	easy	SELECT DISTINCT ülke FROM şarkıcı WHERE yaş > 20
+konser_şarkıcı	Bütün ülkeleri ve her ülkedeki şarkıcı sayısını göster.	medium	SELECT ülke, count(*) FROM şarkıcı GROUP BY ülke
+konser_şarkıcı	Her ülkeden kaç şarkıcı var?	medium	SELECT ülke , count(*) FROM şarkıcı GROUP BY ülke
+konser_şarkıcı	Şarkıcısının yaşı ortalamanın üstünde olan bütün şarkıları listele.	hard	SELECT şarkı_ismi FROM şarkıcı WHERE yaş > (SELECT avg(yaş) FROM şarkıcı)
+konser_şarkıcı	Ortalamadan daha yaşlı olan şarkıcıların bütün şarkı isimleri nelerdir?	hard	SELECT şarkı_ismi FROM şarkıcı WHERE yaş > (SELECT avg(yaş) FROM şarkıcı)
+konser_şarkıcı	Kapasitesi 5000 ve 10000 arasında olan bütün stadyumların konumları ve isimlerini göster.	medium	SELECT konum , isim FROM stadyum WHERE kapasite BETWEEN 5000 AND 10000
+konser_şarkıcı	Kapasitesi 5000 ve 10000 arasında olan bütün stadyumların ismi ve konumu nedir?	medium	SELECT konum , isim FROM stadyum WHERE kapasite BETWEEN 5000 AND 10000
+konser_şarkıcı	Bütün stadyumların maksimum kapasitesi ve ortalaması nelerdir?	medium	select max(kapasite), ortalama from stadyum
+konser_şarkıcı	Stadyumların ortalama ve maksimum kapasiteleri nelerdir?	medium	select avg(kapasite) , max(kapasite) from stadyum
+konser_şarkıcı	En yüksek ortalama katılıma sahip stadyumun ismi ve kapasitesi nedir?	medium	SELECT isim , kapasite FROM stadyum ORDER BY ortalama DESC LIMIT 1
+konser_şarkıcı	En yüksek ortalama katılıma sahip stadyumun ismi ve kapasitesi nedir?	medium	SELECT isim, kapasite FROM stadyum ORDER BY ortalama DESC LIMIT 1
+konser_şarkıcı	2014 veya 2015 yılında kaç konser vardır?	medium	SELECT count(*) FROM konser WHERE yıl = 2014 OR yıl = 2015
+konser_şarkıcı	2014 veya 2015 yılında kaç tane konser gerçekleşti?	medium	SELECT count(*) FROM konser WHERE yıl = 2014 OR yıl = 2015
+konser_şarkıcı	Stadyum ismini ve her stadyumdaki konser sayısını göster.	medium	SELECT T2.isim, count(*) FROM konser AS T1 JOIN stadyum AS T2 ON T1.stadyum_no = T2.stadyum_no GROUP BY T1.stadyum_no
+konser_şarkıcı	Stadyumlarda kaçar konser yapılıyor?	medium	SELECT T2.isim, count(*) FROM konser AS T1 JOIN stadyum AS T2 ON T1.stadyum_no = T2.stadyum_no GROUP BY T1.stadyum_no
+konser_şarkıcı	2014 yılı ve sonrasında en çok konser gerçekleşen stadyumun ismini ve kapasitesini göster.	extra	SELECT T2.isim , T2.kapasite FROM konser AS T1 JOIN stadyum AS T2 ON T1.stadyum_no = T2.stadyum_no WHERE T1.yıl >= 2014 GROUP BY T2.stadyum_no ORDER BY count(*) DESC LIMIT 1
+konser_şarkıcı	2013 sonrası en fazla konser yapılmış stadyumun ismi ve kapasitesi nedir?	extra	select t2.isim, t2.kapasite from konser as t1 join stadyum as t2 on t1.stadyum_no = t2.stadyum_no where t1.yıl > 2013 group by t2.stadyum_no order by count(*) desc limit 1
+konser_şarkıcı	En çok konser yapılan yıl hangisidir?	hard	SELECT yıl FROM konser GROUP BY yıl ORDER BY count(*) DESC LIMIT 1
+konser_şarkıcı	En çok konserin yapıldığı yıl hangisidir?	hard	SELECT yıl FROM konser GROUP BY yıl ORDER BY count(*) DESC LIMIT 1
+konser_şarkıcı	Konser yapılmamış bütün stadyumları göster.	hard	SELECT isim FROM stadyum WHERE stadyum_no NOT IN (SELECT stadyum_no FROM konser)
+konser_şarkıcı	Konser olmayan stadyumların isimleri nelerdir?	hard	SELECT isim FROM stadyum WHERE stadyum_no NOT IN (SELECT stadyum_no FROM konser)
+konser_şarkıcı	40 yaş üstü ve 30 yaş altı şarkıcıların olduğu ülkeleri göster.	hard	SELECT ülke FROM şarkıcı WHERE yaş > 40 INTERSECT SELECT ülke FROM şarkıcı WHERE yaş < 30
+konser_şarkıcı	2014'te konser yapılmış stadyumlar dışındaki bütün stadyumların isimlerini göster.	hard	SELECT isim FROM stadyum EXCEPT SELECT T2.isim FROM konser AS T1 JOIN stadyum AS T2 ON T1.stadyum_no = T2.stadyum_no WHERE T1.yıl = 2014 
+konser_şarkıcı	2014'te konser yapılmamış olan stadyumların isimleri nelerdir?	hard	SELECT isim FROM stadyum EXCEPT SELECT T2.isim FROM konser AS T1 JOIN stadyum AS T2 ON T1.stadyum_no = T2.stadyum_no WHERE T1.yıl = 2014
+konser_şarkıcı	Bütün konserlerin ismini ve temalarını ve her konserdeki şarkıcı sayısını göster.	medium	SELECT T2.isim , T2.tema , count(*) FROM konserdeki_şarkıcı AS T1 JOIN konser AS T2 ON T1.konser_no = T2.konser_no GROUP BY T2.konser_no
+konser_şarkıcı	Her konserin ismi, teması ve şarkıcı sayısı nelerdir?	medium	select t2.isim, t2.tema, count(*) from konserdeki_şarkıcı as t1 join konser as t2 on t1.konser_no = t2.konser_no group by t2.konser_no
+konser_şarkıcı	Her şarkıcı için şarkıcı ismini ve konser sayılarını listele.	medium	SELECT T2.isim , count(*) FROM konserdeki_şarkıcı AS T1 JOIN şarkıcı AS T2 ON T1.şarkıcı_no = T2.şarkıcı_no GROUP BY T2.şarkıcı_no
+konser_şarkıcı	Her kişi için şarkıcı ismi ve konser sayısı nelerdir?	medium	SELECT T2.isim , count(*) FROM konserdeki_şarkıcı AS T1 JOIN şarkıcı AS T2 ON T1.şarkıcı_no = T2.şarkıcı_no GROUP BY T2.şarkıcı_no
+konser_şarkıcı	2014 yılındaki konserlerin tüm şarkıcı isimlerini listele.	hard	SELECT T2.isim FROM konserdeki_şarkıcı AS T1 JOIN şarkıcı as T2 ON T1.şarkıcı_no = T2.şarkıcı_no JOIN konser as T3 ON T1.konser_no = T3.konser_no WHERE T3.yıl = 2014
+konser_şarkıcı	2014'te konser veren şarkıcıların isimleri nelerdir?	hard	SELECT T2.isim FROM konserdeki_şarkıcı AS T1 JOIN şarkıcı AS T2 ON T1.şarkıcı_no = T2.şarkıcı_no JOIN konser AS T3 ON T1.konser_no = T3.konser_no WHERE T3.yıl = 2014
+konser_şarkıcı	İsminde '%Hey%' geçen şarkıya sahip şarkıcının ismi ve ülkesi nedir?	medium	SELECT isim , ülke FROM şarkıcı WHERE şarkı_ismi LIKE '%Hey%'
+konser_şarkıcı	Şarkılarının başlıklarında 'Hey' kelimesi olan bütün şarkıcıların isimleri ve ülkeleri nelerdir?	medium	SELECT isim, ülke FROM şarkıcı WHERE şarkı_ismi LIKE '%Hey%'
+konser_şarkıcı	2014 ve 2015 yıllarında konser gerçekleşen stadyumların isimlerini ve konumlarını bulun.	extra	SELECT T2.isim , T2.konum FROM konser AS T1 JOIN stadyum AS T2 ON T1.stadyum_no = T2.stadyum_no WHERE T1.yıl = 2014 INTERSECT SELECT T2.isim , T2.konum FROM konser AS T1 JOIN stadyum AS T2 ON T1.stadyum_no = T2.stadyum_no WHERE T1.yıl = 2015
+konser_şarkıcı	2014 ve 2015 yıllarında konser gerçekleşmiş stadyumların ismileri ve konumları nerelerdir?	extra	SELECT T2.isim , T2.konum FROM konser AS T1 JOIN stadyum AS T2 ON T1.stadyum_no = T2.stadyum_no WHERE T1.yıl = 2014 INTERSECT SELECT T2.isim , T2.konum FROM konser AS T1 JOIN stadyum AS T2 ON T1.stadyum_no = T2.stadyum_no WHERE T1.yıl = 2015
+konser_şarkıcı	En yüksek kapasiteye sahip stadyumda yapılmış konser sayısını bul.	hard	select count(*) from konser where stadyum_no = (select stadyum_no from stadyum order by kapasite desc limit 1)
+konser_şarkıcı	En yüksek kapasiteli stadyumda gerçekleşen konser sayısı nedir?	hard	select count(*) from konser where stadyum_no = (select stadyum_no from stadyum order by kapasite desc limit 1)
+evcil_hayvanlar_1	Ağırlığı 10'dan fazla olan evcil hayvan sayısını bul.	easy	SELECT count(*) FROM evcil_hayvanlar WHERE ağırlık > 10
+evcil_hayvanlar_1	Kaç tane evcil hayvanın ağırlığı 10'dan yüksektir?	easy	SELECT count(*) FROM Evcil_hayvanlar WHERE ağırlık > 10
+evcil_hayvanlar_1	En genç köpeğin ağırlığını bul.	medium	SELECT ağırlık FROM Evcil_hayvanlar ORDER BY evcil_hayvan_yaşı LIMIT 1
+evcil_hayvanlar_1	En genç köpeğin ağırlığı ne kadardır?	medium	SELECT ağırlık FROM Evcil_hayvanlar ORDER BY evcil_hayvan_yaşı LIMIT 1
+evcil_hayvanlar_1	Her evcil hayvan türünün maksimum ağırlığını bul. Maksimum ağırlık ile evcil hayvan türünü listele.	medium	SELECT max(ağırlık), EvcilHayvanTürü FROM Evcil_hayvanlar GROUP BY EvcilHayvanTürü
+evcil_hayvanlar_1	Her tip evcil hayvan için maksimum ağırlığı ve türü listele.	medium	SELECT max(ağırlık), EvcilHayvanTürü FROM Evcil_hayvanlar GROUP BY EvcilHayvanTürü
+evcil_hayvanlar_1	20 yaşından büyük öğrencilerin sahip olduğu evcil hayvan sayısını bul.	medium	SELECT count(*) FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO WHERE T1.yaş > 20
+evcil_hayvanlar_1	Evcil hayvanlardan kaç tanesi 20 yaşından daha büyük olan öğrenciler tarafından sahiplenmiştir?	medium	SELECT count(*) FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO WHERE T1.Yaş > 20
+evcil_hayvanlar_1	Kız öğrenciler tarafından yetiştirilen köpek sayısını bul (cinsiyet K).	hard	SELECT count(*) FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO WHERE T1.yaş > 20
+evcil_hayvanlar_1	Kız öğrenciler tarafından kaç tane köpek yetiştiriliyor?	hard	SELECT count(*) FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T2.EvcilHayvanNO = T3.EvcilHayvanNO WHERE T1.Cinsiyet = 'K' AND T3.EvcilHayvanTürü = 'köpek'
+evcil_hayvanlar_1	Farklı evcil hayvan türlerinin sayısını bul.	easy	SELECT count(DISTINCT EvcilHayvanTürü) FROM Evcil_hayvanlar
+evcil_hayvanlar_1	Kaç farklı evcil hayvan türü var?	easy	SELECT count(DISTINCT EvcilHayvanTürü) FROM Evcil_hayvanlar
+evcil_hayvanlar_1	Kedi veya köpek sahibi olan öğrencilerin ilk ismini bul.	extra	SELECT DISTINCT T1.Ad FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.EvcilHayvanTürü = 'kedi' OR T3.EvcilHayvanTürü = 'köpek'
+evcil_hayvanlar_1	Evcil hayvan olarak kediye veya köpeğe sahip öğrencilerin ilk isimleri nelerdir?	extra	SELECT DISTINCT T1.Ad FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNo WHERE T3.EvcilHayvanTürü = 'kedi' OR T3.EvcilHayvanTürü = 'köpek'
+evcil_hayvanlar_1	Köpek ve kedisi olan öğrencilerin ismini bul.	extra	SELECT T1.Ad FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.EvcilHayvanTürü = 'kedi' INTERSECT SELECT T1.Ad FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.EvcilHayvanTürü = 'köpek'
+evcil_hayvanlar_1	Hem kedisi hem de köpeği olan öğrencilerin ilk isimleri nelerdir?	extra	SELECT T1.Ad FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.EvcilHayvanTürü = 'kedi' INTERSECT SELECT T1.Ad FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.EvcilHayvanTürü = 'köpek'
+evcil_hayvanlar_1	Evcil kedisi olmayan öğrencilerin anadalı ve yaşı nelerdir?	extra	SELECT Anadal, Yaş FROM öğrenci WHERE ÖğrenciNO NOT IN (SELECT T1.ÖğrenciNO FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.EvcilHayvanNO = 'kedi')
+evcil_hayvanlar_1	Evcil kedisi olmayan öğrenciler hangi bölümde okuyorlar ve kaç yaşındalar?	extra	SELECT Anadal, Yaş FROM öğrenci WHERE ÖğrenciNO NOT IN (SELECT T1.ÖğrenciNO FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.EvcilHayvanNO = 'kedi')
+evcil_hayvanlar_1	Kedisi olmayan öğrencilerin öğrenci numarasını bul.	hard	SELECT ÖğrenciNO FROM öğrenci EXCEPT SELECT T1.ÖğrenciNO FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.EvcilHayvanTürü = 'kedi'
+evcil_hayvanlar_1	Evcil kedisi olmayan öğrencilerin numaraları nelerdir?	hard	SELECT ÖğrenciNO FROM öğrenci EXCEPT SELECT T1.ÖğrenciNO FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNo WHERE T3.EvcilHayvanNO = 'kedi'
+evcil_hayvanlar_1	Köpeği olan ama kedisi olmayan bütün öğrencilerin ilk ismi nedir?	extra	SELECT T1.Ad , T1.yaş FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.EvcilHayvanTürü = 'köpek' AND T1.ÖğrenciNO NOT IN (SELECT T1.ÖğrenciNO FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.EvcilHayvanTürü = 'kedi')
+evcil_hayvanlar_1	Köpeği olan ama kedisi olmayan bütün öğrencilerin ilk ismi nedir?	extra	SELECT T1.Ad , T1.yaş FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.EvcilHayvanTürü = 'köpek' AND T1.ÖğrenciNO NOT IN (SELECT T1.ÖğrenciNO FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.EvcilHayvanTürü = 'kedi')
+evcil_hayvanlar_1	En genç evcil hayvanın türünü ve ağırlığını bul.	medium	SELECT EvcilHayvanTürü, ağırlık FROM Evcil_hayvanlar ORDER BY evcil_hayvan_yaşı LIMIT 1
+evcil_hayvanlar_1	En genç evcil hayvanın türü ve ağırlığı nedir?	medium	SELECT EvcilHayvanTürü, ağırlık FROM Evcil_hayvanlar ORDER BY evcil_hayvan_yaşı LIMIT 2
+evcil_hayvanlar_1	1 yaşından büyük olan bütün evcil hayvanların evcil hayvan numarası ve ağırlığını bul.	medium	SELECT EvcilHayvanNO , ağırlık FROM Evcil_hayvanlar WHERE evcil_hayvan_yaşı > 1
+evcil_hayvanlar_1	1 yaşından büyük bütün evcil hayvanların numarasını ve ağırlığı nelerdir?	medium	SELECT EvcilHayvanNO, ağırlık FROM Evcil_hayvanlar WHERE evcil_hayvan_yaşı > 1
+evcil_hayvanlar_1	Her evcil hayvan türünün ortalama ve maksimum yaşını bul.	medium	SELECT avg(evcil_hayvan_yaşı) , max(evcil_hayvan_yaşı) , EvcilHayvanTürü FROM Evcil_hayvanlar GROUP BY EvcilHayvanTürü
+evcil_hayvanlar_1	Her evcil hayvan türünün ortalama ve maksimum yaşı nedir?	medium	SELECT avg(evcil_hayvan_yaşı) , max(evcil_hayvan_yaşı) , EvcilHayvanTürü FROM Evcil_hayvanlar GROUP BY EvcilHayvanTürü
+evcil_hayvanlar_1	Her evcil hayvan türünün ortalama ağırlığını bul.	medium	SELECT avg(ağırlık), EvcilHayvanTürü FROM Evcil_hayvanlar GROUP BY EvcilHayvanTürü
+evcil_hayvanlar_1	Her tür evcil hayvan için ortalama ağırlık nedir?	medium	SELECT avg(ağırlık), EvcilHayvanTürü FROM Evcil_hayvanlar GROUP BY EvcilHayvanTürü
+evcil_hayvanlar_1	Evcil hayvana sahip öğrencilerin adları ve yaşlarını bul.	medium	SELECT DISTINCT T1.Ad , T1.yaş FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO
+evcil_hayvanlar_1	Evcil hayvana sahip öğrencilerin farklı ilk isimleri ve yaşları nelerdir?	medium	SELECT DISTINCT T1.Ad, T1.Yaş FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNo
+evcil_hayvanlar_1	Soyadı 'Smith' olan öğrencinin sahip olduğu evcil hayvanın evcil hayvan numarasını bul.	medium	SELECT T2.EvcilHayvanNO FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO WHERE T1.Soyad = 'Smith'
+evcil_hayvanlar_1	Soyadı 'Smith' olan öğrencinin sahip olduğu evcil hayvanın evcil hayvan numarası nedir?	medium	SELECT T2.EvcilHayvanNO FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO WHERE T1.Soyad = 'Smith'
+evcil_hayvanlar_1	Herhangi bir evcil hayvana sahip öğrencilerin evcil hayvan sayısını ve öğrenci numarasını bul.	medium	SELECT count(*), T1.ÖğrenciNO FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO GROUP BY T1.ÖğrenciNO
+evcil_hayvanlar_1	Evcil hayvanı olan öğrencilerin kaçar evcil hayvanı var? İsim yerine numaralarını listele.	medium	SELECT count(*), T1.ÖğrenciNO FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO GROUP BY T1.ÖğrenciNO
+evcil_hayvanlar_1	Birden fazla evcil hayvana sahip öğrencinin ilk ismini ve cinsiyetini bul.	medium	SELECT T1.Ad , T1.Cinsiyet FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO GROUP BY T1.ÖğrenciNO HAVING count(*) > 1
+evcil_hayvanlar_1	Birden fazla evcil hayvana sahip öğrencilerin ilk isimleri ve cinsiyetleri nelerdir?	medium	SELECT T1.Ad, T1.Cinsiyet FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO GROUP BY T1.ÖğrenciNO HAVING count(*) > 1
+evcil_hayvanlar_1	Kedisi 3 yaşında olan öğrencinin soyadını bul.	hard	select t1.soyad FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.evcil_hayvan_yaşı = 3 AND T3.EvcilHayvanTürü = 'kedi'
+evcil_hayvanlar_1	Kedisi 3 yaşında olan öğrencinin soyadı nedir?	hard	SELECT T1.Soyad FROM öğrenci AS T1 JOIN Evcil_Hayvana_Sahip AS T2 ON T1.ÖğrenciNO = T2.ÖğrenciNO JOIN Evcil_hayvanlar AS T3 ON T3.EvcilHayvanNO = T2.EvcilHayvanNO WHERE T3.evcil_hayvan_yaşı = 3 AND T3.EvcilHayvanTürü = 'kedi'
+evcil_hayvanlar_1	Evcil hayvana sahip olmayan öğrencilerin ortalama yaşını bul.	extra	select avg(Yaş) FROM öğrenci where ÖğrenciNO not in (select ÖğrenciNO from Evcil_Hayvana_Sahip)
+evcil_hayvanlar_1	Evcil hayvana sahip olmayan öğrencilerin ortalama yaşı kaçtır?	extra	select avg(Yaş) FROM öğrenci where ÖğrenciNO not in (select ÖğrenciNO from Evcil_Hayvana_Sahip)
+araba_1	Kaç tane kıta var?	easy	SELECT count(*) FROM kıtalar;
+araba_1	Kıta sayısı kaçtır?	easy	SELECT count(*) FROM kıtalar
+araba_1	Her kıta kaç ülkeye sahip? Kıta numarası, kıta ismi ve ülke sayısını listele.	medium	SELECT T1.kıta_no , T1.kıta , count(*) FROM kıtalar AS T1 JOIN ülkeler AS T2 ON T1.kıta_no = T2.kıta_no GROUP BY T1.kıta_no;
+araba_1	Her kıta için numarasını, ismini ve kaç tane ülkesi olduğunu listele.	medium	SELECT T1.kıta_no , T1.kıta , count(*) FROM kıtalar AS T1 JOIN ülkeler AS T2 ON T1.kıta_no = T2.kıta_no GROUP BY T1.kıta_no;
+araba_1	Kaç tane ülke listelenmiştir?	easy	SELECT count(*) FROM ülkeler
+araba_1	Kaç tane ülke var?	easy	SELECT count(*) FROM ülkeler
+araba_1	Her araba imalatçısı kaç tane model üretiyor? İmalatçının tam ismini, imalatçı numarasını ve ürettiği model sayısını listele.	medium	SELECT T1.tam_isim , T1.imalatçı_no , count(*) FROM araba_imalatçıları AS T1 JOIN model_listesi AS T2 ON T1.imalatçı_no = T2.imalatçı_no GROUP BY T1.imalatçı_no;
+araba_1	Her araba imalatçısının tam ismi, numarası ve ürettiği model sayısı nedir?	medium	SELECT T1.tam_isim, T1.imalatçı_no, count(*) FROM araba_imalatçıları AS T1 JOIN model_listesi AS T2 ON T1.imalatçı_no = T2.imalatçı_no GROUP BY T1.imalatçı_no
+araba_1	Hangi model araba en az beygir güzüne sahip?	hard	SELECT T1.model_ismi FROM araba_isimleri AS T1 JOIN araba_verileri AS T2 ON T1.model_no = T2.model_no ORDER BY T2.beygir ASC LIMIT 1;
+araba_1	En az beygir gücüne sahip arabanın modeli nedir?	hard	SELECT T1.model_ismi FROM araba_isimleri AS T1 JOIN araba_verileri AS T2 ON T1.model_no = T2.model_no ORDER BY T2.beygir ASC LIMIT 1;
+araba_1	Ortalama ağırlığın altında ağırlığa sahip araba modelini bul.	extra	SELECT T1.model_ismi FROM araba_isimleri AS T1 JOIN araba_verileri AS T2 ON T1.model_no = T2.model_no WHERE T2.ağırlık < (SELECT avg(ağırlık) FROM araba_verileri);
+araba_1	Ortalamadan daha küçük ağırlığa sahip olan arabanın modeli nedir?	extra	SELECT T1.model_ismi FROM araba_isimleri AS T1 JOIN araba_verileri AS T2 ON T1.model_no = T2.model_no WHERE T2.ağırlık < (SELECT avg(ağırlık) FROM araba_verileri);
+araba_1	1970 yılında araba üretmiş araba imalatçılarının ismini bul.	extra	SELECT DISTINCT T1.imalatçı FROM araba_imalatçıları AS T1 JOIN model_listesi AS T2 ON T1.imalatçı_no = T2.imalatçı_no JOIN araba_isimleri AS T3 ON T2.isim = T3.marka JOIN araba_verileri as T4 ON T3.model_no = T4.model_no WHERE T4.yıl = '1970';
+araba_1	1970'de araba üretmiş farklı araba imalatçılarının isimleri nelerdir?	extra	SELECT DISTINCT T1.imalatçı FROM araba_imalatçıları AS T1 JOIN model_listesi AS T2 ON T1.imalatçı_no = T2.imalatçı_no JOIN araba_isimleri AS T3 ON T2.isim = T3.marka JOIN araba_verileri as T4 ON T3.model_no = T4.model_no WHERE T4.yıl = '1970';
+araba_1	En erken yılda üretilen arabaların yapım ve üretim zamanlarını bul?	extra	SELECT T2.model_ismi , T1.yıl FROM araba_verileri AS T1 JOIN araba_isimleri AS T2 ON T1.model_no = T2.model_no WHERE T1.yıl = (SELECT min(yıl) FROM araba_verileri);
+araba_1	En erken yılda araba üreten araba imalatçısının ismi nedir ve hangi yıldaydı?	extra	SELECT T2.model_ismi , T1.yıl FROM araba_verileri AS T1 JOIN araba_isimleri AS T2 ON T1.model_no = T2.model_no WHERE T1.yıl = (SELECT min(yıl) FROM araba_verileri);
+araba_1	1980 sonrasında üretilen farklı araba modelleri nelerdir?	hard	SELECT DISTINCT T1.isim FROM model_listesi AS T1 JOIN araba_isimleri AS T2 ON T1.isim = T2.marka JOIN araba_verileri AS T3 ON T2.model_no = T3.model_no WHERE T3.yıl > 1980;
+araba_1	1980 sonrasında üretilen arabaların farklı modelleri nelerdir?	hard	SELECT DISTINCT T1.isim FROM model_listesi AS T1 JOIN araba_isimleri AS T2 ON T1.isim = T2.marka JOIN araba_verileri AS T3 ON T2.model_no = T3.model_no WHERE T3.yıl > 1980;
+araba_1	Her kıtada kaç araba imalatçısı var? Kıta ismi ve sayıyı listele.	hard	SELECT T1.kıta , count(*) FROM kıtalar AS T1 JOIN ülkeler AS T2 ON T1.kıta_no = T2.kıta_no JOIN araba_imalatçıları AS T3 ON T2.ülke_no = T3.ülke GROUP BY T1.kıta;
+araba_1	Her kıtanın ismi nedir ve her kıtada kaç tane araba imalatçısı vardır?	hard	SELECT T1.kıta , count(*) FROM kıtalar AS T1 JOIN ülkeler AS T2 ON T1.kıta_no = T2.kıta_no JOIN araba_imalatçıları AS T3 ON T2.ülke_no = T3.ülke GROUP BY T1.kıta;
+araba_1	Hangi ülkeler en çok araba imalatçısına sahip? Ülke ismini listele.	extra	SELECT T2.isim FROM araba_imalatçıları AS T1 JOIN ülkeler AS T2 ON T1.ülke = T2.ülke_no GROUP BY T1.ülke ORDER BY Count(*) DESC LIMIT 1;
+araba_1	En çok araba imalatçısının olduğu ülkenin ismi nedir?	extra	SELECT T2.isim FROM araba_imalatçıları AS T1 JOIN ülkeler AS T2 ON T1.ülke = T2.ülke_no GROUP BY T1.ülke ORDER BY Count(*) DESC LIMIT 1;
+araba_1	Her bir imalatçı kaç tane araba modeli üretmektedir? Sadece sayısını ve imalatçının tam ismini listeleyin.	medium	select count(*) , t2.tam_isim from model_listesi as t1 join araba_imalatçıları as t2 on t1.imalatçı_no = t2.imalatçı_no group by t2.imalatçı_no;
+araba_1	Her imalatçı tarafından üretilen araba modeli sayısı ve her bir imalatçının kimliği ve ismi nedir?	medium	select count(*) , t2.tam_isim from model_listesi as t1 join araba_imalatçıları as t2 on t1.imalatçı_no = t2.imalatçı_no group by t2.imalatçı_no;
+araba_1	AMC Hornet Sportabout modelinin ivmesi nedir?	medium	SELECT T1.ivme FROM araba_verileri AS T1 JOIN araba_isimleri AS T2 ON T1.model_no = T2.model_no WHERE T2.model_ismi = 'amc hornet sportabout (sw)';
+araba_1	AMC Hornet Sportabout'un ne kadar ivmeleniyor?	medium	SELECT T1.ivme FROM araba_verileri AS T1 JOIN araba_isimleri AS T2 ON T1.model_no = T2.model_no WHERE T2.model_ismi = 'amc hornet sportabout (sw)';
+araba_1	Fransa'da kaç araba imalatçısı vardır?	medium	SELECT count(*) FROM araba_imalatçıları AS T1 JOIN ülkeler AS T2 ON T1.ülke = T2.ülke_no WHERE T2.isim = 'Fransa';
+araba_1	Fransa'daki araba imalatçılarının sayısı nedir?	medium	SELECT count(*) FROM araba_imalatçıları AS T1 JOIN ülkeler AS T2 ON T1.ülke = T2.ülke_no WHERE T2.isim = 'Fransa';
+araba_1	ABD'de kaç tane araba modeli üretilmektedir?	hard	SELECT count(*) FROM model_listesi AS T1 JOIN araba_imalatçıları AS T2 ON T1.imalatçı_no = T2.imalatçı_no JOIN ülkeler AS T3 ON T2.ülke = T3.ülke_no WHERE T3.isim = 'ABD';
+araba_1	ABD'de üretilen araba modellerinin sayısı kaçtır?	hard	SELECT count(*) FROM model_listesi AS T1 JOIN araba_imalatçıları AS T2 ON T1.imalatçı_no = T2.imalatçı_no JOIN ülkeler AS T3 ON T2.ülke = T3.ülke_no WHERE T3.isim = 'ABD';
+araba_1	4 silindirli araçların ortalama galon başı mili nedir?	easy	SELECT avg(galon_başına_mil) FROM araba_verileri WHERE silindir_sayısı = 4;
+araba_1	Dört silindirli arabaların ortalama galon başına mili nedir?	easy	SELECT avg(galon_başına_mil) FROM araba_verileri WHERE silindir_sayısı = 4;
+araba_1	1974'te üretilmiş ve 8 silindirli en küçük arabanın ağırlığı nedir?	medium	select min(ağırlık) from araba_verileri where silindir_sayısı = 8 and yıl = 1974
+araba_1	1974'te üretilmiş ve 8 silindirli olan arabaların minimum ağırlığı nedir?	medium	select min(ağırlık) from araba_verileri where silindir_sayısı = 8 and yıl = 1974
+araba_1	Bütün imalatçılar ve modeller nelerdir?	medium	SELECT imalatçı_no, isim FROM model_listesi;
+araba_1	İmalatçılar ve modeller nelerdir?	medium	SELECT imalatçı_no, isim FROM model_listesi;
+araba_1	En az bir araba imalatçısı olan ülkeler hangileridir? İsmini ve ülke numarasını listele.	medium	SELECT T1.isim , T1.ülke_no FROM ülkeler AS T1 JOIN araba_imalatçıları AS T2 ON T1.ülke_no = T2.ülke GROUP BY T1.ülke_no HAVING count(*) >= 1;
+araba_1	En az bir tane araba imalatçısına sahip ülkelerin isimleri ve numaraları nelerdir?	medium	SELECT T1.isim , T1.ülke_no FROM ülkeler AS T1 JOIN araba_imalatçıları AS T2 ON T1.ülke_no = T2.ülke GROUP BY T1.ülke_no HAVING count(*) >= 1;
+araba_1	Beygir gücü 150'den fazla olan arabaların sayısı kaçtır?	easy	SELECT count(*) FROM araba_verileri WHERE beygir > 150;
+araba_1	Beygir gücü 150'den büyük olan arabaların sayısı nedir?	easy	SELECT count(*) FROM araba_verileri WHERE beygir > 150;
+araba_1	Her yıl arabaların ortalama ağırlıkları nelerdir?	medium	SELECT avg(ağırlık) FROM araba_verileri WHERE beygir > 150;
+araba_1	Her yıl için arabaların ortalama ağırlık ve yılı nedir?	medium	SELECT avg(ağırlık) FROM araba_verileri WHERE beygir > 150;
+araba_1	En az 3 araba imalatçısı olan Avrupa'daki ülkeler nelerdir?	extra	SELECT T1.isim FROM ülkeler AS T1 JOIN kıtalar AS T2 ON T1.kıta_no = T2.kıta_no JOIN araba_imalatçıları AS T3 ON T1.ülke_no = T3.ülke WHERE T2.kıta = 'Avrupa' GROUP BY T1.isim HAVING count(*) >= 3;
+araba_1	En az 3 tane imalatçıya sahip Avrupa ülkelerinin isimleri nelerdir?	extra	SELECT T1.isim FROM ülkeler AS T1 JOIN kıtalar AS T2 ON T1.kıta_no = T2.kıta_no JOIN araba_imalatçıları AS T3 ON T1.ülke_no = T3.ülke WHERE T2.kıta = 'Avrupa' GROUP BY T1.isim HAVING count(*) >= 3;
+araba_1	3 silindirli araba modellerinin maksimum beygir gücü ve modeli nedir?	extra	SELECT T2.beygir , T1.model_ismi FROM araba_isimleri AS T1 JOIN araba_verileri AS T2 ON T1.model_no = T2.model_no WHERE T2.silindir_sayısı = 3 ORDER BY T2.beygir DESC LIMIT 1;
+araba_1	3 silindirli modeller için en büyük beygir gücü miktarı nedir ve hangi modeldir?	extra	SELECT T2.beygir , T1.model_ismi FROM araba_isimleri AS T1 JOIN araba_verileri AS T2 ON T1.model_no = T2.model_no WHERE T2.silindir_sayısı = 3 ORDER BY T2.beygir DESC LIMIT 1;
+araba_1	Hangi model benzinden en fazla tasarruf eder? Başka bir deyişle, maksimum galon başına mile sahiptir.	hard	SELECT T1.marka FROM araba_isimleri AS T1 JOIN araba_verileri AS T2 ON T1.model_no = T2.model_no ORDER BY T2.galon_başına_mil DESC LIMIT 1;
+araba_1	Hangi araba modeli en yüksek galon başına mile sahiptir?	hard	SELECT T1.marka FROM araba_isimleri AS T1 JOIN araba_verileri AS T2 ON T1.model_no = T2.model_no ORDER BY T2.galon_başına_mil DESC LIMIT 1;
+araba_1	1980 öncesindeki arabaların ortalama beygir gücü nedir?	easy	select avg(beygir) from araba_verileri where yıl < 1980;
+araba_1	1980 öncesinde üretilmiş bütün arabaların ortalama beygiri nedir?	easy	select avg(beygir) from araba_verileri where yıl < 1980;
+araba_1	Volvo model arabalar için ortalama motor hacmi nedir?	medium	SELECT avg(T2.motor_hacmi_inçküp) FROM araba_isimleri AS T1 JOIN araba_verileri AS T2 ON T1.model_no = T2.model_no WHERE T1.marka = 'volvo';
+araba_1	Bütün Volvo'lar için inç küp cinsinden motor hacim ortalaması nedir?	medium	SELECT avg(T2.motor_hacmi_inçküp) FROM araba_isimleri AS T1 JOIN araba_verileri AS T2 ON T1.model_no = T2.model_no WHERE T1.marka = 'volvo';
+araba_1	Farklı silindir sayıları için maksimum ivmeleri nelerdir?	medium	SELECT max(ivme), silindir_sayısı FROM araba_verileri GROUP BY silindir_sayısı;
+araba_1	Farklı silindirler için en yüksek ivme nedir?	medium	SELECT max(ivme), silindir_sayısı FROM araba_verileri GROUP BY silindir_sayısı;
+araba_1	Hangi marka en çok araba versiyonuna(modeline) sahiptir?	hard	SELECT marka FROM araba_isimleri GROUP BY marka ORDER BY count(*) DESC LIMIT 1; 
+araba_1	En çok farklı versiyonlara sahip marka hangisidir?	hard	SELECT marka FROM araba_isimleri GROUP BY marka ORDER BY count(*) DESC LIMIT 1; 
+araba_1	Kaç arabanın 4'ten fazla silindiri var?	easy	SELECT count(*) FROM araba_verileri WHERE silindir_sayısı > 4;
+araba_1	4'ten fazla silindire sahip arabaların sayısı nedir?	easy	SELECT count(*) FROM araba_verileri WHERE silindir_sayısı > 4;
+araba_1	1980'de kaç tane araba üretilmiştir?	easy	SELECT count(*) FROM araba_verileri WHERE yıl = 1980;
+araba_1	1980'de kaç araba üretilmiştir?	easy	SELECT count(*) FROM araba_verileri WHERE yıl = 1980;
+araba_1	Tam ismi American Motor Company olan imalatçı tarafından kaç tane araba modeli üretildi?	medium	SELECT count(*) FROM araba_imalatçıları AS T1 JOIN model_listesi AS T2 ON T1.imalatçı_no = T2.imalatçı_no WHERE T1.tam_isim = 'American Motor Company';
+araba_1	American Motor Company tarafından üretilen araba modeli sayısı nedir?	medium	SELECT count(*) FROM araba_imalatçıları AS T1 JOIN model_listesi AS T2 ON T1.imalatçı_no = T2.imalatçı_no WHERE T1.tam_isim = 'American Motor Company';
+araba_1	Hangi imalatçılar 3'ten fazla araba modeli tasarlamıştır? İsim ve numaralarını listele.	medium	SELECT T1.tam_isim , T1.imalatçı_no FROM araba_imalatçıları AS T1 JOIN model_listesi AS T2 ON T1.imalatçı_no = T2.imalatçı_no GROUP BY T1.imalatçı_no HAVING count(*) > 3;
+araba_1	3'ten fazla modeli olan bütün imalatçıların ismi ve imalatçı numarası nedir?	medium	SELECT T1.tam_isim , T1.imalatçı_no FROM araba_imalatçıları AS T1 JOIN model_listesi AS T2 ON T1.imalatçı_no = T2.imalatçı_no GROUP BY T1.imalatçı_no HAVING count(*) > 3;
+araba_1	General Motors tarafından üretilen veya ağırlığı 3500'den fazla olan farklı modeller hangileridir?	extra	SELECT DISTINCT T2.isim FROM araba_isimleri AS T1 JOIN model_listesi AS T2 ON T1.marka = T2.isim JOIN araba_imalatçıları AS T3 ON T2.imalatçı_no = T3.imalatçı_no JOIN araba_verileri AS T4 ON T1.model_no = T4.model_no WHERE T3.tam_isim = 'General Motors' OR T4.ağırlık > 3500;
+araba_1	General Motors tarafından üretilen veya ağırlığı 3500'den fazla olan farklı modeller nelerdir?	extra	SELECT DISTINCT T2.isim FROM araba_isimleri AS T1 JOIN model_listesi AS T2 ON T1.marka = T2.isim JOIN araba_imalatçıları AS T3 ON T2.imalatçı_no = T3.imalatçı_no JOIN araba_verileri AS T4 ON T1.model_no = T4.model_no WHERE T3.tam_isim = 'General Motors' OR T4.ağırlık > 3500;
+araba_1	Ağırlığı 3000'den az ve 4000'den fazla olmayan arabalar hangi yıllarda üretildi?	easy	select distinct yıl from araba_verileri where ağırlık between 3000 and 4000;
+araba_1	Ağırlığı 3000'den fazla ve 4000'den az olan araba üretildiği farklı yıllar nelerdir?	easy	select distinct yıl from araba_verileri where ağırlık between 3000 and 4000;
+araba_1	En yüksek ivmeye sahip olan arabanın beygir gücü nedir?	medium	SELECT T1.beygir FROM araba_verileri AS T1 ORDER BY T1.ivme DESC LIMIT 1;
+araba_1	En yüksek ivmesi olan arabanın beygir gücü nedir?	medium	SELECT T1.beygir FROM araba_verileri AS T1 ORDER BY T1.ivme DESC LIMIT 1;
+araba_1	Volvo modeli için, en az ivmeye sahip arabanın kaç tane silindiri vardır?	extra	SELECT T1.silindir_sayısı FROM araba_verileri AS T1 JOIN araba_isimleri AS T2 ON T1.model_no = T2.model_no WHERE T2.marka = 'volvo' ORDER BY T1.ivme ASC LIMIT 1;
+araba_1	Bir volvo modeli için, en az ivmeli modelin kaç silindiri vardır?	extra	SELECT T1.silindir_sayısı FROM araba_verileri AS T1 JOIN araba_isimleri AS T2 ON T1.model_no = T2.model_no WHERE T2.marka = 'volvo' ORDER BY T1.ivme ASC LIMIT 1;
+araba_1	Beygir gücü en fazla olan arabadan daha fazla ivmeye sahip kaç araba vardır?	hard	SELECT COUNT(*) FROM araba_verileri WHERE ivme > ( SELECT ivme FROM araba_verileri ORDER BY beygir DESC LIMIT 1 );
+araba_1	En fazla beygire sahip arabadan daha fazla ivmeye sahip arabaların sayısı nedir?	hard	SELECT COUNT(*) FROM araba_verileri WHERE ivme > ( SELECT ivme FROM araba_verileri ORDER BY beygir DESC LIMIT 1 );
+araba_1	Kaç ülkenin 2'den fazla araba imalatçısı var?	medium	select count(*) from ülkeler as t1 join araba_imalatçıları as t2 on t1.ülke_no = t2.ülke group by t1.ülke_no having count(*) > 2
+araba_1	2 taneden fazla araba imalatçısına sahip ülkelerin sayısı nedir?	medium	select count(*) from ülkeler as t1 join araba_imalatçıları as t2 on t1.ülke_no = t2.ülke group by t1.ülke_no having count(*) > 2
+araba_1	Kaç tane arabanın silindir sayısı 6'dan fazladır?	easy	SELECT COUNT(*) FROM araba_verileri WHERE silindir_sayısı > 6;
+araba_1	6'dan fazla silindiri olan araba sayısı kaçtır?	easy	SELECT COUNT(*) FROM araba_verileri WHERE silindir_sayısı > 6;
+araba_1	4 silindirli arabalar arasında hangi markanın beygir gücü en fazladır?	extra	SELECT T1.marka FROM araba_isimleri AS T1 JOIN araba_verileri AS T2 ON T1.model_no = T2.model_no WHERE T2.silindir_sayısı = 4 ORDER BY T2.beygir DESC LIMIT 1;
+araba_1	Bütün 4 silindirli araçlar arasında en fazla beygire sahip model nedir?	extra	SELECT T1.marka FROM araba_isimleri AS T1 JOIN araba_verileri AS T2 ON T1.model_no = T2.model_no WHERE T2.silindir_sayısı = 4 ORDER BY T2.beygir DESC LIMIT 1;
+araba_1	En az beygir gücüne sahip olan araçlardan hangilerinin 3'ten fazla silindiri yoktur? Model numaralarını ve isimlerini listele.	extra	select t2.model_no , t2.model_ismi from araba_verileri as t1 join araba_isimleri as t2 on t1.model_no = t2.model_no where t1.beygir > (select min(beygir) from araba_verileri) and t1.silindir_sayısı <= 3;
+araba_1	Minimum beygir gücüne sahip olmayan arabaların arasından 4 silindirden az olanların model numaraları ve isimleri nelerdir?	extra	select t2.model_no , t2.model_ismi from araba_verileri as t1 join araba_isimleri as t2 on t1.model_no = t2.model_no where t1.beygir > (select min(beygir) from araba_verileri) and t1.silindir_sayısı < 4;
+araba_1	1980'den önce üretilen veya 8 silindire sahip araçların maksimum galon başına mili nedir?	medium	select max(galon_başına_mil) from araba_verileri where silindir_sayısı = 8 or yıl < 1980 or galon_başına_mil = NULL;
+araba_1	1980'den önce üretilen veya 8 silindiri olan arabaların maksimum galon başına mili nedir?	medium	select max(galon_başına_mil) from araba_verileri where silindir_sayısı = 8 or yıl < 1980;
+araba_1	3500'den hafif olan ama Ford Motor Company tarafından üretilmemiş modeller hangileridir?	extra	SELECT DISTINCT T1.isim FROM model_listesi AS T1 JOIN araba_isimleri AS T2 ON T1.isim = T2.marka JOIN araba_verileri AS T3 ON T2.model_no = T3.model_no JOIN araba_imalatçıları AS T4 ON T1.imalatçı_no = T4.imalatçı_no WHERE T3.ağırlık < 3500 AND T4.tam_isim != 'Ford Motor Company';
+araba_1	Ford Motor Company tarafından üretilmeyip 3500'den hafif olan farklı araba modelleri hangileridir?	extra	SELECT DISTINCT T1.isim FROM model_listesi AS T1 JOIN araba_isimleri AS T2 ON T1.isim = T2.marka JOIN araba_verileri AS T3 ON T2.model_no = T3.model_no JOIN araba_imalatçıları AS T4 ON T1.imalatçı_no = T4.imalatçı_no WHERE T3.ağırlık < 3500 AND T4.tam_isim != 'Ford Motor Company';
+araba_1	Hiçbir araba imalatçısı olmayan ülkelerin isimleri nelerdir?	hard	SELECT isim FROM ülkeler EXCEPT SELECT T1.isim FROM ülkeler AS T1 JOIN araba_imalatçıları AS T2 ON T1.ülke_no = T2.ülke;
+araba_1	Araba imalatçısı olmayan ülkelerin isimleri nelerdir?	hard	SELECT isim FROM ülkeler EXCEPT SELECT T1.isim FROM ülkeler AS T1 JOIN araba_imalatçıları AS T2 ON T1.ülke_no = T2.ülke;
+araba_1	3 arabadan fazla ve en az 2 model üreten araba imalatçıları hangileridir? Numaralarını ve imalatçıları listeleyin.	extra	select t1.imalatçı_no, t1.imalatçı from araba_imalatçıları as t1 join model_listesi as t2 on t1.imalatçı_no = t2.imalatçı_no group by t1.imalatçı_no having count(*) >= 2 intersect select t1.imalatçı_no, t1.imalatçı from araba_imalatçıları as t1 join model_listesi as t2 on t1.imalatçı_no = t2.imalatçı_no join araba_isimleri as t3 on t2.model_no = t3.model_no group by t1.imalatçı_no having count(*) > 3;
+araba_1	En az 2 model ve 3'ten fazla araba üreten araba imalatçılarının numaraları ve imalatçıları nedir?	extra	select t1.imalatçı_no, t1.imalatçı from araba_imalatçıları as t1 join model_listesi as t2 on t1.imalatçı_no = t2.imalatçı_no group by t1.imalatçı_no having count(*) >= 2 intersect select t1.imalatçı_no, t1.imalatçı from araba_imalatçıları as t1 join model_listesi as t2 on t1.imalatçı_no = t2.imalatçı_no join araba_isimleri as t3 on t2.model_no = t3.model_no group by t1.imalatçı_no having count(*) > 3;
+araba_1	3 taneden fazla araba imalatçısı olan veya 'fiat' modeli üreten ülkelerin numaraları ve isimleri nelerdir?	extra	select t1.ülke_no, t1.isim from ülkeler as t1 join araba_imalatçıları as t2 on t1.ülke_no = t2.ülke group by t1.ülke_no having count(*) > 3 union select t1.ülke_no, t1.isim from ülkeler as t1 join araba_imalatçıları as t2 on t1.ülke_no = t2.ülke join model_listesi as t3 on t2.imalatçı_no = t3.imalatçı_no where t3.isim = 'fiat';
+araba_1	Fiat modeli üreten veya 3 tane araba imalatçısı bulunduran bütün ülkelerin numaraları ve isimleri nelerdir?	extra	select t1.ülke_no, t1.isim from ülkeler as t1 join araba_imalatçıları as t2 on t1.ülke_no = t2.ülke group by t1.ülke_no having count(*) > 3 union select t1.ülke_no, t1.isim from ülkeler as t1 join araba_imalatçıları as t2 on t1.ülke_no = t2.ülke join model_listesi as t3 on t2.imalatçı_no = t3.imalatçı_no where t3.isim = 'fiat';
+uçuş_2	JetBlue Airways hangi ülkeye bağlıdır?	easy	"SELECT ülke FROM hava_yolları WHERE isim = ""JetBlue Airways"""
+uçuş_2	Jetblue Airways hangi ülkeye bağlıdır?	easy	"SELECT ülke FROM hava_yolları WHERE isim = ""JetBlue Airways"""
+uçuş_2	"""JetBlue Airways"" hava yolunun kısaltması nedir?"	easy	"SELECT kısaltma FROM  hava_yolları WHERE isim = ""JetBlue Airways"""
+uçuş_2	Hangi kısaltma JetBlue Airways'e tekabül etmektedir?	easy	"SELECT kısaltma FROM  hava_yolları WHERE isim = ""JetBlue Airways"""
+uçuş_2	"""ABD"" içindeki bütün hava yolları ve kısaltmalarını listeleyin."	medium	"SELECT isim , kısaltma FROM hava_yolları WHERE ülke = ""ABD"""
+uçuş_2	ABD'deki hava yollarının isimleri ve kısaltmaları nedir?	medium	"SELECT isim , kısaltma FROM hava_yolları WHERE ülke = ""ABD"""
+uçuş_2	Anthony şehrindeki havalimanı kodu ve ismini listele.	medium	"SELECT havaalanı_kodu , havaalanı_isim FROM havaalanları WHERE şehir = ""Anthony """
+uçuş_2	Anthony şehrine karşılık gelen havaalanı kodu ve ismini ver.	medium	"SELECT havaalanı_kodu , havaalanı_isim FROM havaalanları WHERE şehir = ""Anthony """
+uçuş_2	Kaç tane hava yolları vardır?	easy	SELECT count(*) FROM hava_yolları
+uçuş_2	Toplam havayolu sayısı kaçtır?	easy	SELECT count(*) FROM hava_yolları
+uçuş_2	Kaç tane havaalanımız var?	easy	SELECT count(*) FROM havaalanları
+uçuş_2	Havaalanı sayısını döndür.	easy	SELECT count(*) FROM havaalanları
+uçuş_2	Kaç uçuş var?	easy	SELECT count(*) FROM uçuşlar
+uçuş_2	Uçuş sayısını döndür.	easy	SELECT count(*) FROM uçuşlar
+uçuş_2	Hangi hava yolunun kısaltması 'UAL' idir?	easy	"SELECT isim FROM hava_yolları WHERE kısaltma = ""UAL"""
+uçuş_2	Kısaltması 'UAL' olan hava yolunu göster.	easy	"SELECT isim FROM hava_yolları WHERE kısaltma = ""UAL"""
+uçuş_2	ABD'de kaç tane hava yolu var?	easy	"SELECT count(*) FROM hava_yolları WHERE ülke = ""ABD"""
+uçuş_2	ABD'deki hava yolu sayısını göster.	easy	"SELECT count(*) FROM hava_yolları WHERE ülke = ""ABD"""
+uçuş_2	Alton havaalanı hangi şehir ve ülkededir?	medium	"SELECT şehir , ülke FROM havaalanları WHERE havaalanı_isim = ""Alton """
+uçuş_2	Alton havaalanı için olan şehir ve ülkeyi ver.	medium	"SELECT şehir , ülke FROM havaalanları WHERE havaalanı_isim = ""Alton"""
+uçuş_2	AKO' kısaltmasına sahip havaalanının ismi nedir?	easy	"SELECT havaalanı_isim FROM havaalanları WHERE havaalanı_kodu = ""AKO"""
+uçuş_2	AKO' kodlu havalimanının ismini göster.	easy	"SELECT havaalanı_isim FROM havaalanları WHERE havaalanı_kodu = ""AKO"""
+uçuş_2	Aberdeen' şehrindeki havaalanı isimleri nelerdir?	easy	"SELECT havaalanı_isim FROM havaalanları WHERE şehir = ""Aberdeen """
+uçuş_2	Aberdeen'deki havaalanlarının isimleri nelerdir?	easy	"SELECT havaalanı_isim FROM havaalanları WHERE şehir = ""Aberdeen """
+uçuş_2	APG'den kalkan uçuş sayısı kaçtır?	easy	"SELECT count(*) FROM uçuşlar WHERE kalkış_limanı = ""APG"""
+uçuş_2	APG'den kalkan uçuşların say.	easy	"SELECT count(*) FROM uçuşlar WHERE kalkış_limanı = ""APG"""
+uçuş_2	Kaç uçuşun varışı ATO'dur?	easy	"SELECT count(*) FROM uçuşlar WHERE varış_limanı = ""ATO"""
+uçuş_2	ATO'ya giden uçuşların sayısını göster.	easy	"SELECT count(*) FROM uçuşlar WHERE varış_limanı = ""ATO"""
+uçuş_2	Aberdeen şehrinden kalkan kaç tane uçuş var?	medium	"SELECT count(*) FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.kalkış_limanı = T2.havaalanı_kodu WHERE T2.şehir = ""Aberdeen"""
+uçuş_2	Aberdeen'den kalkan uçuş sayısını döndür.	medium	"SELECT count(*) FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.kalkış_limanı = T2.havaalanı_kodu WHERE T2.şehir = ""Aberdeen"""
+uçuş_2	Kaç uçuş Aberdeen'e varıyor?	medium	"SELECT count(*) FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.kalkış_limanı = T2.havaalanı_kodu WHERE T2.şehir = ""Aberdeen"""
+uçuş_2	Aberdeen'e varan uçuş sayısını döndür.	medium	"SELECT count(*) FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.varış_limanı = T2.havaalanı_kodu WHERE T2.şehir = ""Aberdeen"""
+uçuş_2	Aberdeen'den kalkıp Ashley'e varan kaç tane uçuş vardır?	hard	"SELECT count(*) FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.varış_limanı = T2.havaalanı_kodu JOIN havaalanları AS T3 ON T1.kalkış_limanı = T3.havaalanı_kodu WHERE T2.şehir = ""Ashley"" AND T3.şehir = ""Aberdeen"""
+uçuş_2	Aberdeen'den Ashley'e giden kaç uçuş vardır?	hard	"SELECT count(*) FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.varış_limanı = T2.havaalanı_kodu JOIN havaalanları AS T3 ON T1.kalkış_limanı = T3.havaalanı_kodu WHERE T2.şehir = ""Ashley"" AND T3.şehir = ""Aberdeen"""
+uçuş_2	JetBlue Airways' havaalanının kaç tane uçuşu var?	medium	"SELECT count(*) FROM uçuşlar AS T1 JOIN hava_yolları AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.isim = ""JetBlue Airways"""
+uçuş_2	JetBlue Airways uçuşlarının sayısını ver.	medium	"SELECT count(*) FROM uçuşlar AS T1 JOIN hava_yolları AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.isim = ""JetBlue Airways"""
+uçuş_2	Kaç tane 'United Airlines' uçuşu 'ASY' havalimanına gider?	medium	"SELECT count(*) FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T2.hava_yolu_no = T1.hava_yolu_no WHERE T1.isim = ""United Airlines"" AND T2.varış_limanı = ""ASY"""
+uçuş_2	ASY havaalanına varan United Airlines uçuşlarını say.	medium	"SELECT count(*) FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T2.hava_yolu_no = T1.hava_yolu_no WHERE T1.isim = ""United Airlines"" AND T2.varış_limanı = ""ASY"""
+uçuş_2	Kaç tane United Airlines uçuşları AHD havaalanından kalkmaktadır?	medium	"SELECT count(*) FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T2.hava_yolu_no = T1.hava_yolu_no WHERE T1.isim = ""United Airlines"" AND T2.kalkış_limanı = ""AHD"""
+uçuş_2	AHD havalimanından kalkan United Airlines uçuş sayısını göster.	medium	"SELECT count(*) FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T2.hava_yolu_no = T1.hava_yolu_no WHERE T1.isim = ""United Airlines"" AND T2.kalkış_limanı = ""AHD"""
+uçuş_2	Kaç tane United Airlines uçuşu 'Aberdeen' şehrine gidiyor?	hard	"SELECT count(*) FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.varış_limanı = T2.havaalanı_kodu JOIN hava_yolları AS T3 ON T3.hava_yolu_no = T1.hava_yolu_no WHERE T2.şehir = ""Aberdeen"" AND T3.isim = ""United Airlines"""
+uçuş_2	Aberdeen'e varan United Airlines uçuşları sayısını say.	hard	"SELECT count(*) FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.varış_limanı = T2.havaalanı_kodu JOIN hava_yolları AS T3 ON T3.hava_yolu_no = T1.hava_yolu_no WHERE T2.şehir = ""Aberdeen"" AND T3.isim = ""United Airlines"""
+uçuş_2	Hangi şehir en çok gelen uçuş sayısına sahiptir?	extra	SELECT T1.şehir FROM havaalanları AS T1 JOIN uçuşlar AS T2 ON T1.havaalanı_kodu = T2.varış_limanı GROUP BY T1.şehir ORDER BY count(*) DESC LIMIT 1
+uçuş_2	Hangi şehir en sık gidilen havaalanına sahiptir?	extra	SELECT T1.şehir FROM havaalanları AS T1 JOIN uçuşlar AS T2 ON T1.havaalanı_kodu = T2.varış_limanı GROUP BY T1.şehir ORDER BY count(*) DESC LIMIT 1
+uçuş_2	En fazla ayrılan uçuşa sahip şehir hangisidir?	extra	SELECT T1.şehir FROM havaalanları AS T1 JOIN uçuşlar AS T2 ON T1.havaalanı_kodu = T2.kalkış_limanı GROUP BY T1.şehir ORDER BY count(*) DESC LIMIT 1
+uçuş_2	Hangi şehir en sık kullanılan kalkış limanıdır?	extra	SELECT T1.şehir FROM havaalanları AS T1 JOIN uçuşlar AS T2 ON T1.havaalanı_kodu = T2.kalkış_limanı GROUP BY T1.şehir ORDER BY count(*) DESC LIMIT 1
+uçuş_2	En fazla uçuşa sahip havaalanının kodu nedir?	extra	SELECT T1.havaalanı_kodu FROM havaalanları AS T1 JOIN uçuşlar AS T2 ON T1.havaalanı_kodu = T2.varış_limanı OR T1.havaalanı_kodu = T2.kalkış_limanı GROUP BY T1.havaalanı_kodu ORDER BY count(*) DESC LIMIT 1
+uçuş_2	En fazla uçuşa sahip havaalanının kodu nedir?	extra	SELECT T1.havaalanı_kodu FROM havaalanları AS T1 JOIN uçuşlar AS T2 ON T1.havaalanı_kodu = T2.varış_limanı OR T1.havaalanı_kodu = T2.kalkış_limanı GROUP BY T1.havaalanı_kodu ORDER BY count(*) DESC LIMIT 1
+uçuş_2	En az uçuşa sahip olan havalimanının kodu nedir?	extra	SELECT T1.havaalanı_kodu FROM havaalanları AS T1 JOIN uçuşlar AS T2 ON T1.havaalanı_kodu = T2.varış_limanı OR T1.havaalanı_kodu = T2.kalkış_limanı GROUP BY T1.havaalanı_kodu ORDER BY count(*) LIMIT 1
+uçuş_2	En az uçuş yapılan havaalanının kodunu ver.	extra	SELECT T1.havaalanı_kodu FROM havaalanları AS T1 JOIN uçuşlar AS T2 ON T1.havaalanı_kodu = T2.varış_limanı OR T1.havaalanı_kodu = T2.kalkış_limanı GROUP BY T1.havaalanı_kodu ORDER BY count(*) LIMIT 1
+uçuş_2	En fazla uçuşa sahip hava yolu hangisidir?	extra	SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no GROUP BY T1.isim ORDER BY count(*) DESC LIMIT 1
+uçuş_2	Hangi hava yolu en çok uçuşu yapar?	extra	SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no GROUP BY T1.isim ORDER BY count(*) DESC LIMIT 1
+uçuş_2	En az uçuşa sahip hava yolunun kısaltmasını ve ülkesini bul?	extra	SELECT T1.kısaltma , T1.ülke FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no GROUP BY T1.isim ORDER BY count(*) LIMIT 1
+uçuş_2	En az uçuşa sahip hava yolunun kısaltması nedir ve hangi ülkededir?	extra	SELECT T1.kısaltma , T1.ülke FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no GROUP BY T1.isim ORDER BY count(*) LIMIT 1
+uçuş_2	AHD' havalimanından kalkan uçuşa sahip olan hava yolları nelerdir?	medium	"SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.kalkış_limanı = ""AHD"""
+uçuş_2	Hangi hava yolları AHD havaalanından kalkan uçuşa sahiptir?	medium	"SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.kalkış_limanı = ""AHD"""
+uçuş_2	AHD havaalanına varan uçuşların hava yolları nelerdir?	medium	"SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.varış_limanı = ""AHD"""
+uçuş_2	AHD varış havalimanına sahip hava yolları nelerdir?	medium	"SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.varış_limanı = ""AHD"""
+uçuş_2	Hem 'APG' hem de 'CVO' havaalanlarından uçuşa sahip bütün hava yollarını bul.	extra	"SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.kalkış_limanı = ""APG"" INTERSECT SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.kalkış_limanı = ""CVO"""
+uçuş_2	APG ve CVO havaalanlarından kalkan uçuşların hava yolları hangileridir?	extra	"SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.kalkış_limanı = ""APG"" INTERSECT SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.kalkış_limanı = ""CVO"""
+uçuş_2	CVO' havalimanından uçuşu olan fakat 'APG' havalimanından olmayan tüm hava yollarını bul.	extra	"SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.kalkış_limanı =  ""CVO"" EXCEPT SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.kalkış_limanı = ""APG"""
+uçuş_2	Hangi hava yollarının CVO'dan kalkışı var ama APG havaalanından yok?	extra	"SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.kalkış_limanı = ""CVO"" EXCEPT SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no WHERE T2.kalkış_limanı = ""APG"""
+uçuş_2	En az 10 uçuşa sahip bütün hava yollarını bulun.	medium	SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no GROUP BY T1.isim HAVING count(*) > 10
+uçuş_2	Hangi hava yolları en az 10 uçuşa sahiptir?	medium	SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no GROUP BY T1.isim HAVING count(*) > 10
+uçuş_2	200'den az uçuşu olan tüm hava yollarını bul.	medium	SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no GROUP BY T1.isim HAVING count(*) < 200
+uçuş_2	200'den az uçuşa sahip hava yolları hangileridir?	medium	SELECT T1.isim FROM hava_yolları AS T1 JOIN uçuşlar AS T2 ON T1.hava_yolu_no = T2.hava_yolu_no GROUP BY T1.isim HAVING count(*) < 200
+uçuş_2	United Airlines' hava yollarının uçuş numaraları nelerdir?	medium	"SELECT T1.uçuş_no FROM uçuşlar AS T1 JOIN hava_yolları AS T2 ON T2.hava_yolu_no = T1.hava_yolu_no WHERE T2.isim = ""United Airlines"""
+uçuş_2	Hangi uçuş numaraları United Airlines uçuşlarına karşılık geliyor?	medium	"SELECT T1.uçuş_no FROM uçuşlar AS T1 JOIN hava_yolları AS T2 ON T2.hava_yolu_no = T1.hava_yolu_no WHERE T2.isim = ""United Airlines"""
+uçuş_2	APG havalaanından kalkacak uçuşların uçuş numaraları nelerdir?	easy	"SELECT uçuş_no FROM uçuşlar WHERE kalkış_limanı = ""APG"""
+uçuş_2	APG'den kalkan uçuş sayısını göster.	easy	"SELECT uçuş_no FROM uçuşlar WHERE kalkış_limanı = ""APG"""
+uçuş_2	"""APG"" havaalanına varan uçuşların numaraları nelerdir?"	easy	"SELECT uçuş_no FROM uçuşlar WHERE varış_limanı = "" APG"""
+uçuş_2	APG'ye inecek uçuşların uçuş numaralarını ver.	easy	"SELECT uçuş_no FROM uçuşlar WHERE varış_limanı = ""APG"""
+uçuş_2	Aberdeen şehrinden kalkan uçuş sayısı nedir?	medium	"SELECT T1.uçuş_no FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.kalkış_limanı = T2.havaalanı_kodu WHERE T2.şehir = ""Aberdeen"""
+uçuş_2	Aberdeen'den kalkan uçuşların uçuş numaralarını ver.	medium	"SELECT T1.uçuş_no FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.kalkış_limanı = T2.havaalanı_kodu WHERE T2.şehir = ""Aberdeen"""
+uçuş_2	Aberdeen'e varan uçuşların uçuş numaraları nelerdir?	medium	"SELECT T1.uçuş_no FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.varış_limanı = T2.havaalanı_kodu WHERE T2.şehir = ""Aberdeen"""
+uçuş_2	Aberdeen'e varan uçuş numaralarını göster.	medium	"SELECT T1.uçuş_no FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.varış_limanı = T2.havaalanı_kodu WHERE T2.şehir = ""Aberdeen"""
+uçuş_2	Aberdeen veya Abilene'ye inen uçuşların sayısını bul.	hard	"SELECT count(*) FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.varış_limanı = T2.havaalanı_kodu WHERE T2.şehir = ""Aberdeen"" OR T2.şehir = ""Abilene"""
+uçuş_2	Aberdeen veya Abilene'ye inen kaç tane uçuş vardır?	hard	"SELECT count(*) FROM uçuşlar AS T1 JOIN havaalanları AS T2 ON T1.varış_limanı = T2.havaalanı_kodu WHERE T2.şehir = ""Aberdeen"" OR T2.şehir = ""Abilene"""
+uçuş_2	Giriş ve çıkış uçuşu olmayan havalimanlarının adını bul.	hard	SELECT havaalanı_isim FROM havaalanları WHERE havaalanı_kodu NOT IN (SELECT kalkış_limanı FROM uçuşlar UNION SELECT varış_limanı FROM uçuşlar)
+uçuş_2	Hangi havaalanları kalkış ve varış uçuşları yoktur?	hard	SELECT havaalanı_isim FROM havaalanları WHERE havaalanı_kodu NOT IN (SELECT kalkış_limanı FROM uçuşlar UNION SELECT varış_limanı FROM uçuşlar)
+eleman_işe_alım_değerlendirme	Kaç tane çalışan vardır?	easy	SELECT count(*) FROM eleman
+eleman_işe_alım_değerlendirme	Çalışan sayısını göster.	easy	SELECT count(*) FROM eleman
+eleman_işe_alım_değerlendirme	Eleman isimlerini yaşlarına göre artan sırada sırala.	easy	SELECT isim FROM eleman ORDER BY yaş
+eleman_işe_alım_değerlendirme	Artan yaş sırasıyla çalışanların isimlerini listele.	easy	SELECT isim FROM eleman ORDER BY yaş
+eleman_işe_alım_değerlendirme	Her şehir için çalışan sayısı nedir?	medium	SELECT count(*) , şehir FROM eleman GROUP BY şehir
+eleman_işe_alım_değerlendirme	Her şehir için eleman sayısını say.	medium	SELECT count(*) , şehir FROM eleman GROUP BY şehir
+eleman_işe_alım_değerlendirme	30 yaşının altında birden fazla çalışana sahip şehirler hangileridir?	medium	SELECT şehir FROM eleman WHERE yaş < 30 GROUP BY şehir HAVING count(*) > 1
+eleman_işe_alım_değerlendirme	Yaşı 30'dan küçük birden fazla çalışanı olan şehirleri bul.	medium	SELECT şehir FROM eleman WHERE yaş < 30 GROUP BY şehir HAVING count(*) > 1
+eleman_işe_alım_değerlendirme	Her konumdaki mağaza sayısını say.	medium	SELECT count(*) , konum FROM mağaza GROUP BY konum
+eleman_işe_alım_değerlendirme	Her konumda kaç tane mağaza vardır?	medium	SELECT count(*) , konum FROM mağaza GROUP BY konum
+eleman_işe_alım_değerlendirme	En çok ürün satan mağazanın müdür ismi ve semtini bul.	medium	SELECT müdür_ismi , semt FROM mağaza ORDER BY ürün_sayısı DESC LIMIT 1
+eleman_işe_alım_değerlendirme	En çok ürün satan mağazanın müdür ismi ve semti nedir?	medium	SELECT müdür_ismi , semt FROM mağaza ORDER BY ürün_sayısı DESC LIMIT 1
+eleman_işe_alım_değerlendirme	Bütün mağazaların maksimum ve minimum ürün sayılarını bulun.	medium	SELECT min(ürün_sayısı) , max(ürün_sayısı) FROM mağaza
+eleman_işe_alım_değerlendirme	Her mağaza için minimum ve maksimum ürün sayısı nedir?	medium	SELECT min(ürün_sayısı) , max(ürün_sayısı) FROM mağaza
+eleman_işe_alım_değerlendirme	Azalan sırada ürün sayılarına göre bütün mağazaların isim, konum ve semtini döndür.	medium	SELECT isim , konum , semt FROM mağaza ORDER BY ürün_sayısı DESC
+eleman_işe_alım_değerlendirme	Azalan sırada ürün sayılarına göre bütün mağazaları sıralayın ve her mağazanın isimlerini, konumlarını ve semtlerini gösterin.	medium	SELECT isim , konum , semt FROM mağaza ORDER BY ürün_sayısı DESC
+eleman_işe_alım_değerlendirme	Ürün sayısı ortalama ürün sayısından fazla olan mağaza isimlerini bul.	hard	SELECT isim FROM mağaza WHERE ürün_sayısı > (SELECT avg(ürün_sayısı) FROM mağaza)
+eleman_işe_alım_değerlendirme	Hangi mağazaların ürün sayısı ortalamanın üstündedir? Bana mağaza isimlerini ver.	hard	SELECT isim FROM mağaza WHERE ürün_sayısı > (SELECT avg(ürün_sayısı) FROM mağaza)
+eleman_işe_alım_değerlendirme	Değerlendirme en fazla ödüllendirilen çalışanın ismini bulun.	extra	SELECT t1.isim FROM eleman AS t1 JOIN değerlendirme AS t2 ON t1.eleman_no = t2.eleman_no GROUP BY t2.eleman_no ORDER BY count(*) DESC LIMIT 1
+eleman_işe_alım_değerlendirme	Değerlendirmelerde en çok ödül alan çalışan kimdir? Çalışan ismini bul.	extra	SELECT t1.isim FROM eleman AS t1 JOIN değerlendirme AS t2 ON t1.eleman_no = t2.eleman_no GROUP BY t2.eleman_no ORDER BY count(*) DESC LIMIT 1
+eleman_işe_alım_değerlendirme	En fazla tek seferlik bonusu almış elemanın ismini bul.	hard	SELECT t1.isim FROM eleman AS t1 JOIN değerlendirme AS t2 ON t1.eleman_no = t2.eleman_no ORDER BY t2.bonus DESC LIMIT 1
+eleman_işe_alım_değerlendirme	En fazla bonus alan çalışan hangisidir? Bana çalışanın ismini ver.	hard	SELECT t1.isim FROM eleman AS t1 JOIN değerlendirme AS t2 ON t1.eleman_no = t2.eleman_no ORDER BY t2.bonus DESC LIMIT 1
+eleman_işe_alım_değerlendirme	Değerlendirmede hiçbir ödül kazanmamış çalışanların isimlerini bul.	hard	SELECT isim FROM eleman WHERE eleman_no NOT IN (SELECT eleman_no FROM değerlendirme)
+eleman_işe_alım_değerlendirme	Hiç değerlendirme almamış elemanların isimleri nelerdir?	hard	SELECT isim FROM eleman WHERE eleman_no NOT IN (SELECT eleman_no FROM değerlendirme)
+eleman_işe_alım_değerlendirme	En fazla çalışana sahip mağazanın ismi nedir?	extra	SELECT t2.isim FROM işe_alım AS t1 JOIN mağaza AS t2 ON t1.mağaza_no = t2.mağaza_no GROUP BY t1.mağaza_no ORDER BY count(*) DESC LIMIT 1
+eleman_işe_alım_değerlendirme	Hangi mağaza en çok çalışana sahip? Mağaza ismini bul.	extra	SELECT t2.isim FROM işe_alım AS t1 JOIN mağaza AS t2 ON t1.mağaza_no = t2.mağaza_no GROUP BY t1.mağaza_no ORDER BY count(*) DESC LIMIT 1
+eleman_işe_alım_değerlendirme	Eleman almayan mağazaların isimlerini bul.	hard	SELECT isim FROM mağaza WHERE mağaza_no NOT IN (SELECT mağaza_no FROM işe_alım)
+eleman_işe_alım_değerlendirme	Çalışanı olmayan mağazalar hangileridir? İsimlerini gösterin.	hard	SELECT isim FROM mağaza WHERE mağaza_no NOT IN (SELECT mağaza_no FROM işe_alım)
+eleman_işe_alım_değerlendirme	Her mağaza için işe alınan çalışan sayısını bul, mağaza isimlerini de göster.	medium	SELECT count(*) , t2.isim FROM işe_alım AS t1 JOIN mağaza AS t2 ON t1.mağaza_no = t2.mağaza_no GROUP BY t2.isim
+eleman_işe_alım_değerlendirme	Her mağaza için orada çalışan eleman sayısını ve mağaza ismini döndür.	medium	SELECT count(*) , t2.isim FROM işe_alım AS t1 JOIN mağaza AS t2 ON t1.mağaza_no = t2.mağaza_no GROUP BY t2.isim
+eleman_işe_alım_değerlendirme	Bütün değerlendirmeden çıkan toplam bonus nedir?	easy	SELECT sum(bonus) FROM değerlendirme
+eleman_işe_alım_değerlendirme	Değerlendirmelerde verilen toplam bonus miktarını bul.	easy	SELECT sum(bonus) FROM değerlendirme
+eleman_işe_alım_değerlendirme	İşe alımla ilgili bütün bilgileri bana ver.	easy	SELECT * FROM işe_alım
+eleman_işe_alım_değerlendirme	İşe alımdaki bütün bilgiler nelerdir?	easy	SELECT * FROM işe_alım
+eleman_işe_alım_değerlendirme	Hangi semtin hem 3000 üründen az hem de 10000 üründen fazla mağazaları var?	hard	SELECT semt FROM mağaza WHERE ürün_sayısı < 3000 INTERSECT SELECT semt FROM mağaza WHERE ürün_sayısı > 10000
+eleman_işe_alım_değerlendirme	Hem 3000'den az hem de 10000'den fazla ürün satan mağazaların semtlerini bul.	hard	SELECT semt FROM mağaza WHERE ürün_sayısı < 3000 INTERSECT SELECT semt FROM mağaza WHERE ürün_sayısı > 10000
+eleman_işe_alım_değerlendirme	Kaç tane farklı mağaza konumu vardır?	easy	SELECT count(DISTINCT konum) FROM mağaza
+eleman_işe_alım_değerlendirme	Farklı mağaza konumlarını say.	easy	SELECT count(DISTINCT konum) FROM mağaza
+cre_Doküman_Şablon_İşletme	Kaç tane dokümanımız var?	easy	SELECT count(*) FROM dokümanlar
+cre_Doküman_Şablon_İşletme	Doküman sayısını sayın.	easy	SELECT count(*) FROM dokümanlar
+cre_Doküman_Şablon_İşletme	Tüm dokümanların döküman numaralarını, isimlerini ve açıklamalarını listele.	medium	SELECT doküman_no , doküman_ismi , doküman_açıklaması FROM Dokümanlar
+cre_Doküman_Şablon_İşletme	Tüm dokümanlar için doküman numaraları, isimleri ve açıklamaları nelerdir?	medium	SELECT doküman_no , doküman_ismi , doküman_açıklaması FROM Dokümanlar
+cre_Doküman_Şablon_İşletme	Açıklamada 'w' harfine sahip dokümanların isimleri ve şablon kimlikleri nelerdir?	medium	"SELECT doküman_ismi , şablon_no FROM dokümanlar WHERE doküman_açıklaması LIKE ""%w%"""
+cre_Doküman_Şablon_İşletme	Açıklamasında 'w' harfi bulunan dokümanların isimlerini ve şablon numaralarını döndür.	medium	"SELECT doküman_ismi , şablon_no FROM dokümanlar WHERE doküman_açıklaması LIKE ""%w%"""
+cre_Doküman_Şablon_İşletme	"""Robbin CV"" isimli doküman için doküman numarası, şablon numarası ve açıklaması nedir?"	medium	"SELECT doküman_no , şablon_no , doküman_açıklaması FROM dokümanlar WHERE doküman_ismi = ""Robbin CV"""
+cre_Doküman_Şablon_İşletme	Robbin CV isimli dokümanın doküman ve şablon numaralarını ile tanımını gösterin.	medium	"SELECT doküman_no , şablon_no , doküman_açıklaması FROM dokümanlar WHERE doküman_ismi = ""Robbin CV"""
+cre_Doküman_Şablon_İşletme	Dokümanlar kaç farklı şablon kullanıyor?	easy	SELECT count(DISTINCT şablon_no) FROM dokümanlar
+cre_Doküman_Şablon_İşletme	Dokümanlar için kullanılmış farklı şablon sayısını say.	easy	SELECT count(DISTINCT şablon_no) FROM dokümanlar
+cre_Doküman_Şablon_İşletme	Kaç tane doküman 'PPT' tür koduna sahip şablonu kullanmaktadır?	medium	SELECT count(*) FROM dokümanlar AS T1 JOIN şablonlar AS T2 ON T1.şablon_no = T2.şablon_no WHERE T2.şablon_türü_kodu = 'PPT'
+cre_Doküman_Şablon_İşletme	PPT şablon türünü kullanan dokümanları say.	medium	SELECT count(*) FROM dokümanlar AS T1 JOIN şablonlar AS T2 ON T1.şablon_no = T2.şablon_no WHERE T2.şablon_türü_kodu = 'PPT'
+cre_Doküman_Şablon_İşletme	Her şablon için şablon numaralarını ve kaç dokümanda kullanıldığını göster.	medium	SELECT şablon_no , count(*) FROM dokümanlar GROUP BY şablon_no
+cre_Doküman_Şablon_İşletme	Dokümanlar için kullanılan farklı şablon numaraları nelerdir ve bu şablonlar kaç kere kullanılmıştır?	medium	SELECT şablon_no , count(*) FROM dokümanlar GROUP BY şablon_no
+cre_Doküman_Şablon_İşletme	En çok kullanılan şablonun numarası ve tür kodu nedir?	extra	SELECT T1.şablon_no , T2.şablon_türü_kodu FROM dokümanlar AS T1 JOIN şablonlar AS T2 ON T1.şablon_no = T2.şablon_no GROUP BY T1.şablon_no ORDER BY count(*) DESC LIMIT 1
+cre_Doküman_Şablon_İşletme	En çok dokümanda kullanılmış olan şablonun şablon numarasını ve tür kodunu döndür.	extra	SELECT T1.şablon_no , T2.şablon_türü_kodu FROM dokümanlar AS T1 JOIN şablonlar AS T2 ON T1.şablon_no = T2.şablon_no GROUP BY T1.şablon_no ORDER BY count(*) DESC LIMIT 1
+cre_Doküman_Şablon_İşletme	Birden fazla doküman tarafından kullanılan bütün şablonların numarasını gösterin.	easy	SELECT şablon_no FROM dokümanlar GROUP BY şablon_no HAVING count(*) > 1
+cre_Doküman_Şablon_İşletme	Birden fazla dokümanda kullanılan şablonların şablon numarası nedir?	easy	SELECT şablon_no FROM dokümanlar GROUP BY şablon_no HAVING count(*) > 1
+cre_Doküman_Şablon_İşletme	Hiçbir dokümanda kullanılmamış şablonların şablon numarasını göster.	hard	SELECT şablon_no FROM şablonlar EXCEPT SELECT şablon_no FROM dokümanlar
+cre_Doküman_Şablon_İşletme	Hiçbir dokümanda kullanılmamış şablonların numaraları nelerdir?	hard	SELECT şablon_no FROM şablonlar EXCEPT SELECT şablon_no FROM dokümanlar
+cre_Doküman_Şablon_İşletme	Kaç tane şablon var?	easy	SELECT count(*) FROM şablonlar
+cre_Doküman_Şablon_İşletme	Şablon sayısını say.	easy	SELECT count(*) FROM şablonlar
+cre_Doküman_Şablon_İşletme	Bütün şablonların numaralarını, versiyon sayılarını ve tür kodlarını gösterin.	medium	SELECT şablon_no , sürüm_no , şablon_türü_kodu FROM şablonlar
+cre_Doküman_Şablon_İşletme	Şablonların şablon numaraları, versiyon sayıları ve tür kodları nelerdir?	medium	SELECT şablon_no , sürüm_no , şablon_türü_kodu FROM şablonlar
+cre_Doküman_Şablon_İşletme	Bütün şablonlar için tüm farklı şablon türü kodlarını göster.	easy	SELECT DISTINCT şablon_türü_kodu FROM şablonlar
+cre_Doküman_Şablon_İşletme	Farklı şablon türü kodları nelerdir?	easy	SELECT DISTINCT şablon_türü_kodu FROM şablonlar
+cre_Doküman_Şablon_İşletme	Şablon kodu PP ya da PPT olan şablonların numaraları nelerdir?	medium	"SELECT şablon_no FROM şablonlar WHERE şablon_türü_kodu = ""PP"" OR şablon_türü_kodu = ""PPT"""
+cre_Doküman_Şablon_İşletme	Kodu PP veya PPT olan şablonların numaralarını döndür.	medium	"SELECT şablon_no FROM şablonlar WHERE şablon_türü_kodu = ""PP"" OR şablon_türü_kodu = ""PPT"""
+cre_Doküman_Şablon_İşletme	CV şablon türü koduna sahip kaç tane şablon vardır?	easy	"SELECT count(*) FROM şablonlar WHERE şablon_türü_kodu = ""CV"""
+cre_Doküman_Şablon_İşletme	CV tipindeki şablon sayısını say.	easy	"SELECT count(*) FROM şablonlar WHERE şablon_türü_kodu = ""CV"""
+cre_Doküman_Şablon_İşletme	Sürüm numarası 5'ten sonra olan şablonun sürüm numarası ve şablon türü kodu nedir?	medium	SELECT sürüm_no , şablon_türü_kodu FROM şablonlar WHERE sürüm_no > 5
+cre_Doküman_Şablon_İşletme	Sürüm numarası 5'ten büyük şablonların versiyon sayısı ve şablon türü kodunu gösterin.	medium	SELECT sürüm_no , şablon_türü_kodu FROM şablonlar WHERE sürüm_no > 5
+cre_Doküman_Şablon_İşletme	Tüm şablonlar için şablon tür kodunu ve şablon sayısını göster.	medium	SELECT şablon_türü_kodu , count(*) FROM şablonlar GROUP BY şablon_türü_kodu
+cre_Doküman_Şablon_İşletme	Farklı şablon türü kodları nelerdir, ve kaç tane şablona karşılık gelir?	medium	SELECT şablon_türü_kodu , count(*) FROM şablonlar GROUP BY şablon_türü_kodu
+cre_Doküman_Şablon_İşletme	Hangi şablon türü kodu en fazla şablona sahiptir?	hard	SELECT şablon_türü_kodu FROM şablonlar GROUP BY şablon_türü_kodu ORDER BY count(*) DESC LIMIT 1
+cre_Doküman_Şablon_İşletme	En çok şablona sahip olan şablon türünü döndür.	hard	SELECT şablon_türü_kodu FROM şablonlar GROUP BY şablon_türü_kodu ORDER BY count(*) DESC LIMIT 1
+cre_Doküman_Şablon_İşletme	3 taneden az şablonu olan şablon türlerinin kodları nelerdir?	easy	SELECT şablon_türü_kodu FROM şablonlar GROUP BY şablon_türü_kodu HAVING count(*) < 3
+cre_Doküman_Şablon_İşletme	3'ten az şablona sahip şablon türleriin kodları nelerdir?	easy	SELECT şablon_türü_kodu FROM şablonlar GROUP BY şablon_türü_kodu HAVING count(*) < 3
+cre_Doküman_Şablon_İşletme	En küçük sürüm numarası ve onun şablon tür kodu nedir?	medium	SELECT min(sürüm_no) , şablon_türü_kodu FROM şablonlar
+cre_Doküman_Şablon_İşletme	İlgili şablon türü koduyla birlikte en düşük sürüm numarasını getir.	medium	SELECT min(sürüm_no) , şablon_türü_kodu FROM şablonlar
+cre_Doküman_Şablon_İşletme	"""Data base"" isimli dokümanda kullanılan şablonun tür kodu nedir?"	medium	"SELECT T1.şablon_türü_kodu FROM şablonlar AS T1 JOIN dokümanlar AS T2 ON T1.şablon_no = T2.şablon_no WHERE T2.doküman_ismi = ""Data base"""
+cre_Doküman_Şablon_İşletme	Data base isimli dokümanda kullanılan şablonun şablon tür kodunu döndür.	medium	"SELECT T1.şablon_türü_kodu FROM şablonlar AS T1 JOIN dokümanlar AS T2 ON T1.şablon_no = T2.şablon_no WHERE T2.doküman_ismi = ""Data base"""
+cre_Doküman_Şablon_İşletme	BK koduna sahip şablonları kullanan dokümanların isimlerini göster.	medium	"SELECT T2.doküman_ismi FROM şablonlar AS T1 JOIN dokümanlar AS T2 ON T1.şablon_no = T2.şablon_no WHERE T1.şablon_türü_kodu = ""BK"""
+cre_Doküman_Şablon_İşletme	BK koduna sahip şablonları kullanan dokümanların isimleri nelerdir?	medium	"SELECT T2.doküman_ismi FROM şablonlar AS T1 JOIN dokümanlar AS T2 ON T1.şablon_no = T2.şablon_no WHERE T1.şablon_türü_kodu = ""BK"""
+cre_Doküman_Şablon_İşletme	Tüm şablon tür kodlarını ve her türün kaç dokümanda kullanıldığını göster.	medium	SELECT T1.şablon_türü_kodu , count(*) FROM şablonlar AS T1 JOIN dokümanlar AS T2 ON T1.şablon_no = T2.şablon_no GROUP BY T1.şablon_türü_kodu
+cre_Doküman_Şablon_İşletme	Farklı şablon türü kodları nelerdir, ve her tür kaç dokümanda kullanıldı?	medium	SELECT T1.şablon_türü_kodu , count(*) FROM şablonlar AS T1 JOIN dokümanlar AS T2 ON T1.şablon_no = T2.şablon_no GROUP BY T1.şablon_türü_kodu
+cre_Doküman_Şablon_İşletme	Hangi şablon türü kodu dokümanlar tarafından en fazla kullanılmıştır?	extra	SELECT T1.şablon_türü_kodu FROM şablonlar AS T1 JOIN dokümanlar AS T2 ON T1.şablon_no = T2.şablon_no GROUP BY T1.şablon_türü_kodu ORDER BY count(*) DESC LIMIT 1
+cre_Doküman_Şablon_İşletme	Dokümanlarda en çok kullanılan şablon tipinin kodunu döndür.	extra	SELECT T1.şablon_türü_kodu FROM şablonlar AS T1 JOIN dokümanlar AS T2 ON T1.şablon_no = T2.şablon_no GROUP BY T1.şablon_türü_kodu ORDER BY count(*) DESC LIMIT 1
+cre_Doküman_Şablon_İşletme	Hiçbir dokümanda kullanılmamış şablon türü kodlarını göster.	hard	SELECT şablon_türü_kodu FROM şablonlar EXCEPT SELECT şablon_türü_kodu FROM şablonlar AS T1 JOIN dokümanlar AS T2 ON T1.şablon_no = T2.şablon_no
+cre_Doküman_Şablon_İşletme	Herhangi bir dokümanda kullanılmamış şablon türlerinin kodları nelerdir?	hard	SELECT şablon_türü_kodu FROM şablonlar EXCEPT SELECT şablon_türü_kodu FROM şablonlar AS T1 JOIN dokümanlar AS T2 ON T1.şablon_no = T2.şablon_no
+cre_Doküman_Şablon_İşletme	Tüm şablon tür kodlarını ve açıklamalarını göster.	medium	SELECT şablon_türü_kodu , şablon_türü_açıklaması FROM Ref_şablon_türleri
+cre_Doküman_Şablon_İşletme	Bütün şablon türleri için tür kodları ve açıklamaları nelerdir?	medium	SELECT şablon_türü_kodu , şablon_türü_açıklaması FROM Ref_şablon_türleri
+cre_Doküman_Şablon_İşletme	AD' şablon türü koduna sahip şablon türü açıklamaları nelerdir?	easy	"SELECT şablon_türü_açıklaması FROM ref_şablon_türleri WHERE şablon_türü_kodu = ""AD"""
+cre_Doküman_Şablon_İşletme	AD kodlu şablon tür açıklamalarını döndür.	easy	"SELECT şablon_türü_açıklaması FROM ref_şablon_türleri WHERE şablon_türü_kodu = ""AD"""
+cre_Doküman_Şablon_İşletme	"Şablon türü açıklaması ""Kitap"" olan şablon türü kodu nedir?"	easy	"SELECT şablon_türü_kodu FROM ref_şablon_türleri WHERE şablon_türü_açıklaması = ""Kitap"""
+cre_Doküman_Şablon_İşletme	Kitap' tanımlı şablon türünün tür kodunu döndür.	easy	"SELECT şablon_türü_kodu FROM ref_şablon_türleri WHERE şablon_türü_açıklaması = ""Kitap"""
+cre_Doküman_Şablon_İşletme	Herhangi bir dokümanda kullanılmış olan şablonların şablon tür açıklamaları nedir?	medium	SELECT DISTINCT T1.şablon_türü_açıklaması FROM Ref_şablon_türleri AS T1 JOIN şablonlar AS T2 ON T1.şablon_türü_kodu = T2.şablon_türü_kodu JOIN dokümanlar AS T3 ON T2.şablon_no = T3.şablon_no
+cre_Doküman_Şablon_İşletme	Dokümanda kullanılmış olan şablonların farklı açıklamalarını döndür.	medium	SELECT DISTINCT T1.şablon_türü_açıklaması FROM Ref_şablon_türleri AS T1 JOIN şablonlar AS T2 ON T1.şablon_türü_kodu = T2.şablon_türü_kodu JOIN dokümanlar AS T3 ON T2.şablon_no = T3.şablon_no
+cre_Doküman_Şablon_İşletme	Sunum' tanımlı şablon türünün şablon numaraları nelerdir?	medium	"SELECT T2.şablon_no FROM ref_şablon_türleri AS T1 JOIN şablonlar AS T2 ON T1.şablon_türü_kodu = T2.şablon_türü_kodu WHERE T1.şablon_türü_açıklaması = ""Sunum"""
+cre_Doküman_Şablon_İşletme	Açıklaması 'Sunum' olan şablonlara karşılık gelen kimlikleri döndür.	medium	"SELECT T2.şablon_no FROM ref_şablon_türleri AS T1 JOIN şablonlar AS T2 ON T1.şablon_türü_kodu = T2.şablon_türü_kodu WHERE T1.şablon_türü_açıklaması = ""Sunum"""
+cre_Doküman_Şablon_İşletme	Toplamda kaç tane paragraf var?	easy	SELECT count(*) FROM paragraflar
+cre_Doküman_Şablon_İşletme	Paragraf sayısını sayın.	easy	SELECT count(*) FROM paragraflar
+cre_Doküman_Şablon_İşletme	Summer Show' isimli dökümanda kaç paragraf bulunuyor?	medium	SELECT count(*) FROM paragraflar AS T1 JOIN dokümanlar AS T2 ON T1.doküman_no = T2.doküman_no WHERE T2.doküman_ismi = 'Summer Show'
+cre_Doküman_Şablon_İşletme	Summer Show' isimli dokümanda kaç tane paragraf vardır?	medium	SELECT count(*) FROM paragraflar AS T1 JOIN dokümanlar AS T2 ON T1.doküman_no = T2.doküman_no WHERE T2.doküman_ismi = 'Summer Show'
+cre_Doküman_Şablon_İşletme	Kore' yazısına sahip paragrafların detaylarını gösterin.	medium	select diğer_detaylar from paragraflar where paragraf_yazı like 'Kore'
+cre_Doküman_Şablon_İşletme	Kore' metnine sahip olan paragrafın detayları nelerdir?	medium	select diğer_detaylar from paragraflar where paragraf_yazı like 'Kore'
+cre_Doküman_Şablon_İşletme	Welcome to NY' isimli dokümandaki bütün paragraf numaralarını ve yazılarını göster.	medium	SELECT T1.paragraf_no , T1.paragraf_yazı FROM paragraflar AS T1 JOIN dokümanlar AS T2 ON T1.doküman_no = T2.doküman_no WHERE T2.doküman_ismi = 'Welcome to NY'
+cre_Doküman_Şablon_İşletme	Welcome to NY' başlıklı dokümanın paragraflarının numaraları ve yazıları nelerdir?	medium	SELECT T1.paragraf_no , T1.paragraf_yazı FROM paragraflar AS T1 JOIN dokümanlar AS T2 ON T1.doküman_no = T2.doküman_no WHERE T2.doküman_ismi = 'Welcome to NY'
+cre_Doküman_Şablon_İşletme	"""Customer reviews"" dökümanındaki tüm paragraf metinlerini göster."	medium	"SELECT T1.paragraf_yazı FROM paragraflar AS T1 JOIN dokümanlar AS T2 ON T1.doküman_no = T2.doküman_no WHERE T2.doküman_ismi = ""Customer reviews"""
+cre_Doküman_Şablon_İşletme	Customer reviews' isimli doküman için paragraf yazıları nelerdir?	medium	"SELECT T1.paragraf_yazı FROM paragraflar AS T1 JOIN dokümanlar AS T2 ON T1.doküman_no = T2.doküman_no WHERE T2.doküman_ismi = ""Customer reviews"""
+cre_Doküman_Şablon_İşletme	Her dokümanın doküman numarasını ve paragraf sayısını gösterin. Doküman numarasına göre sıralayın.	medium	SELECT doküman_no , count(*) FROM paragraflar GROUP BY doküman_no ORDER BY doküman_no
+cre_Doküman_Şablon_İşletme	Farklı doküman numaralarını paragraf sayılarıyla beraber numaralarına göre sıralanmış bir şekilde döndür.	medium	SELECT doküman_no , count(*) FROM paragraflar GROUP BY doküman_no ORDER BY doküman_no
+cre_Doküman_Şablon_İşletme	Her doküman için bütün doküman numaralarını, isimlerini ve paragraf sayılarını göster	medium	SELECT T1.doküman_no , T2.doküman_ismi , count(*) FROM paragraflar AS T1 JOIN dokümanlar AS T2 ON T1.doküman_no = T2.doküman_no GROUP BY T1.doküman_no
+cre_Doküman_Şablon_İşletme	Her dokümanın numarası ve isimleri, aynı zamanda paragraf sayıları nelerdir?	medium	SELECT T1.doküman_no , T2.doküman_ismi , count(*) FROM paragraflar AS T1 JOIN dokümanlar AS T2 ON T1.doküman_no = T2.doküman_no GROUP BY T1.doküman_no
+cre_Doküman_Şablon_İşletme	En az 2 paragrafa sahip olan dokümanların numaralarını listele.	easy	SELECT doküman_no FROM paragraflar GROUP BY doküman_no HAVING count(*) >= 2
+cre_Doküman_Şablon_İşletme	2 veya daha fazla paragrafa sahip dokümanların numaraları nelerdir?	easy	SELECT doküman_no FROM paragraflar GROUP BY doküman_no HAVING count(*) >= 2
+cre_Doküman_Şablon_İşletme	En fazla paragraf sayısına sahip doküman numarası ve ismi nedir?	extra	SELECT T1.doküman_no , T2.doküman_ismi FROM paragraflar AS T1 JOIN dokümanlar AS T2 ON T1.doküman_no = T2.doküman_no GROUP BY T1.doküman_no ORDER BY count(*) DESC LIMIT 1
+cre_Doküman_Şablon_İşletme	En çok paragrafa sahip olan dokümanın numarasını ve ismini döndür.	extra	SELECT T1.doküman_no , T2.doküman_ismi FROM paragraflar AS T1 JOIN dokümanlar AS T2 ON T1.doküman_no = T2.doküman_no GROUP BY T1.doküman_no ORDER BY count(*) DESC LIMIT 1
+cre_Doküman_Şablon_İşletme	En az paragrafa sahip dokümanın numarası nedir?	hard	SELECT doküman_no FROM paragraflar GROUP BY doküman_no ORDER BY count(*) ASC LIMIT 1
+cre_Doküman_Şablon_İşletme	En az paragrafa sahip dokümanın numarasını döndür.	hard	SELECT doküman_no FROM paragraflar GROUP BY doküman_no ORDER BY count(*) ASC LIMIT 1
+cre_Doküman_Şablon_İşletme	1 ile 2 arasında paragrafı olan dokümanın numarası nedir?	easy	SELECT doküman_no FROM paragraflar GROUP BY doküman_no HAVING count(*) BETWEEN 1 AND 2
+cre_Doküman_Şablon_İşletme	1 ve 2 arasında paragrafı olan dokümanların numaralarını ver.	easy	SELECT doküman_no FROM paragraflar GROUP BY doküman_no HAVING count(*) BETWEEN 1 AND 2
+cre_Doküman_Şablon_İşletme	Brezilya' ve 'İrlanda' paragraf yazısına sahip doküman numarasını gösterin.	hard	SELECT doküman_no FROM paragraflar WHERE paragraf_yazı = 'Brezilya' INTERSECT SELECT doküman_no FROM paragraflar WHERE paragraf_yazı = 'İrlanda'
+cre_Doküman_Şablon_İşletme	Brezilya' ve 'İrlanda'  paragraf metinlerini içeren dokümanların numaraları nelerdir?	hard	SELECT doküman_no FROM paragraflar WHERE paragraf_yazı = 'Brezilya' INTERSECT SELECT doküman_no FROM paragraflar WHERE paragraf_yazı = 'İrlanda'
+ders_öğret	Kaç tane öğretmen var?	easy	SELECT count(*) FROM öğretmen
+ders_öğret	Öğretmenlerin toplam sayısı nedir?	easy	SELECT count(*) FROM öğretmen
+ders_öğret	Öğretmenlerin isimlerini artan yaş sırasına göre listele.	easy	SELECT İsim FROM öğretmen ORDER BY Yaş ASC
+ders_öğret	Artan yaşa göre sıralanmış öğretmenlerin isimleri nelerdir?	easy	SELECT İsim FROM öğretmen ORDER BY Yaş ASC
+ders_öğret	Öğretmenlerin yaşları ve memleketleri nelerdir?	medium	SELECT Yaş , Memleket FROM öğretmen
+ders_öğret	Öğretmenlerin yaş ve memleketleri nelerdir?	medium	SELECT Yaş , Memleket FROM öğretmen
+ders_öğret	Memleketi 'Little Lever Urban District' olmayan öğretmenlerin isimlerini listele.	easy	"select İsim from öğretmen where Memleket != ""little lever urban district"""
+ders_öğret	Memleketi 'Little Lever Urban District' olmayan öğretmenlerin isimleri nelerdir? 	easy	"select İsim from öğretmen where Memleket != ""little lever urban district"""
+ders_öğret	32 ya da 33 yaşında olan öğretmenlerin isimlerini göster.	medium	SELECT İsim FROM öğretmen WHERE Yaş = 32 OR Yaş = 33
+ders_öğret	Yaşı 32 ya da 33 olan öğretmenlerin isimleri nelerdir?	medium	SELECT İsim FROM öğretmen WHERE Yaş = 32 OR Yaş = 33
+ders_öğret	En genç öğretmenin memleketi nedir?	medium	SELECT Memleket FROM öğretmen ORDER BY Yaş ASC LIMIT 1
+ders_öğret	En genç öğretmen nerelidir?	medium	SELECT Memleket FROM öğretmen ORDER BY Yaş ASC LIMIT 1
+ders_öğret	Her memleket için farklı öğretmenlerin farklı memleketlerini ve öğretmen sayılarını göster.	medium	SELECT Memleket , COUNT(*) FROM öğretmen GROUP BY Memleket
+ders_öğret	Her memleket için kaç tane öğretmen vardır?	medium	SELECT Memleket , COUNT(*) FROM öğretmen GROUP BY Memleket
+ders_öğret	Öğretmenlerin en yaygın memleketini listele.	hard	SELECT Memleket FROM öğretmen GROUP BY Memleket ORDER BY COUNT(*) DESC LIMIT 1
+ders_öğret	Öğretmenler için en yaygın memleket nedir?	hard	SELECT Memleket FROM öğretmen GROUP BY Memleket ORDER BY COUNT(*) DESC LIMIT 1
+ders_öğret	En az iki öğretmen tarafından paylaşılan memleketleri göster.	easy	SELECT Memleket FROM öğretmen GROUP BY Memleket HAVING COUNT(*) >= 2
+ders_öğret	En az iki öğretmenin memleketi olan yerler nerelerdir?	easy	SELECT Memleket FROM öğretmen GROUP BY Memleket HAVING COUNT(*) >= 2
+ders_öğret	Öğretmen isimlerini ve hangi dersleri öğreteceklerini göster.	medium	SELECT T3.İsim , T2.Ders FROM ders_düzenlemesi AS T1 JOIN ders AS T2 ON T1.Ders_No = T2.Ders_No JOIN öğretmen AS T3 ON T1.Öğretmen_No = T3.Öğretmen_No
+ders_öğret	Her öğretmenin ismi nedir ve hangi dersi öğretmektedirler?	medium	SELECT T3.İsim , T2.Ders FROM ders_düzenlemesi AS T1 JOIN ders AS T2 ON T1.Ders_No = T2.Ders_No JOIN öğretmen AS T3 ON T1.Öğretmen_No = T3.Öğretmen_No
+ders_öğret	Öğretmenlerin isimlerini ve kurslarını, öğretmen isimlerinin artan alfabetik sırasına göre göster.	hard	SELECT T3.İsim , T2.ders FROM ders_düzenlemesi AS T1 JOIN ders AS T2 ON T1.Ders_No = T2.Ders_No JOIN öğretmen AS T3 ON T1.Öğretmen_NO = T3.Öğretmen_NO ORDER BY T3.İsim
+ders_öğret	Öğretmen isimlerinin alfabetik sırasıyla öğretmenlerin isimleri ve öğretecekleri dersler nelerdir?	hard	SELECT T3.İsim , T2.ders FROM ders_düzenlemesi AS T1 JOIN ders AS T2 ON T1.Ders_No = T2.Ders_No JOIN öğretmen AS T3 ON T1.Öğretmen_NO = T3.Öğretmen_NO ORDER BY T3.İsim
+ders_öğret	Matematik dersi için öğretmenlerin isimlerini göster.	hard	"SELECT T3.İsim FROM ders_düzenlemesi AS T1 JOIN ders AS T2 ON T1.Ders_No = T2.Ders_No JOIN öğretmen AS T3 ON T1.Öğretmen_No = T3.Öğretmen_No WHERE T2.Ders = ""Matematik"""
+ders_öğret	Matematik dersi öğretenlerin isimleri nelerdir?	hard	"SELECT T3.İsim FROM ders_düzenlemesi AS T1 JOIN ders AS T2 ON T1.Ders_No = T2.Ders_No JOIN öğretmen AS T3 ON T1.Öğretmen_No = T3.Öğretmen_No WHERE T2.Ders = ""Matematik"""
+ders_öğret	Öğretmen isimleri ve öğrettikleri ders sayısını göster.	medium	SELECT T2.İsim , COUNT(*) FROM ders_düzenlemesi AS T1 JOIN öğretmen AS T2 ON T1.Öğretmen_No = T2.Öğretmen_No GROUP BY T2.İsim
+ders_öğret	Öğretmenlerin isimleri nelerdir ve kaç tane ders öğretmektedirler?	medium	SELECT T2.İsim , COUNT(*) FROM ders_düzenlemesi AS T1 JOIN öğretmen AS T2 ON T1.Öğretmen_No = T2.Öğretmen_No GROUP BY T2.İsim
+ders_öğret	En az iki ders veren öğretmenlerin isimlerini göster.	medium	SELECT T2.İsim FROM ders_düzenlemesi AS T1 JOIN öğretmen AS T2 ON T1.Öğretmen_NO = T2.Öğretmen_NO GROUP BY T2.İsim HAVING COUNT(*) >= 2
+ders_öğret	En az iki der veren öğretmenlerin isimleri nelerdir?	medium	SELECT T2.İsim FROM ders_düzenlemesi AS T1 JOIN öğretmen AS T2 ON T1.Öğretmen_NO = T2.Öğretmen_NO GROUP BY T2.İsim HAVING COUNT(*) >= 2
+ders_öğret	Ders ayarlanmayan öğretmenlerin isimlerini göster.	hard	SELECT İsim FROM öğretmen WHERE Öğretmen_No NOT IN (SELECT Öğretmen_No FROM ders_düzenlemesi)
+ders_öğret	Dersleri ayarlanmamış öğretmenlerin isimleri nelerdir?	hard	SELECT İsim FROM öğretmen WHERE Öğretmen_No NOT IN (SELECT Öğretmen_No FROM ders_düzenlemesi)
+müze_ziyareti	30 yaşından küçük kaç tane ziyaretçi var?	easy	SELECT count(*) FROM ziyaretçi WHERE yaş < 30
+müze_ziyareti	Üyelik seviyesi 4'ten fazla olan ziyaretçilerin isimlerini bul, ve sonuçları en yüksek seviyeden en düşük seviyeye doğru sırala.	medium	SELECT isim FROM ziyaretçi WHERE üyelik_seviyesi > 4 ORDER BY üyelik_seviyesi DESC
+müze_ziyareti	Üyelik seviyesi 4'ten fazla olmayan ziyaretçilerin ortalama yaşı kaçtır?	easy	SELECT avg(yaş) FROM ziyaretçi WHERE üyelik_seviyesi <=4
+müze_ziyareti	Üyelik seviyesi 4'ten fazla olan ziyaretçilerin isimlerini bul ve en yaşlıdan gence doğru sırala.	medium	SELECT isim , üyelik_seviyesi FROM ziyaretçi WHERE üyelik_seviyesi > 4 ORDER BY yaş DESC
+müze_ziyareti	En fazla personele sahip olan müzenin numarasını ve ismini bul.	medium	SELECT müze_no , isim FROM müze ORDER BY personel_sayısı DESC LIMIT 1
+müze_ziyareti	2009'dan önce açılmış olan müzelerde çalışan personellerin ortalama sayısını bul.	easy	SELECT avg(personel_sayısı) FROM müze WHERE açılış_yılı <2009
+müze_ziyareti	Plaza Müzesi'nin açılış yılı ve personel sayısı nedir?	medium	SELECT personel_sayısı , açılış_yılı FROM müze WHERE isim = 'Plaza Müzesi'
+müze_ziyareti	2010'den sonra açılmış bütün müzelerin minimumdan fazla personele sahip müzelerin isimlerini bul.	hard	SELECT isim FROM müze WHERE personel_sayısı > (SELECT min(personel_sayısı) FROM müze WHERE açılış_yılı > 2010)
+müze_ziyareti	Bazı müzeleri birden fazla ziyaret eden ziyaretçilerin numara, isim ve yaşlarını bul.	medium	SELECT t1.ziyaretçi_no, t1.isim, t1.yaş FROM ziyaretçi AS t1 JOIN ziyaret AS t2 ON t1.ziyaretçi_no = t2.ziyaretçi_no GROUP BY t1.ziyaretçi_no HAVING count(*) > 1
+müze_ziyareti	Tüm müze biletlerine en çok parayı harcamış ziyaretçinin numarası, ismi ve üyelik seviyesi nedir?	extra	SELECT t2.ziyaretçi_no , t1.isim , t1.üyelik_seviyesi FROM ziyaretçi AS t1 JOIN ziyaret AS t2 ON t1.ziyaretçi_no = t2.ziyaretçi_no GROUP BY t2.ziyaretçi_no ORDER BY sum(t2.toplam_harcama) DESC LIMIT 1
+müze_ziyareti	En fazla ziyaret edilen müzenin numarasını ve ismi ne?	extra	SELECT t2.müze_no , t1.isim FROM müze AS t1 JOIN ziyaret AS t2 ON t1.müze_no = t2.müze_no GROUP BY t2.müze_no ORDER BY count(*) DESC LIMIT 1
+müze_ziyareti	Daha hiç ziyaretçisi bulunmayan müzenin ismi nedir?	hard	SELECT isim FROM müze WHERE müze_no NOT IN (SELECT müze_no FROM ziyaret)
+müze_ziyareti	Tek seferde en çok bilet almış ziyaretçinin ismini ve yaşını bul.	hard	SELECT t1.isim , t1.yaş FROM ziyaretçi AS t1 JOIN ziyaret AS t2 ON t1.ziyaretçi_no = t2.ziyaretçi_no ORDER BY t2.bilet_sayısı DESC LIMIT 1
+müze_ziyareti	Bütün ziyaretlerde satın alınan ortalama ve maksimum bilet sayısı ne?	medium	SELECT avg(bilet_sayısı) , max(bilet_sayısı) FROM ziyaret
+müze_ziyareti	Üyelik seviyesi 1 olan ziyaretçilerin toplam bilet harcaması nedir?	medium	SELECT sum(t2.toplam_harcama) FROM ziyaretçi AS t1 JOIN ziyaret AS t2 ON t1.ziyaretçi_no = t2.ziyaretçi_no WHERE t1.üyelik_seviyesi = 1
+müze_ziyareti	2009'dan önce ve 2011'den sonra açılmış bir müzeyi ziyaret eden ziyaretçinin ismi nedir?	extra	SELECT t1.isim FROM ziyaretçi AS t1 JOIN ziyaret AS t2 ON t1.ziyaretçi_no = t2.ziyaretçi_no JOIN müze AS t3 ON t3.müze_no = t2.müze_no WHERE t3.açılış_yılı < 2009 INTERSECT SELECT t1.isim FROM ziyaretçi AS t1 JOIN ziyaret AS t2 ON t1.ziyaretçi_no = t2.ziyaretçi_no JOIN müze AS t3 ON t3.müze_no = t2.müze_no WHERE t3.açılış_yılı > 2011
+müze_ziyareti	2010'dan sonra açılan hiçbir müzeyi gezmemiş ziyaretçi sayısını bul.	extra	SELECT count(*) FROM ziyaretçi WHERE ziyaretçi_no NOT IN (SELECT t2.ziyaretçi_no FROM müze AS t1 JOIN ziyaret AS t2 ON t1.müze_no = t2.müze_no WHERE t1.açılış_yılı > 2010)
+müze_ziyareti	2013'ten sonra veya 2008'den önce kaç müze açılmıştır?	medium	SELECT count(*) FROM müze WHERE açılış_yılı > 2013 OR açılış_yılı < 2008
+ktb_1	Toplam oyuncu sayısını bul.	easy	SELECT count(*) FROM oyuncular
+ktb_1	Kaç tane oyuncu var?	easy	SELECT count(*) FROM oyuncular
+ktb_1	Toplam maç sayısını bul.	easy	SELECT count(*) FROM maçlar
+ktb_1	Maç sayısını say.	easy	SELECT count(*) FROM maçlar
+ktb_1	USA kodlu ülkeden olan oyuncuların ilk isimlerini ve doğum tarihlerini listele.	medium	SELECT isim , doğum_tarihi FROM oyuncular WHERE ülke_kodu = 'USA'
+ktb_1	ABD'li oyuncuların isimleri ve doğum tarihleri nelerdir?	medium	SELECT isim , doğum_tarihi FROM oyuncular WHERE ülke_kodu = 'USA'
+ktb_1	Bütün maçların kaybeden ve kazananların yaş ortalamasını bul.	medium	SELECT avg(kaybeden_yaşı) , avg(kazanan_yaşı) FROM maçlar
+ktb_1	Maçlar arasında kazanan ve kaybedenlerin ortalama yaşı nelerdir?	medium	SELECT avg(kaybeden_yaşı) , avg(kazanan_yaşı) FROM maçlar
+ktb_1	Bütün maçlardaki kazananların ortalama sıralamasını bul.	easy	SELECT avg(kazanan_sırası) FROM maçlar
+ktb_1	Bütün maçlardaki kazananların ortalama sıralamasını bul.	easy	SELECT avg(kazanan_sırası) FROM maçlar
+ktb_1	Bütün maçlardaki kaybedenlerden en büyük sıralamayı bul.	easy	SELECT min(kaybeden_sırası) FROM maçlar
+ktb_1	Bütün maçlardaki kaybedenler arasından en iyi sıralama nedir?	easy	SELECT min(kaybeden_sırası) FROM maçlar
+ktb_1	Bütün oyuncuların farklı ülke kodu sayısını bul.	easy	SELECT count(DISTINCT ülke_kodu) FROM oyuncular
+ktb_1	Oyuncular kaç farklı ülkeden gelmektedir?	easy	SELECT count(DISTINCT ülke_kodu) FROM oyuncular
+ktb_1	Farklı kaybeden isim sayısını bul.	easy	SELECT count(DISTINCT kaybeden_ismi) FROM maçlar
+ktb_1	Kaç tane farklı kaybeden ismi var?	easy	SELECT count(DISTINCT kaybeden_ismi) FROM maçlar
+ktb_1	10 maçtan fazla maça sahip turnuvaların isimlerini bul.	easy	SELECT turnuva_ismi FROM maçlar GROUP BY turnuva_ismi HAVING count(*) > 10
+ktb_1	10'dan fazla maça sahip olan turnuvaların isimleri nelerdir?	easy	SELECT turnuva_ismi FROM maçlar GROUP BY turnuva_ismi HAVING count(*) > 10
+ktb_1	Hem 2013 hem de 2016'da oynamış bütün kazananların isimlerini listele.	hard	SELECT kazanan_ismi FROM maçlar WHERE yıl = 2013 INTERSECT SELECT kazanan_ismi FROM maçlar WHERE yıl = 2016
+ktb_1	2013 ve 2016'da kazanmış oyuncuların isimleri nelerdir?	hard	SELECT kazanan_ismi FROM maçlar WHERE yıl = 2013 INTERSECT SELECT kazanan_ismi FROM maçlar WHERE yıl = 2016
+ktb_1	2013 veya 2016'da oynanmış maçların sayısını listele.	medium	SELECT count(*) FROM maçlar WHERE yıl = 2013 OR yıl = 2016
+ktb_1	2013 veya 2016'da oynanmış kaç tane maç var?	medium	SELECT count(*) FROM maçlar WHERE yıl = 2013 OR yıl = 2016
+ktb_1	WTA Şampiyonaları ve Avustralya Açık turnuvalarının ikisini de kazanmış oyuncuların ülke kodu ve ilk ismi nelerdir?	extra	SELECT T1.ülke_kodu , T1.isim FROM oyuncular AS T1 JOIN maçlar AS T2 ON T1.oyuncu_no = T2.kazanan_no WHERE T2.turnuva_ismi = 'WTA Şampiyonaları' INTERSECT SELECT T1.ülke_kodu , T1.isim FROM oyuncular AS T1 JOIN maçlar AS T2 ON T1.oyuncu_no = T2.kazanan_no WHERE T2.turnuva_ismi = 'Avustralya Açık'
+ktb_1	WTA Şampiyonaları ve Avustralya Açık turnuvalarının ikisini de kazanmış oyuncuların ilk isimleri ve ülke kodları nelerdir?	extra	SELECT T1.ülke_kodu , T1.isim FROM oyuncular AS T1 JOIN maçlar AS T2 ON T1.oyuncu_no = T2.kazanan_no WHERE T2.turnuva_ismi = 'WTA Şampiyonaları' INTERSECT SELECT T1.ülke_kodu , T1.isim FROM oyuncular AS T1 JOIN maçlar AS T2 ON T1.oyuncu_no = T2.kazanan_no WHERE T2.turnuva_ismi = 'Avustralya Açık'
+ktb_1	En yaşlı oyuncunun ilk ismini ve ülke kodunu bul.	medium	SELECT isim , ülke_kodu FROM oyuncular ORDER BY doğum_tarihi LIMIT 1
+ktb_1	En yaşlı oyuncunun ilk ismi ve ülke kodu nedir?	medium	SELECT isim , ülke_kodu FROM oyuncular ORDER BY doğum_tarihi LIMIT 1
+ktb_1	Tüm oyuncuların isimleri ve soyisimlerini listele.	medium	SELECT isim , soyisim FROM oyuncular ORDER BY doğum_tarihi
+ktb_1	Bütün oyuncuların tam ismi nelerdir, doğum tarihine göre sıralanmış olarak?	medium	SELECT isim , soyisim FROM oyuncular ORDER BY doğum_tarihi
+ktb_1	Doğum tarihine göre, solak oyuncuların isim ve soyisimlerini sırala.	medium	SELECT isim , soyisim FROM oyuncular WHERE el = 'Sol' ORDER BY doğum_tarihi
+ktb_1	Solak oyuncuların doğum tarihine göre sıralanmış bir şekilde isimleri nelerdir?	medium	SELECT isim , soyisim FROM oyuncular WHERE el = 'Sol' ORDER BY doğum_tarihi
+ktb_1	En fazla tura sahip oyuncunun ilk ismini ve ülke kodunu bul.	hard	SELECT T1.ülke_kodu , T1.isim FROM oyuncular AS T1 JOIN sıralamalar AS T2 ON T1.oyuncu_no = T2.oyuncu_no ORDER BY T2.turlar DESC LIMIT 1
+ktb_1	En fazla tura sahip oyuncunun ismi ve ülke kodu nedir?	hard	SELECT T1.ülke_kodu , T1.isim FROM oyuncular AS T1 JOIN sıralamalar AS T2 ON T1.oyuncu_no = T2.oyuncu_no ORDER BY T2.turlar DESC LIMIT 1
+ktb_1	En fazla maç olan yılı bul.	hard	SELECT yıl FROM maçlar GROUP BY yıl ORDER BY count(*) DESC LIMIT 1
+ktb_1	En fazla maç gerçekleşen yıl hangisidir?	hard	SELECT yıl FROM maçlar GROUP BY yıl ORDER BY count(*) DESC LIMIT 1
+ktb_1	En fazla kazanan oyuncunun ismini ve sıra puanını bulun.	hard	SELECT kazanan_ismi , kazanan_Sıra_puanları FROM maçlar GROUP BY kazanan_ismi ORDER BY count(*) DESC LIMIT 1
+ktb_1	En çok maç kazanan oyuncunun ismi ve sıra puanı nedir?	hard	SELECT kazanan_ismi , kazanan_Sıra_puanları FROM maçlar GROUP BY kazanan_ismi ORDER BY count(*) DESC LIMIT 1
+ktb_1	Australian Open turnuvasına katılmış ve en yüksek puana sahip kazananın adını bul.	hard	SELECT kazanan_ismi FROM maçlar WHERE turnuva_ismi = 'Avustralya Açık' ORDER BY kazanan_Sıra_puanları DESC LIMIT 1
+ktb_1	Avustralya Açık'ta yarışmış en fazla sıra puanına sahip kazananın ismi nedir?	hard	SELECT kazanan_ismi FROM maçlar WHERE turnuva_ismi = 'Avustralya Açık' ORDER BY kazanan_Sıra_puanları DESC LIMIT 1
+ktb_1	En fazla dakika oynayan kaybeden ve kazananın isimlerini bul.	medium	SELECT kazanan_ismi , kaybeden_ismi FROM maçlar ORDER BY dakika DESC LIMIT 1
+ktb_1	En uzun maçı oynamış olan kazanan ve kaybedenin isimleri nelerdir?	medium	SELECT kazanan_ismi , kaybeden_ismi FROM maçlar ORDER BY dakika DESC LIMIT 1
+ktb_1	Her oyuncunun ortalama sıralaması ve ismi nelerdir?	medium	SELECT avg(sıralama) , T1.isim FROM oyuncular AS T1 JOIN sıralamalar AS T2 ON T1.oyuncu_no = T2.oyuncu_no GROUP BY T1.isim
+ktb_1	Tüm oyuncuların isimleri ve ortalama sıraları nelerdir?	medium	SELECT avg(sıralama) , T1.isim FROM oyuncular AS T1 JOIN sıralamalar AS T2 ON T1.oyuncu_no = T2.oyuncu_no GROUP BY T1.isim
+ktb_1	Her oyuncunun toplam sıralama puanını ve isimlerini bul.	medium	SELECT sum(sıralama_puanı) , T1.isim FROM oyuncular AS T1 JOIN sıralamalar AS T2 ON T1.oyuncu_no = T2.oyuncu_no GROUP BY T1.isim
+ktb_1	Bütün oyuncuların isimleri ve toplam sıralama puanları nelerdir?	medium	SELECT sum(sıralama_puanı) , T1.isim FROM oyuncular AS T1 JOIN sıralamalar AS T2 ON T1.oyuncu_no = T2.oyuncu_no GROUP BY T1.isim
+ktb_1	Her ülke için oyuncu sayısını bul.	medium	SELECT count(*) , ülke_kodu FROM oyuncular GROUP BY ülke_kodu
+ktb_1	Her ülkede kaç tane oyuncu var?	medium	SELECT count(*) , ülke_kodu FROM oyuncular GROUP BY ülke_kodu
+ktb_1	En fazla oyuncuya sahip ülkenin kodunu bul.	hard	SELECT ülke_kodu FROM oyuncular GROUP BY ülke_kodu ORDER BY count(*) DESC LIMIT 1
+ktb_1	En çok oyuncusu olan ülkenin kodu nedir?	hard	SELECT ülke_kodu FROM oyuncular GROUP BY ülke_kodu ORDER BY count(*) DESC LIMIT 1
+ktb_1	50'den fazla oyuncuya sahip ülkelerin kodlarını bul.	easy	SELECT ülke_kodu FROM oyuncular GROUP BY ülke_kodu HAVING count(*) > 50
+ktb_1	50'den fazla oyuncuya sahip ülkelerin kodları nelerdir?	easy	SELECT ülke_kodu FROM oyuncular GROUP BY ülke_kodu HAVING count(*) > 50
+ktb_1	Her sıralama tarihi için toplam tur sayısını bul.	medium	SELECT sum(turlar) , sıralama_tarihi FROM sıralamalar GROUP BY sıralama_tarihi
+ktb_1	Her sıralama tarihi için toplamda kaç tane tur yapılmış?	medium	SELECT sum(turlar) , sıralama_tarihi FROM sıralamalar GROUP BY sıralama_tarihi
+ktb_1	Her yıl yapılmış maçların sayısını bul.	medium	SELECT count(*) , yıl FROM maçlar GROUP BY yıl
+ktb_1	Her yılda kaç maç yapılmıştır?	medium	SELECT count(*) , yıl FROM maçlar GROUP BY yıl
+ktb_1	Bütün maçlar arasındaki en genç 3 kazananın ismini ve sıralamasını bul.	medium	SELECT DISTINCT kazanan_ismi , kazanan_sırası FROM maçlar ORDER BY kazanan_yaşı LIMIT 3
+ktb_1	Bütün maçlar arasındaki en genç üç kazananın isimleri ve sıraları nelerdir?	medium	SELECT DISTINCT kazanan_ismi , kazanan_sırası FROM maçlar ORDER BY kazanan_yaşı LIMIT 3
+ktb_1	Kaç farklı kazanan hem WTA Şampiyonası'na katılmıştır hem de solaktır?	medium	SELECT count(DISTINCT kazanan_ismi) FROM maçlar WHERE turnuva_ismi = 'WTA Şampiyonaları' AND kazanan_el = 'Sol'
+ktb_1	WTA Championships'e katılmış solak kazananların sayısını bul.	medium	SELECT count(DISTINCT kazanan_ismi) FROM maçlar WHERE turnuva_ismi = 'WTA Championships' AND kazanan_el = 'L'
+ktb_1	Bütün maçlar arasında en fazla sıra puanına sahip kazanın ismini, ülke kodunu ve doğum tarihini bul.	hard	SELECT T1.isim , T1.ülke_kodu , T1.doğum_tarihi FROM oyuncular AS T1 JOIN maçlar AS T2 ON T1.oyuncu_no = T2.kazanan_no ORDER BY T2.kazanan_Sıra_puanları DESC LIMIT 1
+ktb_1	Bütün maçlar arasında en çok sıra puana sahip olan kazananın ismi, ülke kodu ve doğum tarihi nedir?	hard	SELECT T1.isim , T1.ülke_kodu , T1.doğum_tarihi FROM oyuncular AS T1 JOIN maçlar AS T2 ON T1.oyuncu_no = T2.kazanan_no ORDER BY T2.kazanan_Sıra_puanları DESC LIMIT 2
+ktb_1	Her el türü için toplam oyuncu sayısını bul.	medium	SELECT count(*) , el FROM oyuncular GROUP BY el
+ktb_1	Her el türüne göre kaç tane oyuncu vardır?	medium	SELECT count(*) , el FROM oyuncular GROUP BY el
+muharebe_ölüm	Kaç gemi 'Zapt edildi'?	easy	SELECT count(*) FROM gemi WHERE gemi_akıbeti = 'Zapt edildi'
+muharebe_ölüm	İsimleri azalan alfabetik sıraya göre sıralanmış olarak isim ve tonajı listele.	medium	SELECT isim , tonaj FROM gemi ORDER BY isim DESC
+muharebe_ölüm	Her muharebenin ismini, tarihini ve sonucunu listele.	medium	SELECT isim , tarih FROM muharebe
+muharebe_ölüm	Maksimum ve minimum ölü sayısı nedir?	medium	SELECT max(ölü) , min(ölü) FROM ölüm
+muharebe_ölüm	Her sefer meydana gelen yaralanmaların ortalama sayısı nedir?	easy	SELECT avg(yaralı) FROM ölüm
+muharebe_ölüm	t' tonajına sahip geminin sebep olduğu ölüm ve yaralanma durumları nelerdir?	medium	SELECT T1.ölü , T1.yaralı FROM ölüm AS T1 JOIN gemi AS t2 ON T1.öldüren_gemi_no = T2.no WHERE T2.tonaj = 't'
+muharebe_ölüm	Bulgar komutanın 'Boril' olmadığı muharebelerin isimleri ve sonuçları nelerdir?	medium	SELECT isim , sonuç FROM muharebe WHERE bulgar_komutan != 'Boril'
+muharebe_ölüm	Brik' türü gemilerin kaybedildiği farklı muharebelerin numaraları ve isimleri nelerdir?	medium	SELECT DISTINCT T1.no , T1.isim FROM muharebe AS T1 JOIN gemi AS T2 ON T1.no = T2.kaybedilen_muharebe WHERE T2.gemi_türü = 'Brik'
+muharebe_ölüm	10'dan fazla kişi öldürmüş muharebelerin numaraları ve isimleri nelerdir?	hard	SELECT T1.no , T1.isim FROM muharebe AS T1 JOIN gemi AS T2 ON T1.no = T2.kaybedilen_muharebe JOIN ölüm AS T3 ON T2.no = T3.öldüren_gemi_no GROUP BY T1.no HAVING sum(T3.ölü) > 10
+muharebe_ölüm	En fazla yaralanmaya sebebiyet veren geminin numarası nedir?	extra	SELECT T2.no , T2.isim FROM ölüm AS T1 JOIN gemi AS t2 ON T1.öldüren_gemi_no = T2.no GROUP BY T2.no ORDER BY count(*) DESC LIMIT 1
+muharebe_ölüm	Bulgar komutan 'Kaloyan' ve latin komutan 'I. Baudouin' arasında gerçekleşmiş farklı muhaberenin ismi nedir?	medium	SELECT isim FROM muharebe WHERE bulgar_komutan = 'Kaloyan' AND latin_komutan = 'I. Baudouin'
+muharebe_ölüm	Muharebelerde kaç farklı sonuç vardır?	easy	SELECT count(DISTINCT sonuç) FROM muharebe
+muharebe_ölüm	Kaç muharebede tonajı '225' olan hiçbir gemi kaybedilmedi?	extra	SELECT count(*) FROM muharebe WHERE no NOT IN ( SELECT kaybedilen_muharebe FROM gemi WHERE tonaj = '225' );
+muharebe_ölüm	HMS Atalanta' ve 'Lettice' isimli gemilerin kaybedildiği muhaberenin ismini ve tarihini listele.	extra	SELECT T1.isim , T1.tarih FROM muharebe AS T1 JOIN gemi AS T2 ON T1.no = T2.kaybedilen_muharebe WHERE T2.isim = 'Lettice' INTERSECT SELECT T1.isim , T1.tarih FROM muharebe AS T1 JOIN gemi AS T2 ON T1.no = T2.kaybedilen_muharebe WHERE T2.isim = 'HMS Atalanta'
+muharebe_ölüm	Manş Denizi' içindeki gemi olmayan muharebelerin isimlerini, sonuçlarını ve Bulgar komutanlarını göster.	extra	SELECT isim , sonuç , bulgar_komutan FROM muharebe EXCEPT SELECT T1.isim , T1.sonuç , T1.bulgar_komutan FROM muharebe AS T1 JOIN gemi AS T2 ON T1.no = T2.kaybedilen_muharebe WHERE T2.konum = 'Manş Denizi'
+muharebe_ölüm	İçinde 'Doğu' yazısı geçen ölüm olaylarının notları nelerdir?	medium	"SELECT ""not"" FROM ölüm WHERE ""not"" LIKE '%Doğu%'"
+öğrenci_transkript_takip	Satır 1 ve satır 2 dahil bütün adresler nelerdir?	medium	SELECT satır_1 , satır_2 FROM Adresler
+öğrenci_transkript_takip	Bütün adreslerin ilk ve ikinci satırı nelerdir?	medium	SELECT satır_1 , satır_2 FROM Adresler
+öğrenci_transkript_takip	Toplamda kaç ders listelenmiştir?	easy	SELECT count(*) FROM Dersler
+öğrenci_transkript_takip	Kaç tane ders var?	easy	SELECT count(*) FROM Dersler
+öğrenci_transkript_takip	Matematik dersi nasıl açıklanmaktadır?	easy	SELECT ders_açıklaması FROM Dersler WHERE ders_ismi = 'math'
+öğrenci_transkript_takip	Tüm matematik dersleri için açıklamalar nelerdir?	easy	SELECT ders_açıklaması FROM Dersler WHERE ders_ismi = 'math'
+öğrenci_transkript_takip	Port Chelsea şehrindeki adresin posta kodu nedir?	easy	SELECT posta_kodu FROM Adresler WHERE şehir = 'Port Chelsea'
+öğrenci_transkript_takip	Port Chelsea'nin posta kodu nedir?	easy	SELECT posta_kodu FROM Adresler WHERE şehir = 'Port Chelsea'
+öğrenci_transkript_takip	Hangi departmanlar en fazla lisansa sahip? Departman isimlerini ve numaralarını listele.	extra	SELECT T2.departman_ismi , T1.departman_no FROM Lisans_Programları AS T1 JOIN Departmanlar AS T2 ON T1.departman_no = T2.departman_no GROUP BY T1.departman_no ORDER BY count(*) DESC LIMIT 1;
+öğrenci_transkript_takip	En çok lisansa sahip departmanın ismi ve numarası nedir?	extra	select t2.departman_ismi , t1.departman_no from Lisans_Programları as t1 join Departmanlar as t2 on t1.departman_no = t2.departman_no group by t1.departman_no order by count(*) desc limit 1
+öğrenci_transkript_takip	Herhangi bir lisans sağlayan kaç tane departman vardır?	easy	SELECT count(DISTINCT departman_no) FROM Lisans_Programları
+öğrenci_transkript_takip	Kaç farklı departman lisans programı sağlıyor?	easy	SELECT count(DISTINCT departman_no) FROM Lisans_Programları
+öğrenci_transkript_takip	Kaç tane farklı lisans ismi sunuluyor?	easy	SELECT count(DISTINCT lisans_özeti_ismi) FROM Lisans_Programları
+öğrenci_transkript_takip	Kaç farklı lisans sunulmaktadır?	easy	SELECT count(DISTINCT lisans_özeti_ismi) FROM Lisans_Programları
+öğrenci_transkript_takip	Mühendislik departmanı kaç lisans programı sağlıyor?	medium	SELECT count(*) FROM Departmanlar AS T1 JOIN Lisans_Programları AS T2 ON T1.departman_no = T2.departman_no WHERE T1.departman_ismi = 'mühendislik';
+öğrenci_transkript_takip	Mühendislik departmanının kaç tane lisans programı var?	medium	SELECT count(*) FROM Departmanlar AS T1 JOIN Lisans_Programları AS T2 ON T1.departman_no = T2.departman_no WHERE T1.departman_ismi = 'mühendislik'
+öğrenci_transkript_takip	Bütün dalların isimleri ve açıklamaları nelerdir?	medium	SELECT dal_ismi , dal_açıklaması FROM Dallar
+öğrenci_transkript_takip	Bütün dalların isimleri ve açıklamaları nelerdir?	medium	SELECT dal_ismi , dal_açıklaması FROM Dallar
+öğrenci_transkript_takip	En fazla 2 dala sahip derslerin isimleri ve numaraları nelerdir?	medium	SELECT T1.ders_ismi , T1.ders_no FROM Dersler AS T1 JOIN Dallar AS T2 ON T1.ders_no = T2.ders_no GROUP BY T1.ders_no HAVING count(*) <= 2
+öğrenci_transkript_takip	2'den az dala sahip bütün derslerin isimleri ve numaraları nelerdir?	medium	SELECT T1.ders_ismi , T1.ders_no FROM Dersler AS T1 JOIN Dallar AS T2 ON T1.ders_no = T2.ders_no GROUP BY T1.ders_no HAVING count(*) <= 2
+öğrenci_transkript_takip	dal_ismi'ni alfabetik sıranın tersine göre sırala.	easy	SELECT dal_ismi FROM Dallar ORDER BY dal_ismi DESC
+öğrenci_transkript_takip	Ters alfabetik sırada dalların isimleri nelerdir?	easy	SELECT dal_ismi FROM Dallar ORDER BY dal_ismi DESC
+öğrenci_transkript_takip	En fazla öğrencinin kaydolduğu sömestr nedir? İsimleri ve numaralarını gösterin.	extra	SELECT T1.sömestr_ismi , T1.sömestr_no FROM Sömestrlar AS T1 JOIN öğrenci_kayıt AS T2 ON T1.sömestr_no = T2.sömestr_no GROUP BY T1.sömestr_no ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	En fazla öğrencinin kaydolduğu sömestirin ismi ve nosu nedir?	extra	SELECT T1.sömestr_ismi , T1.sömestr_no FROM Sömestrlar AS T1 JOIN öğrenci_kayıt AS T2 ON T1.sömestr_no = T2.sömestr_no GROUP BY T1.sömestr_no ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	Bilgisayar substring'ini içeren isme sahip departmanın açıklaması nedir?	medium	SELECT departman_açıklaması FROM Departmanlar WHERE departman_ismi LIKE '%bilgisayar%'
+öğrenci_transkript_takip	İçinde bilgisayar kelimesi olan departman isimlerinin açıklamaları nelerdir?	medium	SELECT departman_açıklaması FROM Departmanlar WHERE departman_ismi LIKE '%bilgisayar%'
+öğrenci_transkript_takip	Kim bir sömestirde 2 lisans programına kaydolmuştur? İlk ismi, orta ismi ve soyismini ve numarasını listele.	medium	SELECT T1.ilk_isim , T1.ikinci_isim , T1.soyad , T1.öğrenci_no FROM öğrenciler AS T1 JOIN öğrenci_kayıt AS T2 ON T1.öğrenci_no = T2.öğrenci_no GROUP BY T1.öğrenci_no HAVING count(*) = 2
+öğrenci_transkript_takip	Bir sömestrda 2 lisans programına kayıt olmuş bütün öğrencilerin ilk, ikinci ve soyismi ile öğrenci numaraları nedir?	medium	SELECT T1.ilk_isim , T1.ikinci_isim , T1.soyad , T1.öğrenci_no FROM öğrenciler AS T1 JOIN öğrenci_kayıt AS T2 ON T1.öğrenci_no = T2.öğrenci_no GROUP BY T1.öğrenci_no HAVING count(*) = 2
+öğrenci_transkript_takip	Lisans programına kimler kaydolmuştur? İlk isim, orta isim ve soyismi listele.	hard	SELECT DISTINCT T1.ilk_isim , T1.ikinci_isim , T1.soyad FROM öğrenciler AS T1 JOIN öğrenci_kayıt AS T2 ON T1.öğrenci_no = T2.öğrenci_no JOIN Lisans_Programları AS T3 ON T2.lisans_programı_no = T3.lisans_programı_no WHERE T3.lisans_özeti_ismi = 'Lisans'
+öğrenci_transkript_takip	Lisans programına katılanların ilk, orta ve soyisimleri nelerdir?	hard	SELECT DISTINCT T1.ilk_isim , T1.ikinci_isim , T1.soyad FROM öğrenciler AS T1 JOIN öğrenci_kayıt AS T2 ON T1.öğrenci_no = T2.öğrenci_no JOIN Lisans_Programları AS T3 ON T2.lisans_programı_no = T3.lisans_programı_no WHERE T3.lisans_özeti_ismi = 'Lisans'
+öğrenci_transkript_takip	En çok öğrencinin kayıt olduğu program türünü bul.	extra	SELECT T1.lisans_özeti_ismi FROM Lisans_Programları AS T1 JOIN öğrenci_kayıt AS T2 ON T1.lisans_programı_no = T2.lisans_programı_no GROUP BY T1.lisans_özeti_ismi ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	En fazla öğrencinin kaydolduğu lisansın özet ismi nedir?	extra	SELECT T1.lisans_özeti_ismi FROM Lisans_Programları AS T1 JOIN öğrenci_kayıt AS T2 ON T1.lisans_programı_no = T2.lisans_programı_no GROUP BY T1.lisans_özeti_ismi ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	En fazla öğrencinin kaydolduğu programı bul. Numarasını ve özetini listele.	extra	SELECT T1.lisans_programı_no , T1.lisans_özeti_ismi FROM Lisans_Programları AS T1 JOIN öğrenci_kayıt AS T2 ON T1.lisans_programı_no = T2.lisans_programı_no GROUP BY T1.lisans_programı_no ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	En çok öğrencinin kayıt olduğu lisansın program numarası ve özeti nedir?	extra	SELECT T1.lisans_programı_no , T1.lisans_özeti_ismi FROM Lisans_Programları AS T1 JOIN öğrenci_kayıt AS T2 ON T1.lisans_programı_no = T2.lisans_programı_no GROUP BY T1.lisans_programı_no ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	Hangi öğrenci herhangi bir programa en fazla kaydolmuştur? Numarasını, ilk ismi, orta ismi, soyismi ve kayıt sayısını ve öğrenci kimliğini listele.	extra	SELECT T1.öğrenci_no , T1.ilk_isim , T1.ikinci_isim , T1.soyad , count(*) , T1.öğrenci_no FROM öğrenciler AS T1 JOIN öğrenci_kayıt AS T2 ON T1.öğrenci_no = T2.öğrenci_no GROUP BY T1.öğrenci_no ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	Herhangi bir programa en fazla kaydolan öğrencinin ilk, orta ismi, soyismi, numarası ve kayıt sayısı nedir?	extra	SELECT T1.öğrenci_no , T1.ilk_isim , T1.ikinci_isim , T1.soyad , count(*) , T1.öğrenci_no FROM öğrenciler AS T1 JOIN öğrenci_kayıt AS T2 ON T1.öğrenci_no = T2.öğrenci_no GROUP BY T1.öğrenci_no ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	Hiçbir öğrencinin kaydolmadığı sömestr hangileridir? Sömestr isimlerini listele.	hard	SELECT sömestr_ismi FROM Sömestrlar WHERE sömestr_no NOT IN( SELECT sömestr_no FROM öğrenci_kayıt )
+öğrenci_transkript_takip	Hiçbir öğrencinin kaydolmadığı sömestrin ismi nedir?	hard	SELECT sömestr_ismi FROM Sömestrlar WHERE sömestr_no NOT IN( SELECT sömestr_no FROM öğrenci_kayıt )
+öğrenci_transkript_takip	Herhangi bir öğrencinin kaydolduğu ders isimleri nelerdir?	easy	SELECT DISTINCT T1.ders_ismi FROM Dersler AS T1 JOIN öğrenci_Kayıt_Dersler AS T2 ON T1.ders_no = T2.ders_no
+öğrenci_transkript_takip	Bazı öğrencilerin kayıt olduğu Bütün derslerin isimleri nelerdir?	easy	SELECT DISTINCT T1.ders_ismi FROM Dersler AS T1 JOIN öğrenci_kayıt_dersler AS T2 ON T1.ders_no = T2.ders_no
+öğrenci_transkript_takip	En fazla kayda sahip dersin ismi nedir?	extra	SELECT T1.ders_ismi FROM Dersler AS T1 JOIN öğrenci_kayıt_dersler AS T2 ON T1.ders_no = T2.ders_no GROUP BY T1.ders_ismi ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	Öğrencilerin en fazla kaydolduğu dersin ismi nedir?	extra	SELECT T1.ders_ismi FROM Dersler AS T1 JOIN öğrenci_kayıt_dersler AS T2 ON T1.ders_no = T2.ders_no GROUP BY T1.ders_ismi ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	Şu anda North Carolina'da yaşayan fakat hiçbir lisans programına başvurmamış öğrencilerin soyisimlerini bul.	extra	SELECT T1.soyad FROM öğrenciler AS T1 JOIN Adresler AS T2 ON T1.oturma_yeri_no = T2.adres_no WHERE T2.idari_bölge = 'NorthCarolina' EXCEPT SELECT DISTINCT T3.soyad FROM öğrenciler AS T3 JOIN öğrenci_kayıt AS T4 ON T3.öğrenci_no = T4.öğrenci_no
+öğrenci_transkript_takip	North Carolina'da yaşayıp herhangi bir lisansa kaydolmamış öğrencilerin soyisimleri nelerdir?	extra	SELECT T1.soyad FROM öğrenciler AS T1 JOIN Adresler AS T2 ON T1.oturma_yeri_no = T2.adres_no WHERE T2.idari_bölge = 'NorthCarolina' EXCEPT SELECT DISTINCT T3.soyad FROM öğrenciler AS T3 JOIN öğrenci_kayıt AS T4 ON T3.öğrenci_no = T4.öğrenci_no
+öğrenci_transkript_takip	En az 2 ders sonucunun olduğu transkriptin tarihini ve numarasını göster.	medium	SELECT T2.transkript_tarihi , T1.transkript_no FROM transkript_içeriği AS T1 JOIN Transkriptler AS T2 ON T1.transkript_no = T2.transkript_no GROUP BY T1.transkript_no HAVING count(*) >= 2
+öğrenci_transkript_takip	En az 2 dersin listelendiği transkriptin tarihi ve numarası nedir?	medium	SELECT T2.transkript_tarihi , T1.transkript_no FROM transkript_içeriği AS T1 JOIN Transkriptler AS T2 ON T1.transkript_no = T2.transkript_no GROUP BY T1.transkript_no HAVING count(*) >= 2
+öğrenci_transkript_takip	İlk ismi Timmothy ve soyismi Ward olan adamın telefon numarası nedir?	medium	SELECT cep_telefonu_numarası FROM öğrenciler WHERE ilk_isim = 'Timmothy' AND soyad = 'Ward'
+öğrenci_transkript_takip	Timmothy Ward'ın telefon numarası nedir?	medium	select cep_telefonu_numarası from öğrenciler where ilk_isim = 'Timmothy' and soyad = 'Ward'
+öğrenci_transkript_takip	İlk kaydolan öğrenci kimdir? İlk ismini, ikinci ismini ve soyismini listele.	medium	SELECT ilk_isim , ikinci_isim , soyad FROM öğrenciler ORDER BY kayıt_tarihi ASC LIMIT 1
+öğrenci_transkript_takip	İlk kaydolan öğrencinin ilk ismi, orta ismi ve soyismi nelerdir?	medium	SELECT ilk_isim , ikinci_isim , soyad FROM öğrenciler ORDER BY kayıt_tarihi ASC LIMIT 1
+öğrenci_transkript_takip	Okulun ilk mezunu kimdir? İlk, orta isimlerini ve soyismini listele.	medium	SELECT ilk_isim , ikinci_isim , soyad FROM öğrenciler ORDER BY ayrılma_tarihi ASC LIMIT 1
+öğrenci_transkript_takip	Okuldan ilk mezun olanın ilk, ikinci ve soyismi nedir?	medium	SELECT ilk_isim , ikinci_isim , soyad FROM öğrenciler ORDER BY ayrılma_tarihi ASC LIMIT 1
+öğrenci_transkript_takip	Kimlerin kalıcı adresi şimdiki adreslerinden farklıdır? İlk isimlerini listele.	easy	SELECT ilk_isim FROM öğrenciler WHERE oturma_yeri_no != ikametgah_no
+öğrenci_transkript_takip	Kalıcı adresi şimdiki adresinden farklı olan öğrencinin ilk ismi nedir?	easy	SELECT ilk_isim FROM öğrenciler WHERE oturma_yeri_no != ikametgah_no
+öğrenci_transkript_takip	Şu anda hangi adres en fazla öğrenciyi bulunduruyor? Adres numarasını ve bütün satırlarını listele.	extra	SELECT T1.adres_no , T1.satır_1 , T1.satır_2 FROM Adresler AS T1 JOIN öğrenciler AS T2 ON T1.adres_no = T2.oturma_yeri_no GROUP BY T1.adres_no ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	En fazla öğrenciye sahip adresin numarası, birinci ve ikinci satırları nelerdir?	extra	SELECT T1.adres_no , T1.satır_1 , T1.satır_2 FROM Adresler AS T1 JOIN öğrenciler AS T2 ON T1.adres_no = T2.oturma_yeri_no GROUP BY T1.adres_no ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	Transkriptlerin ortalama basılma tarihi nedir?	easy	SELECT avg(transkript_tarihi) FROM Transkriptler
+öğrenci_transkript_takip	Ortalama transkript tarihi nedir?	easy	SELECT avg(transkript_tarihi) FROM Transkriptler
+öğrenci_transkript_takip	İlk transkript ne zaman yayınlanmıştır? Tarihi ve detayları listele.	medium	SELECT transkript_tarihi , diğer_detaylar FROM Transkriptler ORDER BY transkript_tarihi ASC LIMIT 1
+öğrenci_transkript_takip	En erken transkript yayınlanma tarihi nedir, ve hangi detayları verebilirsin?	medium	SELECT transkript_tarihi , diğer_detaylar FROM Transkriptler ORDER BY transkript_tarihi ASC LIMIT 1
+öğrenci_transkript_takip	Kaç tane transkript yayınlandı?	easy	SELECT count(*) FROM Transkriptler
+öğrenci_transkript_takip	Kaç tane transkript listelenmiştir?	easy	SELECT count(*) FROM Transkriptler
+öğrenci_transkript_takip	Son transkriptin yayınlanma tarihi nedir?	medium	SELECT transkript_tarihi FROM Transkriptler ORDER BY transkript_tarihi DESC LIMIT 1
+öğrenci_transkript_takip	Son transkript ne zaman yayınlandı?	medium	SELECT transkript_tarihi FROM Transkriptler ORDER BY transkript_tarihi DESC LIMIT 1
+öğrenci_transkript_takip	Bir dersin kaydı en fazla kaç kere farklı transkriptlerde gösterilmiştir? Aynı zamanda kayıt numarasını da gösterin.	hard	SELECT count(*) , öğrenci_ders_no FROM transkript_içeriği GROUP BY öğrenci_ders_no ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	Bir dersin en çok farklı transkripte gösterilme sayısı ve bu dersin kayıt kimliği nedir?	hard	SELECT count(*) , öğrenci_ders_no FROM transkript_içeriği GROUP BY öğrenci_ders_no ORDER BY count(*) DESC LIMIT 1
+öğrenci_transkript_takip	En az sonuç gösteren transkript tarihini göster, ayrıca numaralarını listele.	extra	SELECT T2.transkript_tarihi , T1.transkript_no FROM transkript_içeriği AS T1 JOIN Transkriptler AS T2 ON T1.transkript_no = T2.transkript_no GROUP BY T1.transkript_no ORDER BY count(*) ASC LIMIT 1
+öğrenci_transkript_takip	En az sonuca sahip transkriptin tarihi ve numarası nedir?	extra	SELECT T2.transkript_tarihi , T1.transkript_no FROM transkript_içeriği AS T1 JOIN Transkriptler AS T2 ON T1.transkript_no = T2.transkript_no GROUP BY T1.transkript_no ORDER BY count(*) ASC LIMIT 1
+öğrenci_transkript_takip	Hem doktora hem de lisans öğrencilerinin kaydolduğu sömestrı bul.	extra	SELECT DISTINCT T2.sömestr_no FROM Lisans_Programları AS T1 JOIN öğrenci_kayıt AS T2 ON T1.lisans_programı_no = T2.lisans_programı_no WHERE lisans_özeti_ismi = 'Doktora' INTERSECT SELECT DISTINCT T2.sömestr_no FROM Lisans_Programları AS T1 JOIN öğrenci_kayıt AS T2 ON T1.lisans_programı_no = T2.lisans_programı_no WHERE lisans_özeti_ismi = 'Lisans'
+öğrenci_transkript_takip	Hem doktora hem de lisansa kayıtlı öğrencilerin sömestr numarası nedir?	extra	SELECT DISTINCT T2.sömestr_no FROM Lisans_Programları AS T1 JOIN öğrenci_kayıt AS T2 ON T1.lisans_programı_no = T2.lisans_programı_no WHERE lisans_özeti_ismi = 'Doktora' INTERSECT SELECT DISTINCT T2.sömestr_no FROM Lisans_Programları AS T1 JOIN öğrenci_kayıt AS T2 ON T1.lisans_programı_no = T2.lisans_programı_no WHERE lisans_özeti_ismi = 'Lisans'
+öğrenci_transkript_takip	Öğrenciler şu an kaç farklı adreste yaşamaktadır?	easy	SELECT count(DISTINCT oturma_yeri_no) FROM öğrenciler
+öğrenci_transkript_takip	Öğrencilerin yaşadığı kaç farklı adres vardır?	easy	SELECT count(DISTINCT oturma_yeri_no) FROM öğrenciler
+öğrenci_transkript_takip	Bütün öğrenci detaylarını ters sözlük sıralaması ile listele.	easy	SELECT diğer_öğrenci_ayrıntıları FROM öğrenciler ORDER BY diğer_öğrenci_ayrıntıları DESC
+öğrenci_transkript_takip	Ters alfabetik sırada öğrencilerle alakalı bana başka ne detay verebilirsin?	easy	SELECT diğer_öğrenci_ayrıntıları FROM öğrenciler ORDER BY diğer_öğrenci_ayrıntıları DESC
+öğrenci_transkript_takip	h dalını açıkla.	easy	SELECT dal_açıklaması FROM Dallar WHERE dal_ismi = 'h'
+öğrenci_transkript_takip	h isimli dal için açıklama nedir?	easy	SELECT dal_açıklaması FROM Dallar WHERE dal_ismi = 'h'
+öğrenci_transkript_takip	Temelli olarak Haiti'de yaşayan veya telefon numarası 09700166582 olan öğrencilerin ilk isimlerini bul.	hard	select t1.ilk_isim from öğrenciler as t1 join Adresler as t2 on t1.ikametgah_no = t2.adres_no where t2.ülke = 'haiti' or t1.cep_telefonu_numarası = '09700166582'
+öğrenci_transkript_takip	Haiti'de kalıcı olarak yaşayan ya da 09700166582 nolu telefon numarasına sahip olan öğrencilerin ilk isimleri nelerdir?	hard	select t1.ilk_isim from öğrenciler as t1 join Adresler as t2 on t1.ikametgah_no = t2.adres_no where t2.ülke = 'haiti' or t1.cep_telefonu_numarası = '09700166582'
+tvprogramı	Bütün çizgi filmlerin başlıklarını alfabetik sırayla listele.	easy	SELECT Başlık FROM çizgi_film ORDER BY Başlık
+tvprogramı	Alfabetik olarak sıralanmış çizgi dizilerin başlıkları nelerdir?	easy	SELECT Başlık FROM çizgi_film ORDER BY Başlık
+tvprogramı	"""Ben Jones"" tarafından yönetilmiş bütün çizgi filmleri listele."	easy	"SELECT Başlık FROM çizgi_film WHERE Yöneten = ""Ben Jones"";"
+tvprogramı	Ben Jones tarafından yönetilmiş bütün çizgi filmlerin isimleri nelerdir?	easy	"SELECT Başlık FROM çizgi_film WHERE Yöneten = ""Ben Jones"";"
+tvprogramı	"Kaç tane çizgi dizi ""Joseph Kuhr"" tarafından yazılmıştır?"	easy	"SELECT count(*) FROM çizgi_film WHERE Yazan = ""Joseph Kuhr"";"
+tvprogramı	Joseph Kuhr tarafından yazılan çizgi filmlerin sayısı kaçtır?	easy	"SELECT count(*) FROM çizgi_film WHERE Yazan = ""Joseph Kuhr"";"
+tvprogramı	Bütün çizgi film başlıklarını ve yönetmenlerini yayın tarihine göre listele.	medium	SELECT Başlık , Yöneten FROM çizgi_film ORDER BY Orijinal_yayın_tarihi
+tvprogramı	Yayın tarihine göre sıralanmış bütün çizgi dizilerin isimleri ve yönetmenleri nelerdir?	medium	SELECT Başlık , Yöneten FROM çizgi_film ORDER BY Orijinal_yayın_tarihi
+tvprogramı	"""Ben Jones"" veya ""Brendon Vietti"" tarafından yönetilen tüm çizgi filmlerin başlıklarını listele."	medium	"SELECT Başlık FROM çizgi_film WHERE Yöneten = ""Ben Jones"" OR Yöneten = ""Brandon Vietti"";"
+tvprogramı	Ben Jones veya Brandon Vietti tarafından yönetilmiş bütün çizgi filmlerin başlıkları nelerdir?	medium	"SELECT Başlık FROM çizgi_film WHERE Yöneten = ""Ben Jones"" OR Yöneten = ""Brandon Vietti"";"
+tvprogramı	En fazla televizyon kanalına sahip ülke hangisidir? Sahip olduğu program sayısını ve ülkeyi listele.	hard	SELECT Ülke , count(*) FROM TV_Kanalı GROUP BY Ülke ORDER BY count(*) DESC LIMIT 1;
+tvprogramı	En fazla televizyon kanalına sahip ülke nedir ve kaç kanalı vardır?	hard	SELECT Ülke , count(*) FROM TV_Kanalı GROUP BY Ülke ORDER BY count(*) DESC LIMIT 1;
+tvprogramı	Televizyon kanalı tablosundaki farklı seri isimlerinin ve içeriklerin sayılarını listele.	medium	SELECT count(DISTINCT dizi_ismi) , count(DISTINCT İçerik) FROM TV_Kanalı;
+tvprogramı	Televizyon kanalı tablosunda kaç farklı seri ve içerik listelenmiştir?	medium	SELECT count(DISTINCT dizi_ismi) , count(DISTINCT İçerik) FROM TV_Kanalı;
+tvprogramı	"""Sky Radio"" isimli televizyon kanalının içeriği nedir?"	easy	"SELECT İçerik FROM TV_Kanalı WHERE dizi_ismi = ""Sky Radio"";"
+tvprogramı	Sky Radio dizisinin içeriği nedir?	easy	"SELECT İçerik FROM TV_Kanalı WHERE dizi_ismi = ""Sky Radio"";"
+tvprogramı	"Dizi ismi ""Sky Radio"" olan televizyon kanalı paket seçeneği nedir?"	easy	"SELECT Paket_Seçeneği FROM TV_Kanalı WHERE dizi_ismi = ""Sky Radio"";"
+tvprogramı	"Dizi ismi ""Sky Radio"" olan televizyon kanallarının paket seçenekleri nelerdir?"	easy	"SELECT Paket_Seçeneği FROM TV_Kanalı WHERE dizi_ismi = ""Sky Radio"";"
+tvprogramı	Kaç tane İngilizce dilini kullanan televizyon kanalı var?	easy	"SELECT count(*) FROM TV_Kanalı WHERE Dil = ""İngilizce"";"
+tvprogramı	Kaç televizyon kanalı İngilizce dilini kullanmaktadır?	easy	"SELECT count(*) FROM TV_Kanalı WHERE Dil = ""İngilizce"";"
+tvprogramı	En az televizon kanalı tarafından kullanılan dili listele. Dili ve televizyon kanalı sayısını listele.	hard	SELECT Dil , count(*) FROM TV_Kanalı GROUP BY Dil ORDER BY count(*) ASC LIMIT 1;
+tvprogramı	Televizyon kanalları tarafından en az kullanılan dil hangisidir ve kaç tane kanal kullanıyor?	hard	SELECT Dil , count(*) FROM TV_Kanalı GROUP BY Dil ORDER BY count(*) ASC LIMIT 1;
+tvprogramı	Bütün dilleri ve kaç tane televizyon kanalının bu dilleri kullandığını listele.	medium	SELECT Dil , count(*) FROM TV_Kanalı GROUP BY Dil
+tvprogramı	Her dil için, o dili kullanan televizyon kanalı sayısını listele.	medium	SELECT Dil , count(*) FROM TV_Kanalı GROUP BY Dil
+tvprogramı	"""The Rise of the Blue Beetle!"" çizgi filmini gösteren televizyon kanalı nedir? Televizyon kanalının dizi isimlerini listele."	medium	"SELECT T1.dizi_ismi FROM TV_Kanalı AS T1 JOIN çizgi_film AS T2 ON T1.no = T2.Kanal WHERE T2.Başlık = ""The Rise of the Blue Beetle!"";"
+tvprogramı	"""The Rise of the Blue Beetle"" çizgi dizisini gösteren televizyon kanallarının dizi ismi nedir?"	medium	"SELECT T1.dizi_ismi FROM TV_Kanalı AS T1 JOIN çizgi_film AS T2 ON T1.no = T2.Kanal WHERE T2.Başlık = ""The Rise of the Blue Beetle!"";"
+tvprogramı	"""Sky Radio"" ismiyle televizyon kanalına çıkan tüm çizgi filmlerin başlıklarını listele."	medium	"SELECT T2.Başlık FROM TV_Kanalı AS T1 JOIN çizgi_film AS T2 ON T1.no = T2.Kanal WHERE T1.dizi_ismi = ""Sky Radio"";"
+tvprogramı	"""Sky Radio"" dizi ismine sahip televizyon kanalında gösterilmiş bütün çizgi filmlerin başlıklarını listele."	medium	"SELECT T2.Başlık FROM TV_Kanalı AS T1 JOIN çizgi_film AS T2 ON T1.no = T2.Kanal WHERE T1.dizi_ismi = ""Sky Radio"";"
+tvprogramı	Puana göre sıralanan bütün televizyon serilerinin bölümlerini listele.	easy	SELECT Bölüm FROM TV_serisi ORDER BY Puan
+tvprogramı	Puana göre sıralanmış şekilde tüm bölümler nelerdir?	easy	SELECT Bölüm FROM TV_serisi ORDER BY Puan
+tvprogramı	En yüksek puana sahip televizyon serilerini listele. Televizyon serisinin bölüm ve puanını listele.	medium	SELECT Bölüm , Puan FROM TV_serisi ORDER BY Puan DESC LIMIT 3;
+tvprogramı	Televizyon serileri tablosunda en yüksek puanlı 3 bölüm ve bölümlerin puanları nelerdir?	medium	SELECT Bölüm , Puan FROM TV_serisi ORDER BY Puan DESC LIMIT 3;
+tvprogramı	Televizyon serilerinin minimum ve maksimum payı nedir?	medium	SELECT max(Paylaşma) , min(Paylaşma) FROM TV_serisi;
+tvprogramı	Televizyon serileri için maksimum ve minimum paylaşma nedir?	medium	SELECT max(Paylaşma) , min(Paylaşma) FROM TV_serisi;
+tvprogramı	"""A Love of a Lifetime"" bölümünün bulunduğu televizyon serisinin yayınlanma tarihi nedir?"	easy	"SELECT Yayın_Tarihi FROM TV_serisi WHERE Bölüm = ""A Love of a Lifetime"";"
+tvprogramı	"""A Love of a Lifetime"" ne zaman yayınlandı?"	easy	"SELECT Yayın_Tarihi FROM TV_serisi WHERE Bölüm = ""A Love of a Lifetime"";"
+tvprogramı	"""A Love of a Lifetime"" bölümü yayınlanan televizyon serisinin haftalık sıralaması nedir?"	easy	"SELECT Haftalık_Sıralama FROM TV_serisi WHERE Bölüm = ""A Love of a Lifetime"";"
+tvprogramı	"""A Love of a Lifetime"" bölümünün haftalık sırası nedir?"	easy	"SELECT Haftalık_Sıralama FROM TV_serisi WHERE Bölüm = ""A Love of a Lifetime"";"
+tvprogramı	"""A Love of a Lifetime"" hangi televizyon kanalının dizisinin bölümüdür? Bu televizyon kanalının dizilerini listele."	medium	"SELECT T1.dizi_ismi FROM TV_Kanalı AS T1 JOIN TV_serisi AS T2 ON T1.no = T2.Kanal WHERE T2.Bölüm = ""A Love of a Lifetime"";"
+tvprogramı	"""A Love of a Lifetime"" bölümüne sahip dizinin ismi nedir?"	medium	"SELECT T1.dizi_ismi FROM TV_Kanalı AS T1 JOIN TV_serisi AS T2 ON T1.no = T2.Kanal WHERE T2.Bölüm = ""A Love of a Lifetime"";"
+tvprogramı	"Seri ismi ""Sky Radio"" olan televizyon kanallarındaki bütün televizyon serilerinin bölümlerini listele."	medium	"SELECT T2.Bölüm FROM TV_Kanalı AS T1 JOIN TV_serisi AS T2 ON T1.no = T2.Kanal WHERE T1.dizi_ismi = ""Sky Radio"";"
+tvprogramı	"""Sky Radio"" isimli dizinin bölümü nedir?"	medium	"SELECT T2.Bölüm FROM TV_Kanalı AS T1 JOIN TV_serisi AS T2 ON T1.no = T2.Kanal WHERE T1.dizi_ismi = ""Sky Radio"";"
+tvprogramı	Listelenmiş yönetmenler tarafından yönetilmiş bütün çizgi film sayılarını listele.	medium	SELECT count(*) , Yöneten FROM çizgi_film GROUP BY Yöneten
+tvprogramı	Her yönetmen kaç çizgi dizi yaratmıştır?	medium	SELECT count(*) , Yöneten FROM çizgi_film GROUP BY Yöneten
+tvprogramı	En son yayınlanan çizgi filmin üretim kodunu ve kanalını bul.	medium	select Prodüksiyon_kodu , Kanal from çizgi_film order by Orijinal_yayın_tarihi desc limit 1
+tvprogramı	En yeni çizgi filmin prodüksiyon kodu ve kanalı nedir?	medium	select Prodüksiyon_kodu , Kanal from çizgi_film order by Orijinal_yayın_tarihi desc limit 1
+tvprogramı	Yüksek çözünürlüklü televizyona sahip televizyon kanallarının paket seçeneğini ve dizi ismini bul.	medium	"SELECT Paket_Seçeneği , dizi_ismi FROM TV_Kanalı WHERE Yüksek_çözünürlüklü_TV = ""evet"""
+tvprogramı	Yüksek çözünürlüklü televizyona sahip olan televizyon kanallarının paket seçeneklerini ve dizi isimlerini bul.	medium	"SELECT Paket_Seçeneği , dizi_ismi FROM TV_Kanalı WHERE Yüksek_çözünürlüklü_TV = ""evet"""
+tvprogramı	Hangi ülkelerin televizyon kanalları Todd Casey tarafından yazılmış bazı çizgi filmleri yayınlamaktadır?	medium	SELECT T1.Ülke FROM TV_Kanalı AS T1 JOIN çizgi_film AS T2 ON T1.no = T2.Kanal WHERE T2.Yazan = 'Todd Casey'
+tvprogramı	Todd Casey tarafından yazılmış çizgi dizilere sahip ülkeler hangileridir?	medium	SELECT T1.Ülke FROM TV_Kanalı AS T1 JOIN çizgi_film AS T2 ON T1.no = T2.Kanal WHERE T2.Yazan = 'Todd Casey'
+tvprogramı	Todd Casey tarafından yazılan çizgi film hangi ülkelerin televizyon kanallarında yayınlanmıyor?	hard	SELECT Ülke FROM TV_Kanalı EXCEPT SELECT T1.Ülke FROM TV_Kanalı AS T1 JOIN çizgi_film AS T2 ON T1.no = T2.Kanal WHERE T2.Yazan = 'Todd Casey'
+tvprogramı	Hangi ülkelerin televizyon kanalları Todd Casey tarafından yazılmış bazı çizgi filmleri yayınlamamaktadır?	hard	SELECT Ülke FROM TV_Kanalı EXCEPT SELECT T1.Ülke FROM TV_Kanalı AS T1 JOIN çizgi_film AS T2 ON T1.no = T2.Kanal WHERE T2.Yazan = 'Todd Casey'
+tvprogramı	Ben Jones ve Michael Chang tarafından yönetilen bazı çizgi dizileri oynayan televizyon programının dizi ismini ve ülkesini bul.	extra	SELECT T1.dizi_ismi , T1.Ülke FROM TV_Kanalı AS T1 JOIN çizgi_film AS T2 ON T1.no = T2.Kanal WHERE T2.Yöneten = 'Michael Chang' INTERSECT SELECT T1.dizi_ismi , T1.Ülke FROM TV_Kanalı AS T1 JOIN çizgi_film AS T2 ON T1.no = T2.Kanal WHERE T2.Yöneten = 'Ben Jones'
+tvprogramı	Ben Jones ve Michaek Chang tarafından yönetilen çizgi filmleri yayınlayan televizyon kanallarının dizi isimleri ve ülkeleri nelerdir?	extra	SELECT T1.dizi_ismi , T1.Ülke FROM TV_Kanalı AS T1 JOIN çizgi_film AS T2 ON T1.no = T2.Kanal WHERE T2.Yöneten = 'Michael Chang' INTERSECT SELECT T1.dizi_ismi , T1.Ülke FROM TV_Kanalı AS T1 JOIN çizgi_film AS T2 ON T1.no = T2.Kanal WHERE T2.Yöneten = 'Ben Jones'
+tvprogramı	İngilizce kullanmayan televizyon kanallarının piksel çerçeve oranlarını ve ülkelerini bul.	medium	SELECT Piksel_çerçeve_oranı_PÇO , Ülke FROM TV_Kanalı WHERE Dil != 'İngilizce'
+tvprogramı	İngilizce kullanmayan bütün televizyon kanallarının piksel çerçeve oranları ve ülkeleri nelerdir?	medium	SELECT Piksel_çerçeve_oranı_PÇO , Ülke FROM TV_Kanalı WHERE Dil != 'İngilizce'
+tvprogramı	İkiden fazla TV kanalı olan ülkelerin TV kanallarının numaraları nelerdir?	easy	SELECT no FROM TV_Kanalı GROUP BY Ülke HAVING count(*) > 2
+tvprogramı	İkiden fazla TV kanalı olan tüm TV kanallarının numaraları nelerdir?	easy	SELECT no FROM TV_Kanalı GROUP BY Ülke HAVING count(*) > 2
+tvprogramı	Ben Jones tarafından yönetilmemiş çizgi dizileri oynatan televizyon kanallarının numarasını bul.	hard	SELECT no FROM TV_Kanalı EXCEPT SELECT Kanal FROM çizgi_film WHERE Yöneten = 'Ben Jones'
+tvprogramı	Ben Jones tarafından yönetilmiş hiçbir çizgi filmin yayınlanmadığı TV kanallarının numaraları nelerdir?	hard	SELECT no FROM TV_Kanalı EXCEPT SELECT Kanal FROM çizgi_film WHERE Yöneten = 'Ben Jones'
+tvprogramı	Ben Jones tarafından yönetilmemiş çizgi filmleri yayınlayan televizyon kanallarının paket seçeneklerini bul.	hard	SELECT Paket_Seçeneği FROM TV_Kanalı WHERE no NOT IN (SELECT Kanal FROM çizgi_film WHERE Yöneten = 'Ben Jones')
+tvprogramı	Ben Jones tarafından yönetilmemiş çizgi dizileri oynayan bütün televizyon kanallarının paket seçenekleri nelerdir?	hard	SELECT Paket_Seçeneği FROM TV_Kanalı WHERE no NOT IN (SELECT Kanal FROM çizgi_film WHERE Yöneten = 'Ben Jones')
+poker_oyuncusu	Kaç tane poker oyuncusu var?	easy	SELECT count(*) FROM poker_oyuncusu
+poker_oyuncusu	Poker oyuncularının sayısını say.	easy	SELECT count(*) FROM poker_oyuncusu
+poker_oyuncusu	Azalan sırada poker oyuncularının kazançlarını listele.	easy	SELECT kazanç FROM poker_oyuncusu ORDER BY kazanç DESC
+poker_oyuncusu	Azalan sıraya göre poker oyuncularının kazançları nedir?	easy	SELECT kazanç FROM poker_oyuncusu ORDER BY kazanç DESC
+poker_oyuncusu	Poker oyuncuları tarafından yapılan son masa ve en iyi bitişleri listele.	medium	SELECT yapılan_son_masa , en_iyi_bitiş FROM poker_oyuncusu
+poker_oyuncusu	Bütün poker oyuncularının yaptıkları son masaları ve en iyi bitişleri nelerdir?	medium	SELECT yapılan_son_masa , en_iyi_bitiş FROM poker_oyuncusu
+poker_oyuncusu	Bütün poker oyuncularının ortalama kazancı nedir?	easy	SELECT avg(kazanç) FROM poker_oyuncusu
+poker_oyuncusu	Bütün poker oyuncuları arasında ortalama kazancı döndür.	easy	SELECT avg(kazanç) FROM poker_oyuncusu
+poker_oyuncusu	En yüksek kazanca sahip poker oyuncusunun para kademesi nedir?	medium	SELECT para_kademesi FROM poker_oyuncusu ORDER BY kazanç DESC LIMIT 1
+poker_oyuncusu	En yüksek kazanca sahip olan poker oyuncusunun para kademesini döndür.	medium	SELECT para_kademesi FROM poker_oyuncusu ORDER BY kazanç DESC LIMIT 1
+poker_oyuncusu	200000'den az kazanca sahip poker oyuncuları arasında en yüksek yapılan son masa sayısı nedir?	easy	SELECT max(yapılan_son_masa) FROM poker_oyuncusu WHERE kazanç < 200000
+poker_oyuncusu	200000'den az kazanca sahip bütün poker oyuncularının maksimum son masasını döndür.	easy	SELECT max(yapılan_son_masa) FROM poker_oyuncusu WHERE kazanç < 200000
+poker_oyuncusu	Poker oyuncularının isimleri nelerdir?	easy	SELECT T1.isim FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no
+poker_oyuncusu	Bütün poker oyunlarının isimlerini döndür.	easy	SELECT T1.isim FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no
+poker_oyuncusu	300000'den fazla kazanca sahip poker oyuncularının isimleri nelerdir?	medium	SELECT T1.isim FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no WHERE T2.kazanç > 300000
+poker_oyuncusu	300000'den fazla kazancı olan poker oyuncularının isimlerini ver.	medium	SELECT T1.isim FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no WHERE T2.kazanç > 300000
+poker_oyuncusu	Yaptıkları son masaya göre artan sırada poker oyuncularının isimlerini listele.	medium	SELECT T1.isim FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no ORDER BY T2.yapılan_son_masa
+poker_oyuncusu	Yaptıkları son masaya göre artan sırada, poker oyuncularının isimleri nelerdir?	medium	SELECT T1.isim FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no ORDER BY T2.yapılan_son_masa
+poker_oyuncusu	En az kazanca sahip olan poker oyuncusunun doğum tarihi nedir?	hard	SELECT T1.doğum_tarihi FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no ORDER BY T2.kazanç ASC LIMIT 1
+poker_oyuncusu	En düşük kazanca sahip poker oyuncusunun doğum tarihini döndür.	hard	SELECT T1.doğum_tarihi FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no ORDER BY T2.kazanç ASC LIMIT 1
+poker_oyuncusu	En uzun poker oyuncusunun para kademesi nedir?	hard	SELECT T2.para_kademesi FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no ORDER BY T1.boy DESC LIMIT 1
+poker_oyuncusu	En uzun poker oyuncusunun para kademesini döndür.	hard	SELECT T2.para_kademesi FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no ORDER BY T1.boy DESC LIMIT 1
+poker_oyuncusu	Boyu 200'den uzun olan poker oyuncularının ortalama kazancı nedir?	medium	SELECT avg(T2.kazanç) FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no WHERE T1.boy > 200
+poker_oyuncusu	200'den uzun poker oyuncularının ortalama kazancını ver.	medium	SELECT avg(T2.kazanç) FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no WHERE T1.boy > 200
+poker_oyuncusu	Azalan kazanç sırasına göre poker oyuncularının isimleri nelerdir?	medium	SELECT T1.isim FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no ORDER BY T2.kazanç DESC
+poker_oyuncusu	Kazançları azalan sırada poker oyuncularının isimlerini döndür.	medium	SELECT T1.isim FROM kişi AS T1 JOIN poker_oyuncusu AS T2 ON T1.kişi_no = T2.kişi_no ORDER BY T2.kazanç DESC
+poker_oyuncusu	İnsanların farklı milletleri ve her milletteki insan sayısı nedir?	medium	SELECT uyruk , COUNT(*) FROM kişi GROUP BY uyruk
+poker_oyuncusu	Her milletten kaç insan var?	medium	SELECT uyruk , COUNT(*) FROM kişi GROUP BY uyruk
+poker_oyuncusu	Kişilerin en sık milliyeti nedir?	hard	SELECT uyruk FROM kişi GROUP BY uyruk ORDER BY COUNT(*) DESC LIMIT 1
+poker_oyuncusu	İnsanlar arasında en yaygın milleti ver.	hard	SELECT uyruk FROM kişi GROUP BY uyruk ORDER BY COUNT(*) DESC LIMIT 1
+poker_oyuncusu	En az iki kişinin olduğu milliyetler nelerdir?	easy	SELECT uyruk FROM kişi GROUP BY uyruk HAVING COUNT(*) >= 2
+poker_oyuncusu	İki veya daha fazla kişinin olduğu milliyetleri döndür.	easy	SELECT uyruk FROM kişi GROUP BY uyruk HAVING COUNT(*) >= 2
+poker_oyuncusu	İsme göre alfabetik olarak artan sırada kişilerin isimlerini ve doğum tarihlerini listele.	medium	SELECT isim , doğum_tarihi FROM kişi ORDER BY isim ASC
+poker_oyuncusu	İsme göre alfabetik sırada kişilerin isimleri ve doğum tarihleri nedir?	medium	SELECT isim , doğum_tarihi FROM kişi ORDER BY isim ASC
+poker_oyuncusu	"Uyruğu ""Rusya"" olmayan kişilerin isimlerini göster."	easy	"SELECT isim FROM kişi WHERE uyruk != ""Rusya"""
+poker_oyuncusu	Rusya'dan olmayan insanların isimleri nelerdir?	easy	"SELECT isim FROM kişi WHERE uyruk != ""Rusya"""
+poker_oyuncusu	Poker oyuncusu olmayan insanların isimlerini listele.	hard	SELECT isim FROM kişi WHERE kişi_no NOT IN (SELECT kişi_no FROM poker_oyuncusu)
+poker_oyuncusu	Poker oynamayan kişilerin isimleri nelerdir?	hard	SELECT isim FROM kişi WHERE kişi_no NOT IN (SELECT kişi_no FROM poker_oyuncusu)
+poker_oyuncusu	Kaç farklı uyruk vardır?	easy	SELECT count(DISTINCT uyruk) FROM kişi
+poker_oyuncusu	Farklı uyrukları say.	easy	SELECT count(DISTINCT uyruk) FROM kişi
+seçmen_1	Kaç tane eyalet var?	easy	SELECT count(*) FROM ALAN_KODU_EYALET
+seçmen_1	Yarışmacı ismine göre azalan sırada yarışmacı numaralarını ve isimlerini listele.	medium	SELECT aday_numarası , aday_ismi FROM ADAYLAR ORDER BY aday_ismi DESC
+seçmen_1	Oy numaralarını, telefon numaralarını ve oyların eyaletlerini listele.	medium	SELECT oy_no , telefon_numarası , eyalet FROM OYLAR
+seçmen_1	Alan kodlarının maksimum ve minimum değerleri nelerdir?	medium	SELECT max(alan_kodu) , min(alan_kodu) FROM ALAN_KODU_EYALET
+seçmen_1	CA' eyaletinde oluşturulmuş en son oyun tarihi nedir?	easy	SELECT max(oluşturulma) FROM OYLAR WHERE eyalet = 'CA'
+seçmen_1	İsmi 'Jessie Alloway' olmayan adayların isimleri nelerdir?	easy	SELECT aday_ismi FROM ADAYLAR WHERE aday_ismi != 'Jessie Alloway'
+seçmen_1	Bütün oylar için farklı eyaletler ve oluşturulma zamanı nelerdir?	medium	SELECT DISTINCT eyalet , oluşturulma FROM OYLAR
+seçmen_1	En az iki oya sahip yarışmacıların numaraları ve isimleri nelerdir?	medium	SELECT T1.aday_numarası , T1.aday_ismi FROM ADAYLAR AS T1 JOIN OYLAR AS T2 ON T1.aday_numarası = T2.aday_numarası GROUP BY T1.aday_numarası HAVING count(*) >= 2
+seçmen_1	En az oy alan adayın aday numarası ve ismi nedir?	extra	SELECT T1.aday_numarası , T1.aday_ismi FROM ADAYLAR AS T1 JOIN OYLAR AS T2 ON T1.aday_numarası = T2.aday_numarası GROUP BY T1.aday_numarası ORDER BY count(*) ASC LIMIT 1
+seçmen_1	NY' veya 'CA' eyaletindeki oy sayısı nedir?	medium	SELECT count(*) FROM OYLAR WHERE eyalet = 'NY' OR eyalet = 'CA'
+seçmen_1	Kaç yarışmacıya oy verilmemiştir?	extra	SELECT count(*) FROM ADAYLAR WHERE aday_numarası NOT IN ( SELECT aday_numarası FROM OYLAR )
+seçmen_1	En fazla oy verilen yerin alan kodu nedir?	extra	SELECT T1.alan_kodu FROM ALAN_KODU_EYALET AS T1 JOIN OYLAR AS T2 ON T1.eyalet = T2.eyalet GROUP BY T1.alan_kodu ORDER BY count(*) DESC LIMIT 1
+seçmen_1	Tabatha Gehling' isimli aday için olan oyların oluşturulma tarihleri, eyaletleri ve telefon numaraları nelerdir?	medium	SELECT T2.oluşturulma , T2.eyalet , T2.telefon_numarası FROM ADAYLAR AS T1 JOIN OYLAR AS T2 ON T1.aday_numarası = T2.aday_numarası WHERE T1.aday_ismi = 'Tabatha Gehling'
+seçmen_1	Yarışmacı 'Tabatha Gehling' ve 'Kelly Clauss'un ikisine de oy verenlerin alan kodlarını listele.	extra	SELECT T3.alan_kodu FROM ADAYLAR AS T1 JOIN OYLAR AS T2 ON T1.aday_numarası = T2.aday_numarası JOIN ALAN_KODU_EYALET AS T3 ON T2.eyalet = T3.eyalet WHERE T1.aday_ismi = 'Tabatha Gehling' INTERSECT SELECT T3.alan_kodu FROM ADAYLAR AS T1 JOIN OYLAR AS T2 ON T1.aday_numarası = T2.aday_numarası JOIN ALAN_KODU_EYALET AS T3 ON T2.eyalet = T3.eyalet WHERE T1.aday_ismi = 'Kelly Clauss'
+seçmen_1	İsmi 'Al' içeren adayların isimlerini döndür.	medium	"select aday_ismi from ADAYLAR where aday_ismi like ""%al%"""
+dünya_1	1950'den sonra bağımsız olmuş bütün ülkelerin isimleri nelerdir?	easy	SELECT İsim FROM ülke WHERE BağımsızlıkYılı > 1950
+dünya_1	1950'den sonra kurulmuş ülkelerin isimlerini ver.	easy	SELECT İsim FROM ülke WHERE BağımsızlıkYılı > 1950
+dünya_1	Hükûmet biçimi cumhuriyet olan kaç ülke var?	easy	"SELECT count(*) FROM ülke WHERE HükümetBiçimi = ""Cumhuriyet"""
+dünya_1	Hükümet biçimi cumhuriyet olan kaç ülke var?	easy	"SELECT count(*) FROM ülke WHERE HükümetBiçimi = ""Cumhuriyet"""
+dünya_1	Karayipler bölgesindeki ülkelerin toplam yüzey alanı nedir?	easy	"SELECT sum(YüzeyAlanı) FROM ülke WHERE Bölge = ""Karayipler"""
+dünya_1	Karayipler bölgesindeki ülkelerin toplam yüzey alanı nedir?	easy	"SELECT sum(YüzeyAlanı) FROM ülke WHERE Bölge = ""Karayipler"""
+dünya_1	Angola hangi kıtada bulunuyor?	easy	"SELECT Kıta FROM ülke WHERE İsim = ""Anguilla"""
+dünya_1	Anguilla'nın bulunduğu kıtanın ismi nedir?	easy	"SELECT Kıta FROM ülke WHERE İsim = ""Anguilla"""
+dünya_1	Kabul şehri nerededir?	medium	"SELECT Bölge FROM ülke AS T1 JOIN şehir AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.İsim = ""Kabul"""
+dünya_1	Kabul hangi bölgede bulunmaktadır?	medium	"SELECT Bölge FROM ülke AS T1 JOIN şehir AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.İsim = ""Kabul"""
+dünya_1	Aruba'daki en popüler dil hangisidir?	extra	"SELECT T2.Dil FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T1.İsim = ""Aruba"" ORDER BY Yüzdelik DESC LIMIT 1"
+dünya_1	Aruba'da en çok konuşulan dil nedir?	extra	"SELECT T2.Dil FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T1.İsim = ""Aruba"" ORDER BY Yüzdelik DESC LIMIT 1"
+dünya_1	Brezilya'da nüfus ve ortalama yaşam süresi nedir?	medium	"SELECT Nüfus , TahminiYaşamSüresi FROM ülke WHERE İsim = ""Brezilya"""
+dünya_1	Bana Brezilya'nın nüfusunu ve ortalama yaşam süresini ver.	medium	"SELECT Nüfus , TahminiYaşamSüresi FROM ülke WHERE İsim = ""Brezilya"""
+dünya_1	Angola'nın bölgesi ve nüfusu nedir?	medium	"SELECT Nüfus , Bölge FROM ülke WHERE İsim = ""Angola"""
+dünya_1	Angola hangi bölgeye aittir ve nüfusu nedir?	medium	"SELECT Nüfus , Bölge FROM ülke WHERE İsim = ""Angola"""
+dünya_1	Orta Afrika bölgesindeki ülkelerin ortalama yaşam süresi nedir?	easy	"SELECT avg(TahminiYaşamSüresi) FROM ülke WHERE Bölge = ""Orta Afrika"""
+dünya_1	Orta Afrika bölgesindeki ülkelerin ortalama yaşam süresi nedir?	easy	"SELECT avg(TahminiYaşamSüresi) FROM ülke WHERE Bölge = ""Orta Afrika"""
+dünya_1	Asya'da ortalama yaşam süresi en az olan ülkenin ismi nedir?	hard	"SELECT İsim FROM ülke WHERE Kıta = ""Asya"" ORDER BY TahminiYaşamSüresi LIMIT 1"
+dünya_1	Asya'daki en az ortalama yaşam süresine sahip ülkenin ismini ver.	hard	"SELECT İsim FROM ülke WHERE Kıta = ""Asya"" ORDER BY TahminiYaşamSüresi LIMIT 1"
+dünya_1	Asya kıtasındaki toplam nüfus ve maksimum gayrisafi milli hasıla nedir?	medium	"SELECT sum(Nüfus) , max(GayrisafiMilliHasıla) FROM ülke WHERE Kıta = ""Asya"""
+dünya_1	Asya kıtasında kaç kişi yaşıyor, ve aralarındaki en yüksek gayrisafi milli hasıla nedir?	medium	"SELECT sum(Nüfus) , max(GayrisafiMilliHasıla) FROM ülke WHERE Kıta = ""Asya"""
+dünya_1	Afrika'daki cumhuriyetlerin ortalama yaşam süresi nedir?	medium	"SELECT avg(TahminiYaşamSüresi) FROM ülke WHERE Kıta = ""Afrika"" AND HükümetBiçimi = ""Cumhuriyet"""
+dünya_1	Afrika'da cumhuriyet olan ülkelerin ortalama yaşam süresini ver.	medium	"SELECT avg(TahminiYaşamSüresi) FROM ülke WHERE Kıta = ""Afrika"" AND HükümetBiçimi = ""Cumhuriyet"""
+dünya_1	Asya ve Avrupa kıtasının toplam yüzey alanı nedir?	medium	"SELECT sum(YüzeyAlanı) FROM ülke WHERE Kıta = ""Asya"" OR Kıta = ""Avrupa"""
+dünya_1	Asya veya Avrupa'da olan ülkelerin toplam yüzey alanını ver.	medium	"SELECT sum(YüzeyAlanı) FROM ülke WHERE Kıta = ""Asya"" OR Kıta = ""Avrupa"""
+dünya_1	Gelderland semtinde kaç kişi yaşıyor?	easy	"SELECT sum(Nüfus) FROM şehir WHERE Semt = ""Gelderland"""
+dünya_1	Gelderland semtinin toplam nüfusu nedir?	easy	"SELECT sum(Nüfus) FROM şehir WHERE Semt = ""Gelderland"""
+dünya_1	Hükûmeti ABD toprağı olan bütün ülkelerin gayrisafi milli hasılaları ve toplam nüfusu nelerdir?	medium	"SELECT avg(GayrisafiMilliHasıla) , sum(Nüfus) FROM ülke WHERE HükümetBiçimi = ""ABD Toprağı"""
+dünya_1	Hükûmeti ABD toprağı olan ülkelerin ortalama gayrisafi milli hasılaları ve toplam nüfuslarını ver.	medium	"SELECT avg(GayrisafiMilliHasıla) , sum(Nüfus) FROM ülke WHERE HükümetBiçimi = ""ABD Toprağı"""
+dünya_1	Dünyada kaç tane benzersiz dil konuşuluyor?	easy	SELECT count(DISTINCT Dil) FROM ülkedili
+dünya_1	Dünya'da konuşulan farklı dillerin sayısı nedir?	easy	SELECT count(DISTINCT Dil) FROM ülkeDili
+dünya_1	Afrika'da kaç tip hükümet vardır?	easy	"SELECT count(DISTINCT HükümetBiçimi) FROM ülke WHERE Kıta = ""Afrika"""
+dünya_1	Afrika'da kaç tane farklı hükümet biçimi vardır?	easy	"SELECT count(DISTINCT HükümetBiçimi) FROM ülke WHERE Kıta = ""Afrika"""
+dünya_1	Aruba'da kullanılan toplam dil sayısı nedir?	medium	"SELECT COUNT(T2.Dil) FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T1.İsim = ""Aruba"""
+dünya_1	Aruba'da kaç dil konuşuluyor?	medium	"SELECT COUNT(T2.Dil) FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T1.İsim = ""Aruba"""
+dünya_1	Afganistan'ın kaç tane resmi dili mevcuttur?	medium	"SELECT COUNT(*) FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T1.İsim = ""Afganistan"" AND Resmi = ""T"""
+dünya_1	Afganistan'da kaç farklı resmi dil konuşulmaktadır?	medium	"SELECT COUNT(*) FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T1.İsim = ""Afganistan"" AND Resmi = ""T"""
+dünya_1	En çok dili kullanan ülkenin ismi nedir?	extra	SELECT T1.İsim FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu GROUP BY T1.İsim ORDER BY COUNT(*) DESC LIMIT 1
+dünya_1	En çok dili kullanan ülkenin ismini ver.	extra	SELECT T1.İsim FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu GROUP BY T1.İsim ORDER BY COUNT(*) DESC LIMIT 1
+dünya_1	Dil çeşitliliği en fazla olan kıta hangisidir?	extra	SELECT T1.Kıta FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu GROUP BY T1.Kıta ORDER BY COUNT(*) DESC LIMIT 1
+dünya_1	Hangi kıta en fazla dili konuşur?	extra	SELECT T1.Kıta FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu GROUP BY T1.Kıta ORDER BY COUNT(*) DESC LIMIT 1
+dünya_1	Kaç tane ülke hem İngilizce hem de Felemenkçe konuşuyor?	easy	"SELECT COUNT(*) FROM (SELECT T1.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" INTERSECT SELECT T1.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""Felemenkçe"")"
+dünya_1	İngilizce ve Felemenkçe kullanan ülkelerin sayısı nedir?	easy	"SELECT COUNT(*) FROM (SELECT T1.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" INTERSECT SELECT T1.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""Felemenkçe"")"
+dünya_1	Hem İngilizce hem de Fransızca konuşan ülkelerin isimleri nelerdir?	extra	"SELECT T1.İsim FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" INTERSECT SELECT T1.İsim FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""Fransızca"""
+dünya_1	Hem İngilizce hem de Fransızca konuşan ülkelerin isimlerini ver.	extra	"SELECT T1.İsim FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" INTERSECT SELECT T1.İsim FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""Fransızca"""
+dünya_1	Resmi dilleri İngilizce ve Fransızca olan ülkelerin isimleri nelerdir?	extra	"SELECT T1.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" AND T2.Resmi = ""T"" INTERSECT SELECT T1.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""Fransızca"" AND T2.Resmi = ""T"""
+dünya_1	Resmi dilleri İngilizce ve Fransızca olan ülkelerin isimlerini ver.	extra	"SELECT T1.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" AND T2.Resmi = ""T"" INTERSECT SELECT T1.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""Fransızca"" AND T2.Resmi = ""T"""
+dünya_1	Çince konuşulan farklı kıta sayısı nedir?	medium	"SELECT COUNT( DISTINCT Kıta) FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""Çince"""
+dünya_1	Kaç kıta Çince konuşmaktadır?	medium	"SELECT COUNT( DISTINCT Kıta) FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""Çince"""
+dünya_1	İngilizce veya Felemenkçe konuşulan bölgeler nelerdir?	hard	"SELECT DISTINCT T1.Bölge FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" OR T2.Dil = ""Felemenkçe"""
+dünya_1	Hangi bölgelerde Felemenkçe ve İngilizce konuşuluyor?	hard	"SELECT DISTINCT T1.Bölge FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" OR T2.Dil = ""Felemenkçe"""
+dünya_1	İngilizce veya Felemenkçe'nin resmi dil olduğu ülkeler nelerdir?	extra	"select t1.İsim from ülke as t1 join ülkeDili as t2 on t1.Kod = t2.ÜlkeKodu where t2.Dil = ""İngilizce"" and Resmi = ""T"" union select t1.İsim from ülke as t1 join ülkeDili as t2 on t1.Kod = t2.ÜlkeKodu where t2.Dil = ""Felemenkçe"" and Resmi = ""T"""
+dünya_1	Hangi ülkelerim resmi dili ya İngilizce ya da Felemenkçe'dir?	extra	"SELECT * FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" AND Resmi = ""T"" UNION SELECT * FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""Felemenkçe"" AND Resmi = ""T"""
+dünya_1	Asya kıtasında en popüler olan dil hangisidir?	extra	"SELECT T2.Dil FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T1.Kıta = ""Asya"" GROUP BY T2.Dil ORDER BY COUNT (*) DESC LIMIT 1"
+dünya_1	Asya ülkeleri tarafından en fazla kullanılan dil nedir?	extra	"SELECT T2.Dil FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T1.Kıta = ""Asya"" GROUP BY T2.Dil ORDER BY COUNT (*) DESC LIMIT 1"
+dünya_1	Hangi diller yalnızca cumhuriyet ile yönetilen tek bir ülkede konuşulmaktadır?	hard	"SELECT T2.Dil FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T1.HükümetBiçimi = ""Cumhuriyet"" GROUP BY T2.Dil HAVING COUNT(*) = 1"
+dünya_1	Hangi diller yalnızca cumhuriyet ile yönetilen tek bir ülke tarafından kullanılmaktadır?	hard	"SELECT T2.Dil FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T1.HükümetBiçimi = ""Cumhuriyet"" GROUP BY T2.Dil HAVING COUNT(*) = 1"
+dünya_1	İngilizce konuşan en fazla nüfusa sahip şehri bul.	extra	"SELECT T1.İsim , T1.Nüfus FROM şehir AS T1 JOIN ülkeDili AS T2 ON T1.ÜlkeKodu = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" ORDER BY T1.Nüfus DESC LIMIT 1"
+dünya_1	İngilizce konuşan en kalabalık şehir nedir?	extra	"SELECT T1.İsim , T1.Nüfus FROM şehir AS T1 JOIN ülkeDili AS T2 ON T1.ÜlkeKodu = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" ORDER BY T1.Nüfus DESC LIMIT 1"
+dünya_1	En büyük yüzey alanına sahip Asya ülkesinin ismini, nüfusunu ve tahmini yaşam süresini bul.	hard	"SELECT İsim , Nüfus , TahminiYaşamSüresi FROM ülke WHERE Kıta = ""Asya"" ORDER BY YüzeyAlanı DESC LIMIT 1"
+dünya_1	Toprağa göre en büyük Asya ülkesinin ismi, nüfusu ve ortalama yaşam süresi nelerdir?	hard	"SELECT İsim , Nüfus , TahminiYaşamSüresi FROM ülke WHERE Kıta = ""Asya"" ORDER BY YüzeyAlanı DESC LIMIT 1"
+dünya_1	İngilizce'nin resmi dil olmadığı ülkelerdeki tahmini ortalama yaşam süresi nedir?	extra	"SELECT avg(TahminiYaşamSüresi) FROM ülke WHERE İsim NOT IN (SELECT T1.İsim FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" AND T2.Resmi = ""T"")"
+dünya_1	İngilizce'nin resmi dil olmadığı ülkelerdeki tahmini yaşam süresini getir.	extra	"SELECT avg(TahminiYaşamSüresi) FROM ülke WHERE İsim NOT IN (SELECT T1.İsim FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"" AND T2.Resmi = ""T"")"
+dünya_1	İngilizce kullanmayan ülkelerde yaşayan insanların toplam sayısı nedir?	extra	"SELECT sum(Nüfus) FROM ülke WHERE İsim NOT IN (SELECT T1.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"")"
+dünya_1	İngilizce konuşmayan ülkelerde kaç kişi yaşıyor?	extra	"SELECT sum(Nüfus) FROM ülke WHERE İsim NOT IN (SELECT T1.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T2.Dil = ""İngilizce"")"
+dünya_1	Devlet başkanı Beatrix olan ülkenin konuşulan resmi dili nedir?	medium	"SELECT T2.Dil FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T1.DevletBaşkanı = ""Beatrix"" AND T2.Resmi = ""T"""
+dünya_1	Devlet başkanının ismi Beatrix olan ülkenin resmi dili nedir?	medium	"SELECT T2.Dil FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE T1.DevletBaşkanı = ""Beatrix"" AND T2.Resmi = ""T"""
+dünya_1	1930'dan önce kurulmuş ülkelerde konuşulan kaç farklı resmi dil vardır?	medium	"SELECT count(DISTINCT T2.Dil) FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE BağımsızlıkYılı < 1930 AND T2.Resmi = ""T"""
+dünya_1	1930'dan önce kurulmuş ülkelerin toplam farklı resmi dil sayısı nedir?	medium	"SELECT count(DISTINCT T2.Dil) FROM ülke AS T1 JOIN ülkedili AS T2 ON T1.Kod = T2.ÜlkeKodu WHERE BağımsızlıkYılı < 1930 AND T2.Resmi = ""T"""
+dünya_1	Avrupa'daki herhangi bir ülkeden daha fazla yüzey alanına sahip ülkeler nelerdir?	hard	"SELECT İsim FROM ülke WHERE YüzeyAlanı > (SELECT min(YüzeyAlanı) FROM ülke WHERE Kıta = ""Avrupa"")"
+dünya_1	Hangi ülkeler Avrupa'daki herhangi bir ülkeden daha büyük alana sahip?	hard	"SELECT İsim FROM ülke WHERE YüzeyAlanı > (SELECT min(YüzeyAlanı) FROM ülke WHERE Kıta = ""Avrupa"")"
+dünya_1	Asya'daki herhangi bir ülkeden daha az nüfusa sahip Afrika ülkeleri nelerdir?	extra	"SELECT İsim FROM ülke WHERE Kıta = ""Afrika"" AND Nüfus < (SELECT min(Nüfus) FROM ülke WHERE Kıta = ""Asya"")"
+dünya_1	Herhangi bir Asya ülkesinden daha az nüfusa sahip Afrika ülkeleri hangileridir?	extra	"SELECT İsim FROM ülke WHERE Kıta = ""Afrika"" AND Nüfus < (SELECT min(Nüfus) FROM ülke WHERE Kıta = ""Asya"")"
+dünya_1	Hangi Asya ülkeleri Afrika'daki herhangi bir ülkeden daha fazla nüfusa sahiptir?	extra	"SELECT İsim FROM ülke WHERE Kıta = ""Asya"" AND nüfus > (SELECT max(nüfus) FROM ülke WHERE Kıta = ""Afrika"")"
+dünya_1	Afrika'daki herhangi bir ülkeden daha fazla nüfusa sahip Asya ülkeleri nelerdir?	extra	"SELECT İsim FROM ülke WHERE Kıta = ""Asya"" AND nüfus > (SELECT min(nüfus) FROM ülke WHERE Kıta = ""Afrika"")"
+dünya_1	İngilizce konuşmayan ülkelerin ülke kodları nelerdir?	hard	"SELECT ÜlkeKodu FROM ülkeDili EXCEPT SELECT ÜlkeKodu FROM ülkeDili WHERE Dil = ""İngilizce"""
+dünya_1	İngilizce konuşmayan ülkelerin ülke kodunu döndür.	hard	"SELECT ÜlkeKodu FROM ülkeDili EXCEPT SELECT ÜlkeKodu FROM ülkeDili WHERE Dil = ""İngilizce"""
+dünya_1	İngilizce dışında diğer dillerin konuşulduğu ülkelerin ülke kodları nelerdir?	easy	"SELECT DISTINCT ÜlkeKodu FROM ülkeDili WHERE Dil != ""İngilizce"""
+dünya_1	İnsanları İngilizce konuşmayan ülkelerin ülke kodları nelerdir?	easy	"SELECT DISTINCT ÜlkeKodu FROM ülkeDili WHERE Dil != ""İngilizce"""
+dünya_1	İngilizce konuşmayan ve cumhuriyet ile yönetilmeyen ülkelerin kodları nelerdir?	hard	"SELECT Kod FROM ülke WHERE HükümetBiçimi != ""Cumhuriyet"" EXCEPT SELECT ÜlkeKodu FROM ülkedili WHERE Dil = ""İngilizce"""
+dünya_1	İngilizce konuşulmayan ve hükümeti cumhuriyet olmayan ülkelerin kodlarını getir.	hard	"SELECT Kod FROM ülke WHERE HükümetBiçimi != ""Cumhuriyet"" EXCEPT SELECT ÜlkeKodu FROM ülkedili WHERE Dil = ""İngilizce"""
+dünya_1	İngilizce'nin resmi olmadığı Avrupa ülkelerinde bulunan şehirler hangileridir?	extra	SELECT DISTINCT T2.İsim FROM ülke AS T1 JOIN şehir AS T2 ON T2.ÜlkeKodu = T1.Kod WHERE T1.Kıta = 'Avrupa' AND T1.İsim NOT IN (SELECT T3.İsim FROM ülke AS T3 JOIN ülkeDili AS T4 ON T3.Kod = T4.ÜlkeKodu WHERE T4.Resmi = 'T' AND T4.Dil = 'İngilizce')
+dünya_1	Avrupa'da İngilizcenin resmi dil olmadığı şehirler nelerdir?	extra	SELECT DISTINCT T2.İsim FROM ülke AS T1 JOIN şehir AS T2 ON T2.ÜlkeKodu = T1.Kod WHERE T1.Kıta = 'Avrupa' AND T1.İsim NOT IN (SELECT T3.İsim FROM ülke AS T3 JOIN ülkeDili AS T4 ON T3.Kod = T4.ÜlkeKodu WHERE T4.Resmi = 'T' AND T4.Dil = 'İngilizce')
+dünya_1	Hangi benzersiz şehirler Çincenin resmi dil olduğu Asya ülkelerindedir?	hard	"SELECT DISTINCT T3.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu JOIN şehir AS T3 ON T1.Kod = T3.ÜlkeKodu WHERE T2.Resmi = 'T' AND T2.Dil = 'Çince' AND T1.Kıta = ""Asya"""
+dünya_1	Asya'da bulunan ve resmi dili Çince olan farklı şehir isimlerini döndür.	hard	"SELECT DISTINCT T3.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu JOIN şehir AS T3 ON T1.Kod = T3.ÜlkeKodu WHERE T2.Resmi = 'T' AND T2.Dil = 'Çince' AND T1.Kıta = ""Asya"""
+dünya_1	En az nüfusa sahip ülkenin ismi, bağımsızlık yılı ve yüzey alanı nedir?	medium	SELECT İsim , YüzeyAlanı , BağımsızlıkYılı FROM ülke ORDER BY Nüfus LIMIT 1
+dünya_1	En az nüfusa sahip ülkenin ismini, bağımsızlık yılını ve yüzey alanını ver.	medium	SELECT İsim , YüzeyAlanı , BağımsızlıkYılı FROM ülke ORDER BY Nüfus LIMIT 1
+dünya_1	En fazla yüzey alanına sahip ülkenin nüfusu, ismi ve lideri nelerdir?	medium	SELECT İsim , Nüfus , DevletBaşkanı FROM ülke ORDER BY YüzeyAlanı DESC LIMIT 1
+dünya_1	En fazla alana sahip ülkenin ismini, nüfusunu ve başkanını ver.	medium	SELECT İsim , Nüfus , DevletBaşkanı FROM ülke ORDER BY YüzeyAlanı DESC LIMIT 1
+dünya_1	En az 3 dil konuşulan her ülke için ülke ismini ve konuşulan dil sayısını döndür.	medium	SELECT COUNT(T2.Dil) , T1.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu GROUP BY T1.İsim HAVING COUNT(*) > 2
+dünya_1	İkiden fazla dili konuşan ülkelelerin isimleri ve konuştukları dil sayıları nelerdir?	medium	SELECT COUNT(T2.Dil) , T1.İsim FROM ülke AS T1 JOIN ülkeDili AS T2 ON T1.Kod = T2.ÜlkeKodu GROUP BY T1.İsim HAVING COUNT(*) > 2
+dünya_1	Her bölgede nüfusu şehirlerin ortalama nüfusundan büyük olan şehir sayısını bul.	extra	SELECT count(*) , Semt FROM şehir WHERE Nüfus > (SELECT avg(Nüfus) FROM şehir) GROUP BY Semt
+dünya_1	Her semtteki kaç şehrin nüfusu bütün şehirler arasında ortalamadan yüksektir?	extra	SELECT count(*) , Semt FROM şehir WHERE Nüfus > (SELECT avg(Nüfus) FROM şehir) GROUP BY Semt
+dünya_1	Ortalama yaşam süresinin 72'den fazla olduğu her yönetim biçiminin ismini ve toplam nüfusunu bul.	medium	SELECT sum(Nüfus) , HükümetBiçimi FROM ülke GROUP BY HükümetBiçimi HAVING avg(TahminiYaşamSüresi) > 72
+dünya_1	Ortalama tahmini yaşam süresi 72'den büyük olan hükümetlerin toplam nüfusu ve tüm yönetim biçimleri nelerdir?	medium	SELECT sum(Nüfus) , HükümetBiçimi FROM ülke GROUP BY HükümetBiçimi HAVING avg(TahminiYaşamSüresi) > 72
+dünya_1	Tahmini yaşam süresi 72'den az olan kıtaların tahmini yaşam sürelerini ve toplam nüfusunu bul.	medium	SELECT sum(Nüfus) , avg(TahminiYaşamSüresi) , Kıta FROM ülke GROUP BY Kıta HAVING avg(TahminiYaşamSüresi) < 72
+dünya_1	Ortalama yaşam süresinin 72'den az olduğu farklı kıtaların toplam nüfusları ve ortalama yaşam süreleri nelerdir?	medium	SELECT sum(Nüfus) , avg(TahminiYaşamSüresi) , Kıta FROM ülke GROUP BY Kıta HAVING avg(TahminiYaşamSüresi) < 72
+dünya_1	En büyük yüzey alanlı 5 ülkenin isimleri ve alanları nelerdir?	medium	SELECT İsim , YüzeyAlanı FROM ülke ORDER BY YüzeyAlanı DESC LIMIT 5
+dünya_1	Yüzey alanı en büyük 5 ülkenin isimlerini ve yüzey alanlarını döndür.	medium	SELECT İsim , YüzeyAlanı FROM ülke ORDER BY YüzeyAlanı DESC LIMIT 5
+dünya_1	Nüfusu en büyük 3 ülkenin isimleri nelerdir?	medium	SELECT İsim FROM ülke ORDER BY Nüfus DESC LIMIT 3
+dünya_1	En kalabalık 3 ülkenin isimlerini döndür.	medium	SELECT İsim FROM ülke ORDER BY Nüfus DESC LIMIT 3
+dünya_1	Nüfusu en az olan 3 ülkenin isimleri nelerdir?	medium	SELECT İsim FROM ülke ORDER BY Nüfus ASC LIMIT 3
+dünya_1	En az insana sahip 3 ülkenin isimlerini döndür.	medium	SELECT İsim FROM ülke ORDER BY Nüfus ASC LIMIT 3
+dünya_1	Asya'da kaç ülke vardır?	easy	"SELECT count(*) FROM ülke WHERE Kıta = ""Asya"""
+dünya_1	Asya'daki ülke sayısını say.	easy	"SELECT count(*) FROM ülke WHERE Kıta = ""Asya"""
+dünya_1	Avrupa kıtasında olan ve 80000 nüfusa sahip ülkelerin isimleri nelerdir?	medium	"SELECT İsim FROM ülke WHERE Kıta = ""Avrupa"" AND Nüfus = ""80000"""
+dünya_1	Avrupa kıtasında olan ve nüfusu 80000 olan ülkelerin isimlerini ver.	medium	"SELECT İsim FROM ülke WHERE Kıta = ""Avrupa"" AND Nüfus = ""80000"""
+dünya_1	Yüzey alanı 3000'den büyük olup Kuzey Amerika'da bulunan ülkelerin toplam nüfusu ve ortalama yüzey alanı nedir?	hard	"select sum(Nüfus) , avg(YüzeyAlanı) from ülke where Kıta = ""Kuzey Amerika"" and YüzeyAlanı > 3000"
+dünya_1	Yüzey alanı 3000'den fazla olup Kuzey Amerika'da bulunan ülkelerin toplam nüfusunu ve ortalama yüzey alanını ver.	hard	"select sum(Nüfus) , avg(YüzeyAlanı) from ülke where Kıta = ""Kuzey Amerika"" and YüzeyAlanı > 3000"
+dünya_1	Nüfusu 16000 ile 900000 arasında olan şehirler nelerdir?	easy	SELECT İsim FROM şehir WHERE Nüfus BETWEEN 160000 AND 900000
+dünya_1	Nüfusu 160000 ve 900000 arasında olan şehirlerin isimlerini döndür.	easy	select İsim from şehir where Nüfus between 160000 and 900000
+dünya_1	En çok ülke tarafından konuşulan dil hangisidir?	hard	SELECT Dil FROM ülkeDili GROUP BY Dil ORDER BY count(*) DESC LIMIT 1
+dünya_1	En çok ülkede konuşulan dili göster.	hard	SELECT Dil FROM ülkeDili GROUP BY Dil ORDER BY count(*) DESC LIMIT 1
+dünya_1	Her ülke  için yüzdelik olarak en fazla konuşulan dil nedir?	medium	SELECT Dil , ÜlkeKodu , max(Yüzdelik) FROM ülkeDili GROUP BY ÜlkeKodu
+dünya_1	Farklı ülkelerin ülke kodları nelerdir ve her biri için insanlar tarafından en fazla konuşulan diller nelerdir?	medium	SELECT Dil , ÜlkeKodu , max(Yüzdelik) FROM ülkeDili GROUP BY ÜlkeKodu
+dünya_1	İspanyolcayı konuşan nüfusun en çok olduğu ülke sayısı nedir?	extra	"SELECT count(*) , max(Yüzdelik) FROM ülkedili WHERE Dil = ""İspanyolca"" GROUP BY ÜlkeKodu"
+dünya_1	İspanyolcanın ağırlıklı olarak konuşulan dil olduğu ülkelerin sayısını say.	extra	"SELECT count(*) , max(Yüzdelik) FROM ülkedili WHERE Dil = ""İspanyolca"" GROUP BY ÜlkeKodu"
+dünya_1	İnsanların en büyük yüzdesinin İspanyolca konuştuğu ülkelerin kodları nelerdir?	medium	"SELECT ÜlkeKodu , max(Yüzdelik) FROM ülkeDili WHERE Dil = ""İspanyolca"" GROUP BY ÜlkeKodu"
+dünya_1	Ağırlıklı olarak İspanyolca konuşulan ülkelerin kodunu döndür.	medium	"SELECT ÜlkeKodu , max(Yüzdelik) FROM ülkeDili WHERE Dil = ""İspanyolca"" GROUP BY ÜlkeKodu"
+orkestra	Kaç tane orkestra şefi var?	easy	SELECT count(*) FROM orkestra_şefi
+orkestra	Orkestra şefi sayısını say.	easy	SELECT count(*) FROM orkestra_şefi
+orkestra	Yaşlarına göre sıralanmış şekilde orkestra şeflerinin isimlerini listele.	easy	SELECT isim FROM orkestra_şefi ORDER BY yaş ASC
+orkestra	Yaşlarına göre sıralanmış olarak orkestra şeflerinin isimleri nelerdir?	easy	SELECT isim FROM orkestra_şefi ORDER BY yaş ASC
+orkestra	ABD' uyruklu olmayan orkestra şeflerinin isimleri nelerdir?	easy	SELECT isim FROM orkestra_şefi WHERE uyruk != 'ABD'
+orkestra	ABD' uyruklu olmayan orkestra şeflerinin isimlerini döndür.	easy	SELECT isim FROM orkestra_şefi WHERE uyruk != 'ABD'
+orkestra	Kuruldukları yıllara göre azalacak sırada orkestraların kayıt şirketleri nelerdir?	easy	SELECT kayıt_şirketi FROM orkestra ORDER BY kuruluş_yılı DESC
+orkestra	Bulundukları yıllara göre azalacak şekilde sıralanmış olarak orkestraların kayıt şirketlerini döndür.	easy	SELECT kayıt_şirketi FROM orkestra ORDER BY kuruluş_yılı DESC
+orkestra	Gösterilerin ortalama katılımı nedir?	easy	SELECT avg(katılım) FROM gösteri
+orkestra	Bütün gösteriler arasındaki ortalama katılımı döndür.	easy	SELECT avg(katılım) FROM gösteri
+orkestra	Performans türü 'Canlı final' olmayan performansların maksimum ve minimum payları nelerdir?	medium	"SELECT max(pay) , min(pay) FROM performans WHERE tür != ""Canlı final"""
+orkestra	Performans türü 'Canlı final' olmayan performansların maksimum ve minimum paylarını döndür.	medium	"SELECT max(pay) , min(pay) FROM performans WHERE tür != ""Canlı final"""
+orkestra	Orkestra şeflerinin kaç farklı uyruğu vardır?	easy	SELECT count(DISTINCT uyruk) FROM orkestra_şefi
+orkestra	Orkestra şeflerinin farklı uyruklarının sayısını say.	easy	SELECT count(DISTINCT uyruk) FROM orkestra_şefi
+orkestra	Çalışma yıllarına göre orkestra şeflerinin isimlerini listele.	easy	SELECT isim FROM orkestra_şefi ORDER BY çalıştığı_yıl_sayısı DESC
+orkestra	Azalacak şekilde çalıştığı yıl sırasına göre sıralanmış olarak orkestra şeflerinin isimleri nelerdir?	easy	SELECT isim FROM orkestra_şefi ORDER BY çalıştığı_yıl_sayısı DESC
+orkestra	En çok yıl çalışmış orkestra şefinin ismini listele.	medium	SELECT isim FROM orkestra_şefi ORDER BY çalıştığı_yıl_sayısı DESC LIMIT 1
+orkestra	En çok yıl çalışmış olan orkestra şefinin ismi nedir?	medium	SELECT isim FROM orkestra_şefi ORDER BY çalıştığı_yıl_sayısı DESC LIMIT 1
+orkestra	Orkestra şeflerinin isimlerini ve yönettikleri orkestraları göster.	medium	SELECT T1.isim , T2.isim FROM orkestra_şefi AS T1 JOIN orkestra AS T2 ON T1.şef_no = T2.şef_no
+orkestra	Orkestra şeflerinin isimleri ve yönettikleri orkestralar nelerdir?	medium	SELECT T1.isim , T2.isim FROM orkestra_şefi AS T1 JOIN orkestra AS T2 ON T1.şef_no = T2.şef_no
+orkestra	Birden fazla orkestrayı yönetmiş orkestra şeflerinin isimlerini göster.	medium	SELECT T1.isim FROM orkestra_şefi AS T1 JOIN orkestra AS T2 ON T1.şef_no = T2.şef_no GROUP BY T2.şef_no HAVING COUNT(*) > 1
+orkestra	Birden fazla orkestrayıı yönetmiş orkestra şeflerinin isimleri nelerdir?	medium	SELECT T1.isim FROM orkestra_şefi AS T1 JOIN orkestra AS T2 ON T1.şef_no = T2.şef_no GROUP BY T2.şef_no HAVING COUNT(*) > 1
+orkestra	En fazla orkestrayı yönetmiş orkestra şefinin ismini göster.	extra	SELECT T1.isim FROM orkestra_şefi AS T1 JOIN orkestra AS T2 ON T1.şef_no = T2.şef_no GROUP BY T2.şef_no ORDER BY COUNT(*) DESC LIMIT 1
+orkestra	En fazla orkestrayı yönetmiş olan orkestra şefinin ismi nedir?	extra	SELECT T1.isim FROM orkestra_şefi AS T1 JOIN orkestra AS T2 ON T1.şef_no = T2.şef_no GROUP BY T2.şef_no ORDER BY COUNT(*) DESC LIMIT 1
+orkestra	Lütfen 2008'den sonra kurulmuş orkestraları yönetmiş olan orkestra şefinin ismini göster.	medium	SELECT T1.isim FROM orkestra_şefi AS T1 JOIN orkestra AS T2 ON T1.şef_no = T2.şef_no WHERE kuruluş_yılı > 2008
+orkestra	2008'den sonra orkestra yönetmiş orkestra şeflerinin isimleri nelerdir?	medium	SELECT T1.isim FROM orkestra_şefi AS T1 JOIN orkestra AS T2 ON T1.şef_no = T2.şef_no WHERE kuruluş_yılı > 2008
+orkestra	Kayıt şirketlerini ve her şirketin orkestra sayılarını göster.	medium	SELECT kayıt_şirketi , COUNT(*) FROM orkestra GROUP BY kayıt_şirketi
+orkestra	Her kayıt şirketi kaç tane orkestrayı yönetiyor?	medium	SELECT kayıt_şirketi , COUNT(*) FROM orkestra GROUP BY kayıt_şirketi
+orkestra	Lütfen orkestra sayısına göre artacak şekilde sıralanmış orkestraların kayıt şeklini göster.	medium	SELECT ana_kayıt_şekli FROM orkestra GROUP BY ana_kayıt_şekli ORDER BY COUNT(*) ASC
+orkestra	Kullanım sıklığına göre sıralanmış bir şekilde orkestraların başlıca kayıt şekilleri nelerdir?	medium	SELECT ana_kayıt_şekli FROM orkestra GROUP BY ana_kayıt_şekli ORDER BY COUNT(*) ASC
+orkestra	En fazla orkestra tarafından paylaşılan kayıt şirketini listele.	hard	SELECT kayıt_şirketi FROM orkestra GROUP BY kayıt_şirketi ORDER BY COUNT(*) DESC LIMIT 1
+orkestra	En fazla orkestra tarafından kullanılmış kayıt şirketi nedir?	hard	SELECT kayıt_şirketi FROM orkestra GROUP BY kayıt_şirketi ORDER BY COUNT(*) DESC LIMIT 1
+orkestra	Hiçbir gösterisi olmayan orkestraların isimlerini listele.	hard	SELECT isim FROM orkestra WHERE orkestra_no NOT IN (SELECT orkestra_no FROM performans)
+orkestra	Hiçibr performans gerçekleştirmemiş orkestralar nelerdir?	hard	SELECT isim FROM orkestra WHERE orkestra_no NOT IN (SELECT orkestra_no FROM performans)
+orkestra	2003'den önce ve sonra bulunmuş orkestralar tarafından paylaşılan kayıt şirketlerini göster.	hard	SELECT kayıt_şirketi FROM orkestra WHERE kuruluş_yılı < 2003 INTERSECT SELECT kayıt_şirketi FROM orkestra WHERE kuruluş_yılı > 2003
+orkestra	2003'den önce ve sonra kurulmuş orkestralar tarafından kullanılan kayıt şirketleri nelerdir?	hard	SELECT kayıt_şirketi FROM orkestra WHERE kuruluş_yılı < 2003 INTERSECT SELECT kayıt_şirketi FROM orkestra WHERE kuruluş_yılı > 2003
+orkestra	"Kayıt formatı ""CD"" veya ""DVD"" olan orkestraların sayısını bul."	medium	"SELECT COUNT(*) FROM orkestra WHERE ana_kayıt_şekli = ""CD"" OR ana_kayıt_şekli = ""DVD"""
+orkestra	Kayıt formatı CD veya DVD olan orkestraların sayısını say.	medium	"SELECT COUNT(*) FROM orkestra WHERE ana_kayıt_şekli = ""CD"" OR ana_kayıt_şekli = ""DVD"""
+orkestra	Birden fazla gösteri yapmış orkestraların kurulduğu yılları göster.	medium	SELECT kuruluş_yılı FROM orkestra AS T1 JOIN performans AS T2 ON T1.orkestra_no = T2.orkestra_no GROUP BY T2.orkestra_no HAVING COUNT(*) > 1
+orkestra	Birden fazla performansı olan orkestraların kuruluş yılları nelerdir?	medium	SELECT kuruluş_yılı FROM orkestra AS T1 JOIN performans AS T2 ON T1.orkestra_no = T2.orkestra_no GROUP BY T2.orkestra_no HAVING COUNT(*) > 1
+ağ_1	Kaç tane lise öğrencisi var?	easy	SELECT count(*) FROM Lise_öğrencisi
+ağ_1	Lise öğrencilerini say.	easy	SELECT count(*) FROM Lise_öğrencisi
+ağ_1	Her lise öğrencisinin isimlerini ve notlarını göster.	medium	SELECT isim , sınıf FROM Lise_öğrencisi
+ağ_1	Her lise öğrencisinin isimleri ve sınıfları nelerdir?	medium	SELECT isim , sınıf FROM Lise_öğrencisi
+ağ_1	Lise öğrencilerinin tüm sınıflarını göster.	easy	SELECT sınıf FROM Lise_öğrencisi
+ağ_1	Lise öğrencisinin sınıfı nedir?	easy	SELECT sınıf FROM Lise_öğrencisi
+ağ_1	Kyle hangi sınıftadır?	easy	"SELECT sınıf FROM Lise_öğrencisi WHERE isim = ""Kyle"""
+ağ_1	Kyle isimli lise öğrencilerinin sınıfını döndür.	easy	"SELECT sınıf FROM Lise_öğrencisi WHERE isim = ""Kyle"""
+ağ_1	10'uncu sınıftaki bütün lise öğrencilerinin isimleri nelerdir?	easy	"SELECT isim FROM Lise_öğrencisi WHERE ""not"" = 10"
+ağ_1	10'uncu sınıftaki bütün lise öğrencilerinin isimleri nelerdir?	easy	SELECT isim FROM Lise_öğrencisi WHERE sınıf = 10
+ağ_1	Kyle isimli lise öğrencisinin numarasını göster.	easy	"SELECT NO FROM Lise_öğrencisi WHERE isim = ""Kyle"""
+ağ_1	Kyle'ın numarası nedir?	easy	"SELECT NO FROM Lise_öğrencisi WHERE isim = ""Kyle"""
+ağ_1	9'uncu veya 10'uncu sınıflarda kaç tane lise öğrencisi vardır?	medium	SELECT count(*) FROM Lise_öğrencisi WHERE sınıf = 9 OR sınıf = 10
+ağ_1	9 veya 10. sınıfta olan lise öğrencilerini say.	medium	SELECT count(*) FROM Lise_öğrencisi WHERE sınıf = 9 OR sınıf = 10
+ağ_1	Her sınıf için lise öğrencisi sayısını göster.	medium	"SELECT sınıf , count(*) FROM Lise_öğrencisi GROUP BY ""not"""
+ağ_1	Her sınıfta kaç tane lise öğrencisi vardır?	medium	SELECT sınıf , count(*) FROM Lise_öğrencisi GROUP BY sınıf
+ağ_1	Hangi sınıf en fazla lise öğrencisine sahiptir?	hard	SELECT sınıf FROM Lise_öğrencisi GROUP BY sınıf ORDER BY count(*) DESC LIMIT 1
+ağ_1	En çok lise öğrencisine sahip sınıfı döndür.	hard	SELECT sınıf FROM Lise_öğrencisi GROUP BY sınıf ORDER BY count(*) DESC LIMIT 1
+ağ_1	En az 4 öğrenciye sahip bütün sınıfları göster.	easy	SELECT sınıf FROM Lise_öğrencisi GROUP BY sınıf HAVING count(*) >= 4
+ağ_1	Hangi sınıflar 4 veya daha fazla lise öğrencisine sahiptir?	easy	SELECT sınıf FROM Lise_öğrencisi GROUP BY sınıf HAVING count(*) >= 4
+ağ_1	Öğrenci numaraları ve her biriyle ilişkili arkadaş sayılarını göster.	medium	SELECT öğrenci_no , count(*) FROM Arkadaş GROUP BY öğrenci_no
+ağ_1	Her öğrenci kaç tane arkadaşa sahiptir?	medium	SELECT öğrenci_no , count(*) FROM Arkadaş GROUP BY öğrenci_no
+ağ_1	Lise öğrencilerinin isimlerini ve arkadaş sayılarını göster.	medium	SELECT T2.isim , count(*) FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no GROUP BY T1.öğrenci_no
+ağ_1	Lise öğrencilerinin isimleri nelerdir ve her birinin kaç tane arkadaşı var?	medium	SELECT T2.isim , count(*) FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no GROUP BY T1.öğrenci_no
+ağ_1	En fazla arkadaşa sahip lise öğrencisinin ismi nedir?	extra	SELECT T2.isim FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no GROUP BY T1.öğrenci_no ORDER BY count(*) DESC LIMIT 1
+ağ_1	En fazla arkadaşa sahip olan lise öğrencisinin ismini döndür.	extra	SELECT T2.isim FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no GROUP BY T1.öğrenci_no ORDER BY count(*) DESC LIMIT 1
+ağ_1	En az 3 arkadaşı olan lise öğrencilerinin isimlerini göster.	medium	SELECT T2.isim FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no GROUP BY T1.öğrenci_no HAVING count(*) >= 3
+ağ_1	3 veya daha fazla arkadaşa sahip lise öğrencilerinin isimleri nelerdir?	medium	SELECT T2.isim FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no GROUP BY T1.öğrenci_no HAVING count(*) >= 3
+ağ_1	Lise öğrencisi Kyle'ın arkadaşlarının isimlerini göster.	hard	"SELECT T3.isim FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no JOIN Lise_öğrencisi AS T3 ON T1.arkadaş_no = T3.no WHERE T2.isim = ""Kyle"""
+ağ_1	Lise öğrencisi Kyle'ın arkadaşlarının isimlerini döndür.	hard	"SELECT T3.isim FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no JOIN Lise_öğrencisi AS T3 ON T1.arkadaş_no = T3.no WHERE T2.isim = ""Kyle"""
+ağ_1	Lise öğrencisi Kyle'ın kaç tane arkadaşı vardır?	medium	"SELECT count(*) FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no WHERE T2.isim = ""Kyle"""
+ağ_1	Kyle'ın arkadaş sayısını say.	medium	"SELECT count(*) FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no WHERE T2.isim = ""Kyle"""
+ağ_1	Hiç arkadaşı olmayan bütün öğrencilerin numaralarını göster.	hard	SELECT no FROM Lise_öğrencisi EXCEPT SELECT öğrenci_no FROM Arkadaş
+ağ_1	Arkadaşı olmayan lise öğrencilerinin numaraları nelerdir?	hard	SELECT no FROM Lise_öğrencisi EXCEPT SELECT öğrenci_no FROM Arkadaş
+ağ_1	Hiçbir arkadaşı olmayan lise öğrencilerinin isimlerini göster.	hard	SELECT isim FROM Lise_öğrencisi EXCEPT SELECT T2.isim FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no
+ağ_1	Arkadaşı olmayan öğrencilerin isimleri nelerdir?	hard	SELECT isim FROM Lise_öğrencisi EXCEPT SELECT T2.isim FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no
+ağ_1	Arkadaşa sahip ve biri tarafından beğenilen liselilerin numaralarını göster.	hard	SELECT öğrenci_no FROM Arkadaş INTERSECT SELECT beğeni_no FROM Beğeniler
+ağ_1	Hem arkadaşa sahip hem de beğenilen öğrencilerin numaraları nelerdir?	hard	SELECT öğrenci_no FROM Arkadaş INTERSECT SELECT beğeni_no FROM Beğeniler
+ağ_1	Arkadaşı olan ve bazıları tarafından beğenilen bütün öğrencilerin isimlerini göster.	hard	SELECT T2.isim FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no INTERSECT SELECT T2.isim FROM Beğeniler AS T1 JOIN Lise_öğrencisi AS T2 ON T1.beğeni_no = T2.no
+ağ_1	Hem arkadaşları olan hem de beğenilen öğrencilerin isimleri nelerdir?	hard	SELECT T2.isim FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no INTERSECT SELECT T2.isim FROM Beğeniler AS T1 JOIN Lise_öğrencisi AS T2 ON T1.beğeni_no = T2.no
+ağ_1	Her öğrenci numarası için beğeni sayısını say.	medium	SELECT öğrenci_no , count(*) FROM Beğeniler GROUP BY öğrenci_no
+ağ_1	Her öğrenci numarasına kaç tane beğeni karşılık geliyor.	medium	SELECT öğrenci_no , count(*) FROM Beğeniler GROUP BY öğrenci_no
+ağ_1	Beğenilen öğrencilerin isimlerini ve kaç kere beğenildiklerini göster.	medium	SELECT T2.isim , count(*) FROM Beğeniler AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no GROUP BY T1.öğrenci_no
+ağ_1	Beğenisi olan lise öğrencilerinin isimleri nedir ve kaç beğenileri vardır?	medium	SELECT T2.isim , count(*) FROM Beğeniler AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no GROUP BY T1.öğrenci_no
+ağ_1	En çok beğeniye sahip lise öğrencisinin ismi nedir?	extra	SELECT T2.isim FROM Beğeniler AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no GROUP BY T1.öğrenci_no ORDER BY count(*) DESC LIMIT 1
+ağ_1	En fazla beğeniye sahip öğrencinin ismini ver.	extra	SELECT T2.isim FROM Beğeniler AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no GROUP BY T1.öğrenci_no ORDER BY count(*) DESC LIMIT 1
+ağ_1	En az 2 beğenisi olan öğrencilerin isimlerini göster.	medium	SELECT T2.isim FROM Beğeniler AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no GROUP BY T1.öğrenci_no HAVING count(*) >= 2
+ağ_1	2 veya daha fazla beğeniye sahip öğrencilerin isimleri nelerdir?	medium	SELECT T2.isim FROM Beğeniler AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no GROUP BY T1.öğrenci_no HAVING count(*) >= 2
+ağ_1	Sınıfı 5'ten yüksek olan ve en az 2 arkadaşı olan öğrencilerin isimlerini göster.	hard	SELECT T2.isim FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no WHERE T2.sınıf > 5 GROUP BY T1.öğrenci_no HAVING count(*) >= 2
+ağ_1	Sınıfı en az 5 veya en az 2 arkadaşı olan lise öğrencilerinin isimleri nelerdir?	hard	SELECT T2.isim FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no WHERE T2.sınıf > 5 GROUP BY T1.öğrenci_no HAVING count(*) >= 2
+ağ_1	Kyle'ın kaç ne beğenisi var?	medium	"SELECT count(*) FROM Beğeniler AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no WHERE T2.isim = ""Kyle"""
+ağ_1	Kyle adlı liselinin beğeni sayısını döndür.	medium	"SELECT count(*) FROM Beğeniler AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no WHERE T2.isim = ""Kyle"""
+ağ_1	Arkadaşı olan tüm öğrencilerin ortalama sınıfını bul.	hard	SELECT avg(sınıf) FROM Lise_öğrencisi WHERE no IN (SELECT T1.öğrenci_no FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no)
+ağ_1	Arkadaşı olan lise öğrencilerinin ortalama sınıfı nedir?	hard	SELECT avg(sınıf) FROM Lise_öğrencisi WHERE no IN (SELECT T1.öğrenci_no FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no)
+ağ_1	Arkadaşı olmayan öğrencilerin minimum sınıfını bul.	extra	SELECT min(sınıf) FROM Lise_öğrencisi WHERE no NOT IN (SELECT T1.öğrenci_no FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no)
+ağ_1	Hiçbir arkadaşı olmayan öğrencilerden en düşük sınıfta olanların sınıfı nedir?	extra	SELECT min(sınıf) FROM Lise_öğrencisi WHERE no NOT IN (SELECT T1.öğrenci_no FROM Arkadaş AS T1 JOIN Lise_öğrencisi AS T2 ON T1.öğrenci_no = T2.no)
+köpek_kulübeleri	Hangi şehirlerde sahipler ve profesyoneller yaşamaktadır?	hard	SELECT eyalet FROM Sahipler INTERSECT SELECT eyalet FROM Profesyoneller
+köpek_kulübeleri	Sahiplerin ve profesyonellerin yaşadığı eyaletleri bul.	hard	SELECT eyalet FROM Sahipler INTERSECT SELECT eyalet FROM Profesyoneller
+köpek_kulübeleri	Tedavi görmüş köpeklerin ortalama yaşı nedir?	hard	SELECT avg(yaş) FROM Köpekler WHERE köpek_no IN ( SELECT köpek_no FROM Tedaviler )
+köpek_kulübeleri	Tedavi görmüş köpeklerin ortalama yaşını bul.	hard	SELECT avg(yaş) FROM Köpekler WHERE köpek_no IN ( SELECT köpek_no FROM Tedaviler )
+köpek_kulübeleri	Hangi profesyoneller Indiana eyaletinde yaşıyor veya 2'den fazla tedavi yaptı? Numaralarını, soyadlarını ve telefon numaralarını sırala.	extra	SELECT profesyonel_no , soyisim , cep_telefonu FROM Profesyoneller WHERE eyalet = 'Indiana' UNION SELECT T1.profesyonel_no , T1.soyisim , T1.cep_telefonu FROM Profesyoneller AS T1 JOIN Tedaviler AS T2 ON T1.profesyonel_no = T2.profesyonel_no GROUP BY T1.profesyonel_no HAVING count(*) > 2
+köpek_kulübeleri	Indiana'da yaşayan veya 2'den fazla tedavi yapmış olan profesyonellerin numarası, soyismi ve telefon numarasını bul.	extra	SELECT profesyonel_no , soyisim , cep_telefonu FROM Profesyoneller WHERE eyalet = 'Indiana' UNION SELECT T1.profesyonel_no , T1.soyisim , T1.cep_telefonu FROM Profesyoneller AS T1 JOIN Tedaviler AS T2 ON T1.profesyonel_no = T2.profesyonel_no GROUP BY T1.profesyonel_no HAVING count(*) > 2
+köpek_kulübeleri	Tedavisi sahibine 1000'den fazla masrafa sebep olmamış köpekler hangileridir? Köpek isimlerini listele.	hard	select isim from Köpekler where köpek_no not in ( select köpek_no from Tedaviler group by köpek_no having sum(tedavi_maliyeti) > 1000 )
+köpek_kulübeleri	Sahibin tedavisi için 1000'den fazla harcama yapmadığı köpeklerin isimleri neler?	hard	select isim from Köpekler where köpek_no not in ( select köpek_no from Tedaviler group by köpek_no having sum(tedavi_maliyeti) > 1000 )
+köpek_kulübeleri	Profesyoneller veya sahipler için kullanılan fakat köpek ismi olarak kullanılmayan isimler nelerdir?	hard	SELECT isim FROM Profesyoneller UNION SELECT isim FROM Sahipler EXCEPT SELECT isim FROM Köpekler
+köpek_kulübeleri	Profesyoneller veya sahipler için kullanılan fakat köpek ismi olarak kullanılmayan isimleri bul.	hard	SELECT isim FROM Profesyoneller UNION SELECT isim FROM Sahipler EXCEPT SELECT isim FROM Köpekler
+köpek_kulübeleri	Hangi profesyonel köpeklere tedavi yapmamıştır? Profesyonelin numarasını, rolünü ve epostasını listele.	extra	SELECT profesyonel_no , rol_kodu , eposta_adresi FROM Profesyoneller EXCEPT SELECT T1.profesyonel_no , T1.rol_kodu , T1.eposta_adresi FROM Profesyoneller AS T1 JOIN Tedaviler AS T2 ON T1.profesyonel_no = T2.profesyonel_no
+köpek_kulübeleri	Herhangi bir tedavi yapmamış olan profesyonellerin numarasını, rolünü ve eposta adresini ver.	extra	SELECT profesyonel_no , rol_kodu , eposta_adresi FROM Profesyoneller EXCEPT SELECT T1.profesyonel_no , T1.rol_kodu , T1.eposta_adresi FROM Profesyoneller AS T1 JOIN Tedaviler AS T2 ON T1.profesyonel_no = T2.profesyonel_no
+köpek_kulübeleri	Hangi sahibin en fazla köpeği var? Sahip numarası, ismi ve soyismini listele.	extra	SELECT T1.sahip_no , T2.isim , T2.soyisim FROM Köpekler AS T1 JOIN Sahipler AS T2 ON T1.sahip_no = T2.sahip_no GROUP BY T1.sahip_no ORDER BY count(*) DESC LIMIT 1
+köpek_kulübeleri	En fazla köpeğe sahip kişinin numarasını, ismini ve soyismini döndür.	extra	SELECT T1.sahip_no , T2.isim , T2.soyisim FROM Köpekler AS T1 JOIN Sahipler AS T2 ON T1.sahip_no = T2.sahip_no GROUP BY T1.sahip_no ORDER BY count(*) DESC LIMIT 1
+köpek_kulübeleri	En az 2 tedavi yapan profesyoneller kimlerdir? Numaralarını, rollerini ve isimlerini listele.	medium	SELECT T1.profesyonel_no , T1.rol_kodu , T1.isim FROM Profesyoneller AS T1 JOIN Tedaviler AS T2 ON T1.profesyonel_no = T2.profesyonel_no GROUP BY T1.profesyonel_no HAVING count(*) >= 2
+köpek_kulübeleri	İki veya daha fazla tedavi gerçekleştirmiş profesyonellerin numarası, rolü ve ismi nelerdir?	medium	SELECT T1.profesyonel_no , T1.rol_kodu , T1.isim FROM Profesyoneller AS T1 JOIN Tedaviler AS T2 ON T1.profesyonel_no = T2.profesyonel_no GROUP BY T1.profesyonel_no HAVING count(*) >= 2
+köpek_kulübeleri	En fazla köpeğin bulunduğu cinsin ismi nedir?	extra	SELECT T1.cins_ismi FROM Cinsler AS T1 JOIN Köpekler AS T2 ON T1.cins_kodu = T2.cins_kodu GROUP BY T1.cins_ismi ORDER BY count(*) DESC LIMIT 1
+köpek_kulübeleri	En fazla köpeğin bulunduğu köpek cinsi nedir? İsmini ver.	extra	SELECT T1.cins_ismi FROM Cinsler AS T1 JOIN Köpekler AS T2 ON T1.cins_kodu = T2.cins_kodu GROUP BY T1.cins_ismi ORDER BY count(*) DESC LIMIT 1
+köpek_kulübeleri	Kendi köpeğinin tedavisi için en çok ödemiş sahip hangisidir? Sahip numarasını ve soyadını listele.	extra	SELECT T1.sahip_no , T1.soyisim FROM Sahipler AS T1 JOIN Köpekler AS T2 ON T1.sahip_no = T2.sahip_no JOIN Tedaviler AS T3 ON T2.köpek_no = T3.köpek_no GROUP BY T1.sahip_no ORDER BY count(*) DESC LIMIT 1
+köpek_kulübeleri	Bana köpeklerinin tedavisinde en fazla harcama yapmış sahiplerin numaralarını ve soyisimlerini söyle.	extra	SELECT T1.sahip_no , T1.soyisim FROM Sahipler AS T1 JOIN Köpekler AS T2 ON T1.sahip_no = T2.sahip_no JOIN Tedaviler AS T3 ON T2.köpek_no = T3.köpek_no GROUP BY T1.sahip_no ORDER BY count(*) DESC LIMIT 1
+köpek_kulübeleri	En az maliyete sahip olan tedavi türünün açıklaması nedir?	extra	SELECT T1.tedavi_türü_açıklaması FROM Tedavi_Türleri AS T1 JOIN Tedaviler AS T2 ON T1.tedavi_türü_kodu = T2.tedavi_tipi_kodu GROUP BY T1.tedavi_türü_kodu ORDER BY sum(tedavi_maliyeti) ASC LIMIT 1
+köpek_kulübeleri	Toplam maliyeti en az olan tedavinin açıklamasını ver.	extra	SELECT T1.tedavi_türü_açıklaması FROM Tedavi_Türleri AS T1 JOIN Tedaviler AS T2 ON T1.tedavi_türü_kodu = T2.tedavi_tipi_kodu GROUP BY T1.tedavi_türü_kodu ORDER BY sum(tedavi_maliyeti) ASC LIMIT 1
+köpek_kulübeleri	Hangi sahip köpekleri için en çok para ödemiştir? Sahip numarasını ve posta kodunu göster.	extra	SELECT T1.sahip_no , T1.posta_kodu FROM Sahipler AS T1 JOIN Köpekler AS T2 ON T1.sahip_no = T2.sahip_no JOIN Tedaviler AS T3 ON T2.köpek_no = T3.köpek_no GROUP BY T1.sahip_no ORDER BY sum(T3.tedavi_maliyeti) DESC LIMIT 1
+köpek_kulübeleri	Köpekleri için en çok para harcayan sahibin sahip numarasını ve posta kodunu bul.	extra	SELECT T1.sahip_no , T1.posta_kodu FROM Sahipler AS T1 JOIN Köpekler AS T2 ON T1.sahip_no = T2.sahip_no JOIN Tedaviler AS T3 ON T2.köpek_no = T3.köpek_no GROUP BY T1.sahip_no ORDER BY sum(T3.tedavi_maliyeti) DESC LIMIT 1
+köpek_kulübeleri	Hangi profesyonel en az iki tedavi gerçekleştirmiştir? Profesyonel numarasını ve telefon numarasını listele.	medium	SELECT T1.profesyonel_no , T1.cep_telefonu FROM Profesyoneller AS T1 JOIN Tedaviler AS T2 ON T1.profesyonel_no = T2.profesyonel_no GROUP BY T1.profesyonel_no HAVING count(*) >= 2
+köpek_kulübeleri	İki veya daha fazla tedavi yapmış profesyonellerin numaralarını ve telefon numaralarını göster.	medium	SELECT T1.profesyonel_no , T1.cep_telefonu FROM Profesyoneller AS T1 JOIN Tedaviler AS T2 ON T1.profesyonel_no = T2.profesyonel_no GROUP BY T1.profesyonel_no HAVING count(*) >= 2
+köpek_kulübeleri	Ortalamanın altında maliyetle tedavi yapmış profesyonellerin isimleri ve soyisimleri nelerdir?	extra	SELECT DISTINCT T1.isim , T1.soyisim FROM Profesyoneller AS T1 JOIN Tedaviler AS T2 WHERE tedavi_maliyeti < ( SELECT avg(tedavi_maliyeti) FROM Tedaviler )
+köpek_kulübeleri	Hangi profesörler ortalamanın altında bir ücretle tedavi uygulamıştır. Onların isimlerini ve soyisimlerini ver.	extra	SELECT DISTINCT T1.isim , T1.soyisim FROM Profesyoneller AS T1 JOIN Tedaviler AS T2 WHERE tedavi_maliyeti < ( SELECT avg(tedavi_maliyeti) FROM Tedaviler )
+köpek_kulübeleri	Her tedavinin tarihini bu tedaviyi yapmış profesyonelin ismiyle birlikte sırala.	medium	SELECT T1.tedavi_tarihi , T2.isim FROM Tedaviler AS T1 JOIN Profesyoneller AS T2 ON T1.profesyonel_no = T2.profesyonel_no
+köpek_kulübeleri	Tedavilerin tarihi ve tedaviyi yapmış profesyonellerin isimleri nelerdir?	medium	SELECT T1.tedavi_tarihi , T2.isim FROM Tedaviler AS T1 JOIN Profesyoneller AS T2 ON T1.profesyonel_no = T2.profesyonel_no
+köpek_kulübeleri	Tedavi maliyetlerini ve ilgili tedavi türü açıklamasını listele.	medium	SELECT T1.tedavi_maliyeti , T2.tedavi_türü_açıklaması FROM Tedaviler AS T1 JOIN Tedavi_Türleri AS T2 ON T1.tedavi_tipi_kodu = T2.tedavi_türü_kodu
+köpek_kulübeleri	Her tedavinin maliyeti ve açıklaması nelerdir?	medium	SELECT T1.tedavi_maliyeti , T2.tedavi_türü_açıklaması FROM Tedaviler AS T1 JOIN Tedavi_Türleri AS T2 ON T1.tedavi_tipi_kodu = T2.tedavi_türü_kodu
+köpek_kulübeleri	Her sahibin ismi, soyismi ve köpeğinin boyutunu listele.	medium	SELECT T1.isim , T1.soyisim , T2.ölçü_kodu FROM Sahipler AS T1 JOIN Köpekler AS T2 ON T1.sahip_no = T2.sahip_no
+köpek_kulübeleri	Her sahibin ismi, soyismi ve köpeğinin boyutu nedir?	medium	SELECT T1.isim , T1.soyisim , T2.ölçü_kodu FROM Sahipler AS T1 JOIN Köpekler AS T2 ON T1.sahip_no = T2.sahip_no
+köpek_kulübeleri	Sahiplerin isimlerini ve köpeklerinin isimlerini listele.	medium	SELECT T1.isim , T2.isim FROM Sahipler AS T1 JOIN Köpekler AS T2 ON T1.sahip_no = T2.sahip_no
+köpek_kulübeleri	Sahiplerin ve köpeklerinin ismi nelerdir?	medium	SELECT T1.isim , T2.isim FROM Sahipler AS T1 JOIN Köpekler AS T2 ON T1.sahip_no = T2.sahip_no
+köpek_kulübeleri	En nadir köpek cinsinin isimlerini ve tedavi tarihlerini listele.	extra	SELECT T1.isim , T2.tedavi_tarihi FROM Köpekler AS T1 JOIN Tedaviler AS T2 ON T1.köpek_no = T2.köpek_no WHERE T1.cins_kodu = ( SELECT cins_kodu FROM Köpekler GROUP BY cins_kodu ORDER BY count(*) ASC LIMIT 1 )
+köpek_kulübeleri	Hangi köpekler en nadir cinstendir? İsimlerini ve tedavi tarihlerini göster.	extra	SELECT T1.isim , T2.tedavi_tarihi FROM Köpekler AS T1 JOIN Tedaviler AS T2 ON T1.köpek_no = T2.köpek_no WHERE T1.cins_kodu = ( SELECT cins_kodu FROM Köpekler GROUP BY cins_kodu ORDER BY count(*) ASC LIMIT 1 )
+köpek_kulübeleri	Hangi köpeklerin sahipleri Virginia'da yaşıyor? Sahibin ve köpeğin ismini listele.	medium	SELECT T1.isim , T2.isim FROM Sahipler AS T1 JOIN Köpekler AS T2 ON T1.sahip_no = T2.sahip_no WHERE T1.eyalet = 'Virginia'
+köpek_kulübeleri	Virginia'da yaşayan sahiplerin isimlerini ve sahip oldukları köpeklerin isimlerini bul.	medium	SELECT T1.isim , T2.isim FROM Sahipler AS T1 JOIN Köpekler AS T2 ON T1.sahip_no = T2.sahip_no WHERE T1.eyalet = 'Virginia'
+köpek_kulübeleri	Tedavi geçirmiş köpeklerin varış ve ayrılış tarihleri nelerdir?	medium	SELECT DISTINCT T1.vardığı_tarih , T1.ayrıldığı_Tarih FROM Köpekler AS T1 JOIN Tedaviler AS T2 ON T1.köpek_no = T2.köpek_no
+köpek_kulübeleri	Tedavi yapılmış köpeklerin varış ve ayrılış tarihlerini bul.	medium	SELECT DISTINCT T1.vardığı_tarih , T1.ayrıldığı_Tarih FROM Köpekler AS T1 JOIN Tedaviler AS T2 ON T1.köpek_no = T2.köpek_no
+köpek_kulübeleri	En genç köpeğin sahibinin soyismini listele.	extra	SELECT T1.soyisim FROM Sahipler AS T1 JOIN Köpekler AS T2 ON T1.sahip_no = T2.sahip_no WHERE T2.yaş = ( SELECT max(yaş) FROM Köpekler )
+köpek_kulübeleri	En genç köpeğe kim sahiptir? Bana soyadını ver.	extra	SELECT T1.soyisim FROM Sahipler AS T1 JOIN Köpekler AS T2 ON T1.sahip_no = T2.sahip_no WHERE T2.yaş = ( SELECT max(yaş) FROM Köpekler )
+köpek_kulübeleri	Hawaii ya da Winsconsin'de yaşayan profesyonellerin eposta adreslerii listele.	medium	SELECT eposta_adresi FROM Profesyoneller WHERE eyalet = 'Hawaii' OR eyalet = 'Wisconsin'
+köpek_kulübeleri	Hawaii eyaleti veya Wisconsin eyaletinde yaşayan profesyonellerin epostaları nelerdir?	medium	SELECT eposta_adresi FROM Profesyoneller WHERE eyalet = 'Hawaii' OR eyalet = 'Wisconsin'
+köpek_kulübeleri	Bütün köpeklerin varış ve ayrılış tarihleri nelerdir?	medium	SELECT vardığı_tarih , ayrıldığı_Tarih FROM Köpekler
+köpek_kulübeleri	Tüm köpekler için varış ve ayrılış tarihlerini listele.	medium	SELECT vardığı_tarih , ayrıldığı_Tarih FROM Köpekler
+köpek_kulübeleri	Kaç tane köpek herhangi bir tedavi geçirdi?	easy	SELECT count(DISTINCT köpek_no) FROM Tedaviler
+köpek_kulübeleri	Tedavi sürecinden geçmiş köpeklerin sayısını say.	easy	SELECT count(DISTINCT köpek_no) FROM Tedaviler
+köpek_kulübeleri	Kaç profesyonel, köpek tedavi etmiştir?	easy	SELECT count(DISTINCT profesyonel_no) FROM Tedaviler
+köpek_kulübeleri	Şimdiye kadar köpek tedavi etmiş profesyonellerin numaralarını bul.	easy	SELECT count(DISTINCT profesyonel_no) FROM Tedaviler
+köpek_kulübeleri	West' kelimesi içeren bir şehirde yaşayan profesyoneller hangileridir? Rollerini, caddelerini, şehirlerini ve eyaletlerini listele.	medium	SELECT rol_kodu , sokak , şehir , eyalet FROM Profesyoneller WHERE şehir LIKE '%West%'
+köpek_kulübeleri	West' kelimesini içeren bir şehirde yaşayan profesyonellerin rolünü, sokağını, şehrini ve eyaletini bul.	medium	SELECT rol_kodu , sokak , şehir , eyalet FROM Profesyoneller WHERE şehir LIKE '%West%'
+köpek_kulübeleri	North' substring'ini içeren eyalette yaşayan sahipler hangileridir? İsmini, soyismini ve epostasını listele.	medium	SELECT isim , soyisim , eposta_adresi FROM Sahipler WHERE eyalet LIKE '%North%'
+köpek_kulübeleri	İçinde 'North' kelimesi geçen eyaletlerde yaşayan sahiplerin isimlerini, soyisimlerini ve epostalarını döndür.	medium	SELECT isim , soyisim , eposta_adresi FROM Sahipler WHERE eyalet LIKE '%North%'
+köpek_kulübeleri	Kaç köpeğin yaş ortalamanın altındadır?	hard	SELECT count(*) FROM Köpekler WHERE yaş < ( SELECT avg(yaş) FROM Köpekler )
+köpek_kulübeleri	Yaşı ortalamanın altında olan kaç tane köpek var?	hard	SELECT count(*) FROM Köpekler WHERE yaş < ( SELECT avg(yaş) FROM Köpekler )
+köpek_kulübeleri	En son tedavinin masrafı nedir?	medium	SELECT tedavi_maliyeti FROM Tedaviler ORDER BY tedavi_tarihi DESC LIMIT 1
+köpek_kulübeleri	En son yapılan tedavinin masrafını göster.	medium	SELECT tedavi_maliyeti FROM Tedaviler ORDER BY tedavi_tarihi DESC LIMIT 1
+köpek_kulübeleri	Kaç tane köpek hiç tedavi geçirmedi?	extra	SELECT count(*) FROM Köpekler WHERE köpek_no NOT IN ( SELECT köpek_no FROM Tedaviler )
+köpek_kulübeleri	Bana herhangi bir tedavi geçirmemiş köpeklerin sayısını söyle.	extra	select count(*) from Köpekler where köpek_no not in ( select köpek_no from Tedaviler )
+köpek_kulübeleri	Kaç sahibin geçici süreliğine köpeği yok?	extra	SELECT count(*) FROM Sahipler WHERE sahip_no NOT IN ( SELECT sahip_no FROM Köpekler )
+köpek_kulübeleri	Şu anda köpeği olmayan sahip sayısını bul.	extra	SELECT count(*) FROM Sahipler WHERE sahip_no NOT IN ( SELECT sahip_no FROM Köpekler )
+köpek_kulübeleri	Kaç profesyonel herhangi bir köpeğe tedavi yapmamıştır?	extra	SELECT count(*) FROM Profesyoneller WHERE profesyonel_no NOT IN ( SELECT profesyonel_no FROM Tedaviler )
+köpek_kulübeleri	Hiçbir köpeğe tedavi yapmamış profesyonel sayısını bul.	extra	SELECT count(*) FROM Profesyoneller WHERE profesyonel_no NOT IN ( SELECT profesyonel_no FROM Tedaviler )
+köpek_kulübeleri	Terk edilmiş köpeklerin isimlerini, yaşlarını ve ağırlıklarını listele. 1 evet, 0 ise hayır anlamına geliyor.	medium	SELECT isim , yaş , ağırlık FROM Köpekler WHERE terk_edilmiş_mi = 1
+köpek_kulübeleri	Terk edilen köpeklerin isimleri, yaşları ve ağırlıkları nelerdir? Tabloda 1 evet, 0 da hayır anlamına gelmektedir.	medium	SELECT isim , yaş , ağırlık FROM Köpekler WHERE terk_edilmiş_mi = 1
+köpek_kulübeleri	Köpeklerin ortalama yaşı kaçtır?	easy	SELECT avg(yaş) FROM Köpekler
+köpek_kulübeleri	Bütün köpeklerin ortalam yaşını heaspla.	easy	SELECT avg(yaş) FROM Köpekler
+köpek_kulübeleri	En yaşlı köpeğin yaşı nedir?	easy	SELECT max(yaş) FROM Köpekler
+köpek_kulübeleri	En yaşlı köğeğin yaşını söyle.	easy	SELECT max(yaş) FROM Köpekler
+köpek_kulübeleri	Her masraf ne kadar tutuyor? Masraf türünü ve miktarını listele.	medium	SELECT masraf_tipi , masraf_miktarı FROM Masraflar
+köpek_kulübeleri	Her masraf türünü ve miktarını sırala.	medium	SELECT masraf_tipi , masraf_miktarı FROM Masraflar
+köpek_kulübeleri	En pahalı masraf türü ne kadar tutuyor?	easy	SELECT max(masraf_miktarı) FROM Masraflar
+köpek_kulübeleri	En pahalı masraf türü ne kadar tutuyor?	easy	SELECT max(masraf_miktarı) FROM Masraflar
+köpek_kulübeleri	Bütün profesyonellerin epostalarını, cep telefon numaralarını ve ev telefon numaralarını sırala.	medium	SELECT eposta_adresi , cep_telefonu , ev_telefonu FROM Profesyoneller
+köpek_kulübeleri	Her profesyonelin eposta adresi, telefon numarası ve ev telefonu numarası nedir?	medium	SELECT eposta_adresi , cep_telefonu , ev_telefonu FROM Profesyoneller
+köpek_kulübeleri	Köpekler için mümkün olan bütün cins türü ve boyut türü kombinasyonları nelerdir?	medium	SELECT DISTINCT cins_kodu , ölçü_kodu FROM Köpekler
+köpek_kulübeleri	Köpeklerin farklı cins ve boyut türü kombinasyonlarını bul.	medium	SELECT DISTINCT cins_kodu , ölçü_kodu FROM Köpekler
+köpek_kulübeleri	Yaptıkları tedavinin açıklamasıyla birlikte tüm profesyonellerin adlarını listele.	medium	SELECT DISTINCT T1.isim , T3.tedavi_türü_açıklaması FROM Profesyoneller AS T1 JOIN Tedaviler AS T2 ON T1.profesyonel_no = T2.profesyonel_no JOIN Tedavi_Türleri AS T3 ON T2.tedavi_tipi_kodu = T3.tedavi_türü_kodu
+köpek_kulübeleri	Her profesyonelin ismi ve gerçekleştirdikleri tedavinin açıklaması nelerdir?	medium	SELECT DISTINCT T1.isim , T3.tedavi_türü_açıklaması FROM Profesyoneller AS T1 JOIN Tedaviler AS T2 ON T1.profesyonel_no = T2.profesyonel_no JOIN Tedavi_Türleri AS T3 ON T2.tedavi_tipi_kodu = T3.tedavi_türü_kodu
+şarkıcı	Kaç tane şarkıcı var?	easy	SELECT count(*) FROM şarkıcı
+şarkıcı	Kaç tane şarkıcı var?	easy	SELECT count(*) FROM şarkıcı
+şarkıcı	Öz varlıkları artan sırada şarkıcıların isimlerini listele.	easy	SELECT isim FROM şarkıcı ORDER BY öz_varlık ASC
+şarkıcı	Artan öz varlıklarına göre şarkıcıların isimleri nelerdir?	easy	SELECT isim FROM şarkıcı ORDER BY öz_varlık ASC
+şarkıcı	Şarkıcıların doğum yılları ve vatandaşlıkları nelerdir?	medium	SELECT doğum_tarihi , vatandaşlık FROM şarkıcı
+şarkıcı	Şarkıcıların doğum yılları ve vatandaşlıkları nelerdir?	medium	SELECT doğum_tarihi , vatandaşlık FROM şarkıcı
+şarkıcı	Fransa' vatandaşı olmayan şarkıcıların isimlerini sırala.	easy	"SELECT isim FROM şarkıcı WHERE vatandaşlık != ""Fransa"""
+şarkıcı	Fransa vatandaşı olmayan şarkıcıların isimlerini nelerdir?	easy	"SELECT isim FROM şarkıcı WHERE vatandaşlık != ""Fransa"""
+şarkıcı	1948 veya 1948'da doğmuş olan şarkıcıların isimlerini göster.	medium	SELECT isim FROM şarkıcı WHERE doğum_tarihi = 1948 OR doğum_tarihi = 1949
+şarkıcı	Doğum yılı 1948 veya 1949'da olan şarkıcıların isimleri nelerdir?	medium	SELECT isim FROM şarkıcı WHERE doğum_tarihi = 1948 OR doğum_tarihi = 1949
+şarkıcı	En büyük net servete sahip şarkıcının adı nedir?	medium	SELECT isim FROM şarkıcı ORDER BY öz_varlık DESC LIMIT 1
+şarkıcı	En değerli şarkıcının ismi nedir?	medium	SELECT isim FROM şarkıcı ORDER BY öz_varlık DESC LIMIT 1
+şarkıcı	Şarkıcıların farklı vatandaşlıklarını ve her vatandaşlık için şarkıcı sayısını göster.	medium	SELECT vatandaşlık , COUNT(*) FROM şarkıcı GROUP BY vatandaşlık
+şarkıcı	Her vatandaşlık için o ülkeden kaç şarkıcı var?	medium	SELECT vatandaşlık , COUNT(*) FROM şarkıcı GROUP BY vatandaşlık
+şarkıcı	Lütfen şarkıcıların en sık vatandaşlığını göster.	hard	SELECT vatandaşlık FROM şarkıcı GROUP BY vatandaşlık ORDER BY COUNT(*) DESC LIMIT 1
+şarkıcı	En yaygın şarkıcı vatandışlığı nedir?	hard	select vatandaşlık from şarkıcı group by vatandaşlık order by count(*) desc limit 1
+şarkıcı	Farklı vatandaşlıkları ve her vatandaşlıktan şarkıcıların maksimum net değerini göster.	medium	SELECT vatandaşlık , max(öz_varlık) FROM şarkıcı GROUP BY vatandaşlık
+şarkıcı	Her vatandaşlık için maksimum öz varlık nedir?	medium	SELECT vatandaşlık , max(öz_varlık) FROM şarkıcı GROUP BY vatandaşlık
+şarkıcı	Şarkıcıların şarkı başlıklarını ve isimlerini göster.	medium	SELECT T2.şarkı_isim , T1.isim FROM şarkıcı AS T1 JOIN şarkı AS T2 ON T1.şarkıcı_no = T2.şarkıcı_no
+şarkıcı	Şarkı ve şarkıcı isimleri nelerdir?	medium	SELECT T2.şarkı_isim , T1.isim FROM şarkıcı AS T1 JOIN şarkı AS T2 ON T1.şarkıcı_no = T2.şarkıcı_no
+şarkıcı	Şarkıları 300000'den fazla satmış şarkıcıların farklı isimlerini göster.	medium	SELECT DISTINCT T1.isim FROM şarkıcı AS T1 JOIN şarkı AS T2 ON T1.şarkıcı_no = T2.şarkıcı_no WHERE T2.satış > 300000
+şarkıcı	300000'den fazla satış yapan şarkıcıların farklı isimleri nelerdir?	medium	SELECT DISTINCT T1.isim FROM şarkıcı AS T1 JOIN şarkı AS T2 ON T1.şarkıcı_no = T2.şarkıcı_no WHERE T2.satış > 300000
+şarkıcı	Birden fazla şarkısı olan şarkıcıların isimlerini göster.	medium	SELECT T1.isim FROM şarkıcı AS T1 JOIN şarkı AS T2 ON T1.şarkıcı_no = T2.şarkıcı_no GROUP BY T1.isim HAVING COUNT(*) > 1
+şarkıcı	Birden fazla şarkısı olan şarkıcıların isimleri nelerdir?	medium	SELECT T1.isim FROM şarkıcı AS T1 JOIN şarkı AS T2 ON T1.şarkıcı_no = T2.şarkıcı_no GROUP BY T1.isim HAVING COUNT(*) > 1
+şarkıcı	Şarkıcıların isimlerini ve şarkılarının toplam satışını göster.	medium	SELECT T1.isim , sum(T2.satış) FROM şarkıcı AS T1 JOIN şarkı AS T2 ON T1.şarkıcı_no = T2.şarkıcı_no GROUP BY T1.isim
+şarkıcı	Her şarkıcı ismi için şarkılarının toplam satışı kaçtır?	medium	SELECT T1.isim , sum(T2.satış) FROM şarkıcı AS T1 JOIN şarkı AS T2 ON T1.şarkıcı_no = T2.şarkıcı_no GROUP BY T1.isim
+şarkıcı	Hiçibr şarkısı olmayan şarkıcıların isimlerini listele.	hard	SELECT isim FROM şarkıcı WHERE şarkıcı_no NOT IN (SELECT şarkıcı_no FROM şarkı)
+şarkıcı	Herhangi bir şarkısı olmayan şarkıcıların isimleri nelerdir?	hard	SELECT isim FROM şarkıcı WHERE şarkıcı_no NOT IN (SELECT şarkıcı_no FROM şarkı)
+şarkıcı	Doğum yılı 1945'ten önce ve 1955'ten sonra olan şarkıcıların vatandaşlıklarını göster.	hard	SELECT vatandaşlık FROM şarkıcı WHERE doğum_tarihi < 1945 INTERSECT SELECT vatandaşlık FROM şarkıcı WHERE doğum_tarihi > 1955
+şarkıcı	1945'den önce ve 1955'den sonra doğmuş olan şarkıcılar tarafından paylaşılan vatandaşlıklar hangileridir?	hard	SELECT vatandaşlık FROM şarkıcı WHERE doğum_tarihi < 1945 INTERSECT SELECT vatandaşlık FROM şarkıcı WHERE doğum_tarihi > 1955
+gayrimenkuller	Toplamda kaç farklı mevcut özellik vardır?	easy	SELECT count(*) FROM diğer_mevcut_özellikler
+gayrimenkuller	Aircon'un özellik türü ismi nedir?	medium	"SELECT T2.özellik_tür_kodu FROM diğer_mevcut_özellikler AS T1 JOIN ref_özellik_türleri AS T2 ON T1.özellik_tür_kodu = T2.özellik_tür_kodu WHERE T1.özellik_ismi = ""Havalandırma"""
+gayrimenkuller	O koda ait olan mülklerin mülk türü açıklamalarını göster.	medium	SELECT T2.mülk_tür_açıklaması FROM Mülkler AS T1 JOIN Ref_Mülk_Türleri AS T2 ON T1.mülk_tür_kodu = T2.mülk_tür_kodu GROUP BY T1.mülk_tür_kodu
+gayrimenkuller	1'den fazla odaya sahip evlerin veya apartmanların mülklerinin isimleri nelerdir?	hard	"SELECT mülk_ismi FROM Mülkler WHERE mülk_tür_kodu = ""Ev"" UNION SELECT mülk_ismi FROM Mülkler WHERE mülk_tür_kodu = ""Daire"" AND oda_sayısı > 1"
