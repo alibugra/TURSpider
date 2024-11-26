@@ -23,14 +23,14 @@ If you use TURSpider, please cite the following work:
 
 ```
 @ARTICLE{10753591,
-  author={Kanburoglu, Ali Bugra and Tek, Faik Boray},
+  author={Kanburoglu, Ali Bugra and Boray Tek, Faik},
   journal={IEEE Access}, 
   title={TURSpider: A Turkish Text-to-SQL Dataset and LLM-Based Study}, 
   year={2024},
-  volume={},
+  volume={12},
   number={},
-  pages={1-1},
-  keywords={Text-to-SQL;LLM;large language models;Turkish;dataset;TURSpider},
+  pages={169379-169387},
+  keywords={Training;Structured Query Language;Accuracy;Error analysis;Large language models;Benchmark testing;Cognition;Encoding;Text-to-SQL;LLM;large language models;Turkish;dataset;TURSpider},
   doi={10.1109/ACCESS.2024.3498841}}
 ```
 
